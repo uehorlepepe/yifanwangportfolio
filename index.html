@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Yifan Wang</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #fafaf8;
@@ -19,151 +19,422 @@
   --serif: 'Instrument Serif', Georgia, serif;
   --sans: 'Instrument Sans', system-ui, sans-serif;
 }
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-body { font-family: var(--sans); background: var(--bg); color: var(--ink); line-height: 1.7; font-size: 15px; }
-
+body {
+  font-family: var(--sans);
+  background:
+    radial-gradient(circle at top left, rgba(26, 92, 58, 0.05), transparent 28%),
+    linear-gradient(180deg, #fbfbf8 0%, #f7f6f1 100%);
+  color: var(--ink);
+  line-height: 1.7;
+  font-size: 15px;
+}
 nav {
-  position: fixed; top: 0; left: 0; right: 0;
-  background: rgba(250,250,248,0.92); backdrop-filter: blur(10px);
+  position: fixed;
+  inset: 0 0 auto 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.95rem 2.5rem;
   border-bottom: 1px solid var(--rule);
-  padding: 0.875rem 2.5rem;
-  display: flex; justify-content: space-between; align-items: center; z-index: 100;
+  background: rgba(250, 250, 248, 0.92);
+  backdrop-filter: blur(10px);
+  z-index: 100;
 }
 .nav-name { font-family: var(--serif); font-size: 17px; }
-.nav-links { display: flex; gap: 2rem; }
-.nav-links a { font-size: 13px; color: var(--muted); text-decoration: none; letter-spacing: 0.03em; transition: color 0.15s; }
+.nav-links { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+.nav-links a { color: var(--muted); font-size: 13px; text-decoration: none; }
 .nav-links a:hover { color: var(--ink); }
-
-.section { max-width: 700px; margin: 0 auto; padding: 5.5rem 2rem; }
-#hero { padding-top: 11rem; padding-bottom: 6rem; }
-
-.hero-eyebrow { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); font-weight: 500; margin-bottom: 1.25rem; opacity: 0; animation: fadeUp 0.7s 0.1s forwards; }
-#hero h1 { font-family: var(--serif); font-size: clamp(38px, 6vw, 54px); font-weight: 400; line-height: 1.08; margin-bottom: 1.5rem; letter-spacing: -0.01em; opacity: 0; animation: fadeUp 0.7s 0.2s forwards; }
-#hero h1 em { font-style: italic; color: var(--muted); }
-.hero-desc { font-size: 16px; color: var(--muted); max-width: 480px; line-height: 1.75; opacity: 0; animation: fadeUp 0.7s 0.35s forwards; }
-
-.section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 2.5rem; padding-bottom: 0.875rem; border-bottom: 1px solid var(--rule); }
-
-.research-item { padding-bottom: 2rem; margin-bottom: 2rem; border-bottom: 1px solid var(--rule); }
-.research-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-.item-meta { font-size: 11px; color: var(--muted); letter-spacing: 0.04em; margin-bottom: 0.5rem; }
-.item-title { font-family: var(--serif); font-size: 18px; font-weight: 400; line-height: 1.35; margin-bottom: 0.6rem; }
-.item-desc { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 0.875rem; }
-.item-link { font-size: 13px; color: var(--link); text-decoration: none; }
-.item-link:hover { text-decoration: underline; }
-.item-status { font-size: 12px; color: var(--muted); background: var(--rule); padding: 2px 8px; border-radius: 99px; display: inline-block; }
-
-.projects-grid { display: flex; flex-direction: column; gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 14px; overflow: hidden; }
-.project-card { background: var(--white); padding: 1.5rem; display: flex; justify-content: space-between; align-items: flex-start; gap: 1.5rem; transition: background 0.15s; }
-.project-card:hover { background: #fdfdfb; }
-.project-card-left { flex: 1; }
-.project-card-tag { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; }
-.project-card-title { font-family: var(--serif); font-size: 17px; font-weight: 400; margin-bottom: 0.4rem; line-height: 1.3; }
-.project-card-desc { font-size: 13px; color: var(--muted); line-height: 1.65; }
-.project-card-right { flex-shrink: 0; padding-top: 2px; }
-.project-badge { font-size: 11px; padding: 3px 10px; border-radius: 99px; white-space: nowrap; font-weight: 500; }
+.section {
+  width: min(1120px, calc(100vw - 3.5rem));
+  margin: 0 auto;
+  padding: 6rem 0;
+}
+#hero { padding-top: 10.5rem; padding-bottom: 5rem; }
+.hero-grid,
+.about-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(280px, 380px);
+  gap: 3rem;
+  align-items: center;
+}
+.hero-copy { max-width: 720px; }
+.hero-eyebrow,
+.section-label,
+.card-kicker,
+.stat-kicker,
+.blog-date {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.hero-eyebrow { color: var(--accent); font-weight: 600; margin-bottom: 1.25rem; }
+#hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(48px, 7vw, 78px);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+}
+#hero h1 em { color: var(--muted); }
+.hero-desc {
+  max-width: 680px;
+  font-size: 18px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+.hero-actions { display: flex; gap: 0.9rem; flex-wrap: wrap; margin-top: 2rem; }
+.hero-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 1rem;
+  border-radius: 999px;
+  font-size: 13px;
+  text-decoration: none;
+}
+.hero-btn-primary { background: var(--ink); color: var(--white); }
+.hero-btn-secondary { border: 1px solid var(--rule); color: var(--ink); background: rgba(255,255,255,0.8); }
+.hero-photo-card,
+.panel,
+.research-item,
+.project-card,
+.athletics-card,
+.blog-card,
+.contact-row {
+  background: rgba(255,255,255,0.86);
+  border: 1px solid var(--rule);
+  border-radius: 18px;
+}
+.hero-photo-card { padding: 1rem; box-shadow: 0 18px 50px rgba(20,20,18,0.08); }
+.hero-photo,
+.photo-placeholder {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border-radius: 16px;
+}
+.hero-photo { display: block; object-fit: cover; background: linear-gradient(180deg, #e8ece7, #d9dfd8); }
+.photo-placeholder {
+  display: none;
+  place-items: center;
+  text-align: center;
+  padding: 1.25rem;
+  color: var(--muted);
+  border: 1px dashed #c8c8c1;
+  background: linear-gradient(180deg, #f9f8f4, #eeede7);
+}
+.photo-placeholder code {
+  background: rgba(255,255,255,0.8);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 2px 6px;
+}
+.section-label {
+  color: var(--muted);
+  font-weight: 600;
+  margin-bottom: 2rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--rule);
+}
+.panel { padding: 1.6rem; }
+.panel h3,
+.item-title,
+.project-card-title,
+.athletics-title,
+.blog-title {
+  font-family: var(--serif);
+  font-weight: 400;
+}
+.panel h3 { font-size: 28px; margin-bottom: 0.9rem; }
+.panel p,
+.item-desc,
+.project-card-desc,
+.athletics-lead,
+.blog-desc { color: var(--muted); }
+.about-points { display: grid; gap: 0.9rem; }
+.about-point { padding: 1rem; border-radius: 14px; background: var(--bg); }
+.about-point strong {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: var(--accent);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.research-list,
+.projects-grid,
+.blog-grid,
+.contact-list { display: grid; gap: 1rem; }
+.research-list { grid-template-columns: 1fr; }
+.projects-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.blog-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.contact-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.research-item,
+.project-card,
+.blog-card { padding: 1.5rem; }
+.item-meta { font-size: 11px; color: var(--muted); margin-bottom: 0.5rem; }
+.item-title { font-size: 22px; line-height: 1.3; margin-bottom: 0.6rem; }
+.item-desc { font-size: 15px; margin-bottom: 0.875rem; max-width: 76ch; }
+.item-link,
+.project-link-btn,
+.project-launch-btn,
+.blog-link { color: var(--link); font-size: 12px; text-decoration: none; }
+.project-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+.project-card-tag {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.project-card-title { font-size: 20px; margin: 0.45rem 0; }
+.project-card-desc { font-size: 14px; }
+.project-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
 .badge-live { background: var(--accent-light); color: var(--accent); }
 .badge-progress { background: #fef9ec; color: #7a5c00; }
 .badge-concept { background: #f0f0ee; color: #555; }
-.project-link-btn { display: inline-block; margin-top: 0.75rem; font-size: 12px; color: var(--link); text-decoration: none; }
-.project-launch-btn { background: none; border: none; cursor: pointer; margin-top: 0.75rem; font-size: 12px; color: var(--link); padding: 0; font-family: var(--sans); }
-
-.athletics-card { background: var(--white); border: 1px solid var(--rule); border-radius: 14px; padding: 1.75rem; }
-.athletics-sport { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); font-weight: 500; margin-bottom: 0.5rem; }
-.athletics-title { font-family: var(--serif); font-size: 20px; font-weight: 400; margin-bottom: 1.25rem; }
-.athletics-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem; }
-.stat-box { background: var(--bg); border-radius: 10px; padding: 0.875rem 1rem; }
-.stat-num { font-family: var(--serif); font-size: 28px; color: var(--ink); line-height: 1; margin-bottom: 3px; }
-.stat-label { font-size: 12px; color: var(--muted); }
-.athletics-ofsaa { font-size: 14px; color: var(--muted); line-height: 1.65; padding-top: 1.25rem; border-top: 1px solid var(--rule); }
-.athletics-ofsaa strong { color: var(--ink); font-weight: 500; }
-
-.contact-list { display: flex; flex-direction: column; }
-.contact-row { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid var(--rule); text-decoration: none; color: var(--ink); transition: color 0.15s; }
-.contact-row:last-child { border-bottom: none; }
-.contact-row:hover .contact-handle { color: var(--link); }
-.contact-platform { font-size: 15px; }
+.project-launch-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--sans);
+  margin-top: 0.85rem;
+}
+.athletics-card { padding: 1.8rem; }
+.athletics-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 1.4rem;
+}
+.athletics-title { font-size: 28px; }
+.athletics-lead { max-width: 360px; font-size: 15px; }
+.athletics-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.stat-box {
+  min-height: 132px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+  border-radius: 14px;
+  background: var(--bg);
+}
+.stat-box.featured { background: linear-gradient(180deg, #f4f8f5, #eef5f1); border: 1px solid #d8e7de; }
+.stat-kicker { color: var(--muted); }
+.stat-num { font-family: var(--serif); font-size: 42px; line-height: 0.95; margin: 0.45rem 0 0.35rem; }
+.stat-label { font-size: 13px; color: var(--muted); }
+.blog-card { min-height: 220px; }
+.blog-title { font-size: 22px; line-height: 1.3; margin: 0.75rem 0; }
+.blog-desc { font-size: 14px; margin-bottom: 1rem; }
+.contact-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.1rem;
+  text-decoration: none;
+  color: var(--ink);
+}
 .contact-handle { font-size: 13px; color: var(--muted); }
-
-#aviation-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 1000; align-items: center; justify-content: center; padding: 1rem; }
-.modal-box { background: var(--white); border-radius: 16px; border: 1px solid var(--rule); width: 100%; max-width: 660px; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.12); }
-.modal-header { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--rule); flex-shrink: 0; }
-.modal-header-title { font-family: var(--serif); font-size: 17px; }
-.modal-close { background: none; border: none; cursor: pointer; font-size: 20px; color: var(--muted); line-height: 1; padding: 0; width: auto; height: auto; }
-.modal-body { overflow-y: auto; padding: 1.5rem; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-.form-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 0.75rem; }
-.form-group.full { grid-column: span 2; }
-.form-group label { font-size: 12px; color: var(--muted); }
-.form-group input, .form-group select { height: 38px; padding: 0 10px; border: 1px solid var(--rule); border-radius: 8px; font-size: 14px; font-family: var(--sans); background: var(--bg); color: var(--ink); outline: none; width: 100%; transition: border-color 0.15s; }
-.form-group input:focus, .form-group select:focus { border-color: var(--accent); }
-.run-btn { width: 100%; height: 42px; margin-top: 0.5rem; background: var(--ink); color: white; border: none; border-radius: 10px; font-size: 14px; font-family: var(--sans); cursor: pointer; transition: opacity 0.15s; }
-.run-btn:hover { opacity: 0.85; }
-.run-btn:disabled { opacity: 0.45; cursor: not-allowed; }
-.modal-err { display: none; margin-top: 0.75rem; background: #fff5f5; border: 1px solid #fecaca; border-radius: 8px; padding: 0.6rem 0.875rem; font-size: 13px; color: #991b1b; }
-.modal-results { display: none; margin-top: 1.5rem; }
-.result-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
-.result-metric { background: var(--bg); border-radius: 10px; padding: 1rem; }
-.result-metric-label { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
-.result-metric-value { font-family: var(--serif); font-size: 26px; color: var(--ink); line-height: 1; }
-.result-metric-unit { font-size: 11px; color: var(--muted); margin-top: 2px; }
-.result-recs { background: var(--bg); border-radius: 10px; padding: 1.25rem; }
-.result-recs-label { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.875rem; }
-.rec-item { padding: 9px 0; border-bottom: 1px solid var(--rule); font-size: 13px; line-height: 1.55; color: var(--ink); }
-.rec-item:last-child { border-bottom: none; padding-bottom: 0; }
-
-@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s; }
 .reveal.visible { opacity: 1; transform: none; }
-
-@media (max-width: 600px) {
-  nav { padding: 0.875rem 1.25rem; }
-  .nav-links { gap: 1.25rem; }
-  .section { padding: 4.5rem 1.25rem; }
-  #hero { padding-top: 8rem; }
-  .form-row { grid-template-columns: 1fr; }
+#aviation-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.modal-box {
+  width: 100%;
+  max-width: 760px;
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  border-radius: 16px;
+  border: 1px solid var(--rule);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+}
+.modal-header,
+.modal-body { padding: 1.5rem; }
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--rule);
+}
+.modal-header-title { font-family: var(--serif); font-size: 17px; }
+.modal-close { background: none; border: none; color: var(--muted); font-size: 20px; cursor: pointer; }
+.modal-body { overflow-y: auto; }
+.form-row,
+.result-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 0.75rem; }
+.form-group.full { grid-column: span 2; }
+.form-group label,
+.result-metric-label,
+.result-recs-label { font-size: 11px; color: var(--muted); }
+.form-group input,
+.form-group select {
+  height: 38px;
+  width: 100%;
+  padding: 0 10px;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: var(--sans);
+  background: var(--bg);
+}
+.run-btn {
+  width: 100%;
+  height: 42px;
+  margin-top: 0.5rem;
+  border: none;
+  border-radius: 10px;
+  background: var(--ink);
+  color: var(--white);
+  font-size: 14px;
+  cursor: pointer;
+}
+.modal-err,
+.modal-results { display: none; }
+.modal-err {
+  margin-top: 0.75rem;
+  padding: 0.6rem 0.875rem;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  background: #fff5f5;
+  color: #991b1b;
+  font-size: 13px;
+}
+.result-metric,
+.result-recs { padding: 1rem; border-radius: 10px; background: var(--bg); }
+.result-metric-value { font-family: var(--serif); font-size: 26px; line-height: 1; }
+.result-metric-unit { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.result-recs-label { margin-bottom: 0.875rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+.rec-item { padding: 9px 0; border-bottom: 1px solid var(--rule); font-size: 13px; }
+.rec-item:last-child { border-bottom: none; }
+@media (max-width: 900px) {
+  nav { padding: 0.9rem 1.25rem; }
+  .section { width: min(100vw - 2rem, 1120px); }
+  .hero-grid,
+  .about-grid,
+  .projects-grid,
+  .blog-grid,
+  .contact-list,
+  .athletics-stats,
+  .form-row,
+  .result-metrics { grid-template-columns: 1fr; }
+  .athletics-header { flex-direction: column; }
   .form-group.full { grid-column: span 1; }
+}
+@media (max-width: 600px) {
+  .section { width: min(100vw - 1.4rem, 1120px); padding: 4.5rem 0; }
+  #hero { padding-top: 8rem; }
+  #hero h1 { font-size: clamp(42px, 14vw, 62px); }
+  .hero-desc { font-size: 16px; }
+  .nav-links { gap: 0.9rem; }
 }
 </style>
 </head>
 <body>
-
 <nav>
   <span class="nav-name">Yifan Wang</span>
   <div class="nav-links">
+    <a href="#about">About</a>
     <a href="#research">Research</a>
     <a href="#projects">Projects</a>
     <a href="#athletics">Athletics</a>
+    <a href="#blog">Blog</a>
     <a href="#contact">Contact</a>
   </div>
 </nav>
 
 <div class="section" id="hero">
-  <p class="hero-eyebrow">Student · Researcher · Builder</p>
-  <h1>Yifan<br><em>Wang</em></h1>
-  <p class="hero-desc">Aerospace engineering–focused student working at the intersection of machine learning and experimental aerodynamics. Founder of Elevon Ex, developing AI systems for aviation efficiency alongside wind tunnel testing and aircraft performance analysis.</p>
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <p class="hero-eyebrow">Student / Researcher / Builder</p>
+      <h1>Yifan<br><em>Wang</em></h1>
+      <p class="hero-desc">Aerospace engineering-focused student working at the intersection of machine learning and experimental aerodynamics. Founder of Elevon EX, developing AI systems for aviation efficiency alongside wind tunnel testing and aircraft performance analysis.</p>
+      <div class="hero-actions">
+        <a class="hero-btn hero-btn-primary" href="#about">About me</a>
+        <a class="hero-btn hero-btn-secondary" href="#blog">Read blog</a>
+      </div>
+    </div>
+    <div class="hero-photo-card">
+      <img class="hero-photo" src="images/yifan-portrait.jpg" alt="Portrait of Yifan Wang" onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">
+      <div class="photo-placeholder">
+        Add your portrait at<br><code>images/yifan-portrait.jpg</code><br>and it will appear here automatically.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section reveal" id="about">
+  <p class="section-label">About</p>
+  <div class="about-grid">
+    <div class="panel">
+      <h3>About Me</h3>
+      <p>I'm a student focused on aerospace engineering, with a strong interest in how machine learning can support better aircraft performance, more efficient operations, and smarter design decisions. My work usually lives between research, prototyping, and building things that make technical ideas feel real.</p>
+      <p style="margin-top: 1rem;">Outside of research, I like turning ideas into projects, whether that means launching an aviation-focused AI tool, building experimental RC aircraft, or expanding STEM access through Elevon EX.</p>
+    </div>
+    <div class="about-points">
+      <div class="about-point">
+        <strong>Focus</strong>
+        Machine learning for aviation efficiency, aerodynamics, and applied engineering research.
+      </div>
+      <div class="about-point">
+        <strong>Approach</strong>
+        Combine wind tunnel experiments, computational analysis, and practical builds to test ideas end to end.
+      </div>
+      <div class="about-point">
+        <strong>Current Direction</strong>
+        Expand published and in-progress aviation research while building tools that can be used outside the lab.
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="section reveal" id="research">
   <p class="section-label">Research</p>
-  <div class="research-item">
-    <p class="item-meta">Published · Scholarly Review Journal · January 2026</p>
-    <h3 class="item-title">Aerodynamic Analysis of Conventional and Non-Traditional Paper Aircraft: Wind Tunnel and Flight Analysis</h3>
-    <p class="item-desc">This study demonstrates that paper aircraft geometry significantly influences airflow behavior, stability, and efficiency, with small design changes leading to major differences in flight performance.</p>
-    <a href="https://doi.org/10.70121/001c.155068" target="_blank" class="item-link">Read paper →</a>
-  </div>
-  <div class="research-item">
-    <p class="item-meta">Under review · Curieux Academic Journal · Est. May 2026</p>
-    <h3 class="item-title">A Supervised Machine Learning Approach to Identifying Efficiency Gaps in Commercial Aviation</h3>
-    <p class="item-desc">A supervised machine learning framework using Gradient Boosting to model fuel burn and identify operational inefficiencies in commercial aviation through aerodynamic, environmental, and route-based analysis.</p>
-    <span class="item-status">Under review</span>
-  </div>
-  <div class="research-item">
-    <p class="item-meta">In Progress · Est. Sept 2026</p>
-    <h3 class="item-title">A Hybrid Experimental–Computational Framework for Tailfin Geometry Optimization in Low Reynolds Number Flight</h3>
-    <p class="item-desc">Investigating optimized tailfin geometries for low Reynolds number flight regimes through a combined experimental and computational approach.</p>
-    <span class="item-status">In progress</span>
+  <div class="research-list">
+    <div class="research-item">
+      <p class="item-meta">Published / Scholarly Review Journal / January 2026</p>
+      <h3 class="item-title">Aerodynamic Analysis of Conventional and Non-Traditional Paper Aircraft: Wind Tunnel and Flight Analysis</h3>
+      <p class="item-desc">This study demonstrates that paper aircraft geometry significantly influences airflow behavior, stability, and efficiency, with small design changes leading to major differences in flight performance.</p>
+      <a href="https://doi.org/10.70121/001c.155068" target="_blank" class="item-link">Read paper -></a>
+    </div>
+    <div class="research-item">
+      <p class="item-meta">Under review / Curieux Academic Journal / Est. May 2026</p>
+      <h3 class="item-title">A Supervised Machine Learning Approach to Identifying Efficiency Gaps in Commercial Aviation</h3>
+      <p class="item-desc">A supervised machine learning framework using Gradient Boosting to model fuel burn and identify operational inefficiencies in commercial aviation through aerodynamic, environmental, and route-based analysis.</p>
+      <span class="project-badge badge-progress">Under review</span>
+    </div>
+    <div class="research-item">
+      <p class="item-meta">In Progress / Est. Sept 2026</p>
+      <h3 class="item-title">A Hybrid Experimental-Computational Framework for Tailfin Geometry Optimization in Low Reynolds Number Flight</h3>
+      <p class="item-desc">Investigating optimized tailfin geometries for low Reynolds number flight regimes through a combined experimental and computational approach.</p>
+      <span class="project-badge badge-progress">In progress</span>
+    </div>
   </div>
 </div>
 
@@ -171,46 +442,46 @@ nav {
   <p class="section-label">Projects</p>
   <div class="projects-grid">
     <div class="project-card">
-      <div class="project-card-left">
-        <p class="project-card-tag">Nonprofit · 2025</p>
+      <div>
+        <p class="project-card-tag">Nonprofit / 2025</p>
         <h3 class="project-card-title">Elevon EX</h3>
-        <p class="project-card-desc">Designing and distributing aerospace STEM kits to children in lower-income communities. Building toward a 1-week summer program reaching 1,000+ students.</p>
-        <a href="https://elevonex.pages.dev/" target="_blank" class="project-link-btn">Visit site →</a>
+        <p class="project-card-desc">Designing and distributing aerospace STEM kits to children in lower-income communities. Building toward a one-week summer program reaching 1,000+ students.</p>
+        <a href="https://elevonex.pages.dev/" target="_blank" class="project-link-btn">Visit site -></a>
       </div>
-      <div class="project-card-right"><span class="project-badge badge-progress">In progress</span></div>
+      <span class="project-badge badge-progress">In progress</span>
     </div>
     <div class="project-card">
-      <div class="project-card-left">
-        <p class="project-card-tag">ML App · 2026</p>
+      <div>
+        <p class="project-card-tag">ML App / 2026</p>
         <h3 class="project-card-title">Aviation Fuel Efficiency AI Tool</h3>
-        <p class="project-card-desc">Full-stack ML application predicting commercial flight fuel burn and generating optimization recommendations. Gradient Boosting Regressor, Flask backend, custom frontend.</p>
-        <button class="project-launch-btn" onclick="document.getElementById('aviation-modal').style.display='flex'">Launch tool →</button>
+        <p class="project-card-desc">Full-stack ML application predicting commercial flight fuel burn and generating optimization recommendations using a Gradient Boosting Regressor, Flask backend, and custom frontend.</p>
+        <button class="project-launch-btn" onclick="document.getElementById('aviation-modal').style.display='flex'">Launch tool -></button>
       </div>
-      <div class="project-card-right"><span class="project-badge badge-live">Live</span></div>
+      <span class="project-badge badge-live">Live</span>
     </div>
     <div class="project-card">
-      <div class="project-card-left">
-        <p class="project-card-tag">Hardware · 2024–2026</p>
+      <div>
+        <p class="project-card-tag">Hardware / 2024-2026</p>
         <h3 class="project-card-title">RC Plane</h3>
-        <p class="project-card-desc">Custom RC aircraft as an experimental aerodynamics platform. Validates research ideas in wing geometry and low Reynolds number flight performance.</p>
+        <p class="project-card-desc">Custom RC aircraft built as an experimental aerodynamics platform to validate ideas in wing geometry and low Reynolds number flight performance.</p>
       </div>
-      <div class="project-card-right"><span class="project-badge badge-progress">In progress</span></div>
+      <span class="project-badge badge-progress">In progress</span>
     </div>
     <div class="project-card">
-      <div class="project-card-left">
-        <p class="project-card-tag">Concept · 2026</p>
+      <div>
+        <p class="project-card-tag">Concept / 2026</p>
         <h3 class="project-card-title">Biomimetic Fail-Safe Drone</h3>
-        <p class="project-card-desc">Drone that transforms into a maple seed autorotation glider on power failure. Inspired by Von Kármán vortex dynamics from wind tunnel testing. Includes AI-assisted return-to-user logic.</p>
+        <p class="project-card-desc">Drone that transforms into a maple seed autorotation glider on power failure. Inspired by Von Karman vortex dynamics from wind tunnel testing, with AI-assisted return-to-user logic.</p>
       </div>
-      <div class="project-card-right"><span class="project-badge badge-concept">Concept</span></div>
+      <span class="project-badge badge-concept">Concept</span>
     </div>
     <div class="project-card">
-      <div class="project-card-left">
-        <p class="project-card-tag">Hardware · 2026</p>
+      <div>
+        <p class="project-card-tag">Hardware / 2026</p>
         <h3 class="project-card-title">Smart Home Security System</h3>
-        <p class="project-card-desc">Phone-controlled door lock via servo motor triggered remotely through a custom mobile app. Expanding to include an integrated security camera for real-time monitoring.</p>
+        <p class="project-card-desc">Phone-controlled door lock via servo motor triggered remotely through a custom mobile app, expanding toward an integrated security camera for real-time monitoring.</p>
       </div>
-      <div class="project-card-right"><span class="project-badge badge-progress">In progress</span></div>
+      <span class="project-badge badge-progress">In progress</span>
     </div>
   </div>
 </div>
@@ -218,19 +489,54 @@ nav {
 <div class="section reveal" id="athletics">
   <p class="section-label">Athletics</p>
   <div class="athletics-card">
-    <p class="athletics-sport">Swimming · St. Robert CHS · 2024–2026</p>
-    <h3 class="athletics-title">Varsity Swimming</h3>
+    <div class="athletics-header">
+      <div>
+        <p class="hero-eyebrow" style="margin-bottom: 0.5rem;">Swimming / St. Robert CHS / 2024-2026</p>
+        <h3 class="athletics-title">Varsity Swimming</h3>
+      </div>
+      <p class="athletics-lead">Provincial-level results are the headline here, with strong regional performance underneath. OFSAA now leads the section instead of getting tucked into the fine print.</p>
+    </div>
     <div class="athletics-stats">
-      <div class="stat-box">
-        <div class="stat-num">13×</div>
-        <div class="stat-label">YRAA 1st place finishes</div>
+      <div class="stat-box featured">
+        <div class="stat-kicker">OFSAA</div>
+        <div class="stat-num">3x</div>
+        <div class="stat-label">Top 12 provincial finishes across the 100m IM, 100m Freestyle, and 200m Freestyle.</div>
       </div>
       <div class="stat-box">
-        <div class="stat-num">18×</div>
-        <div class="stat-label">YRAA top 3 finishes</div>
+        <div class="stat-kicker">YRAA</div>
+        <div class="stat-num">13x</div>
+        <div class="stat-label">First-place finishes at YRAA competition.</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-kicker">Overall</div>
+        <div class="stat-num">18x</div>
+        <div class="stat-label">Top 3 YRAA finishes across multiple events and seasons.</div>
       </div>
     </div>
-    <p class="athletics-ofsaa"><strong>Three-time OFSAA provincial finalist</strong> — placing top 12 province-wide in the 100m IM, 100m Freestyle, and 200m Freestyle.</p>
+  </div>
+</div>
+
+<div class="section reveal" id="blog">
+  <p class="section-label">Blog</p>
+  <div class="blog-grid">
+    <article class="blog-card">
+      <p class="blog-date">Featured Note</p>
+      <h3 class="blog-title">What I'm Building Right Now</h3>
+      <p class="blog-desc">A place to share current research directions, project progress, and what I'm learning while building at the intersection of aerospace and machine learning.</p>
+      <a href="#" class="blog-link">Add your first post -></a>
+    </article>
+    <article class="blog-card">
+      <p class="blog-date">Research Log</p>
+      <h3 class="blog-title">Wind Tunnel Notes and Experimental Ideas</h3>
+      <p class="blog-desc">Use this section for short writeups on testing methods, observations, and design changes that came out of your experiments.</p>
+      <a href="#" class="blog-link">Link a post here -></a>
+    </article>
+    <article class="blog-card">
+      <p class="blog-date">Build Journal</p>
+      <h3 class="blog-title">From Concept to Prototype</h3>
+      <p class="blog-desc">A simple home for project updates, progress images, and reflections on tools, models, and hardware builds.</p>
+      <a href="#" class="blog-link">Link a post here -></a>
+    </article>
   </div>
 </div>
 
@@ -238,20 +544,20 @@ nav {
   <p class="section-label">Contact</p>
   <div class="contact-list">
     <a href="mailto:yifanwang102@gmail.com" class="contact-row">
-      <span class="contact-platform">Email</span>
-      <span class="contact-handle">yifanwang102@gmail.com →</span>
+      <span>Email</span>
+      <span class="contact-handle">yifanwang102@gmail.com -></span>
     </a>
     <a href="https://www.linkedin.com/in/yifanwang102/" target="_blank" class="contact-row">
-      <span class="contact-platform">LinkedIn</span>
-      <span class="contact-handle">yifanwang102 →</span>
+      <span>LinkedIn</span>
+      <span class="contact-handle">yifanwang102 -></span>
     </a>
     <a href="https://github.com/uehorlepepe" target="_blank" class="contact-row">
-      <span class="contact-platform">GitHub</span>
-      <span class="contact-handle">uehorlepepe →</span>
+      <span>GitHub</span>
+      <span class="contact-handle">uehorlepepe -></span>
     </a>
     <a href="https://scholar.google.ca/citations?user=Us-blVoAAAAJ&hl=en" target="_blank" class="contact-row">
-      <span class="contact-platform">Google Scholar</span>
-      <span class="contact-handle">Yifan Wang →</span>
+      <span>Google Scholar</span>
+      <span class="contact-handle">Yifan Wang -></span>
     </a>
   </div>
 </div>
@@ -309,11 +615,11 @@ nav {
         </div>
         <div class="form-group">
           <label>Wind speed (kts)</label>
-          <input type="number" id="wind" placeholder="− = tailwind">
+          <input type="number" id="wind" placeholder="- = tailwind">
         </div>
         <div class="form-group">
-          <label>Cruise temperature (°C)</label>
-          <input type="number" id="cruise_temp" placeholder="e.g. −55">
+          <label>Cruise temperature (C)</label>
+          <input type="number" id="cruise_temp" placeholder="e.g. -55">
         </div>
       </div>
       <button class="run-btn" id="run-btn" onclick="runAnalysis()">Run Analysis</button>
@@ -322,12 +628,12 @@ nav {
         <div class="result-metrics">
           <div class="result-metric">
             <div class="result-metric-label">Predicted fuel burn</div>
-            <div class="result-metric-value" id="r-fuel">—</div>
+            <div class="result-metric-value" id="r-fuel">-</div>
             <div class="result-metric-unit">litres</div>
           </div>
           <div class="result-metric">
             <div class="result-metric-label">Efficiency score</div>
-            <div class="result-metric-value" id="r-eff">—</div>
+            <div class="result-metric-value" id="r-eff">-</div>
             <div class="result-metric-unit">pkm / L</div>
           </div>
         </div>
@@ -341,39 +647,53 @@ nav {
 </div>
 
 <script>
-  document.querySelectorAll('.reveal').forEach(el => {
-    new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.1 }).observe(el);
-  });
+document.querySelectorAll('.reveal').forEach(el => {
+  new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 }).observe(el);
+});
 
-  document.getElementById('aviation-modal').addEventListener('click', function(e) {
-    if (e.target === this) this.style.display = 'none';
-  });
+document.getElementById('aviation-modal').addEventListener('click', function (e) {
+  if (e.target === this) this.style.display = 'none';
+});
 
-  function runAnalysis() {
-    const origin = document.getElementById('origin').value.trim().toUpperCase();
-    const destination = document.getElementById('destination').value.trim().toUpperCase();
-    const aircraft = document.getElementById('aircraft').value;
-    const passengers = document.getElementById('passengers').value;
-    const cargo = document.getElementById('cargo').value;
-    const wind = document.getElementById('wind').value;
-    const cruise_temp = document.getElementById('cruise_temp').value;
-    const err = document.getElementById('modal-err');
-    err.style.display = 'none';
-    if (!origin || !destination || !aircraft || !passengers || cargo === '' || wind === '' || cruise_temp === '') {
-      err.textContent = 'Please fill in all fields before running.';
-      err.style.display = 'block';
-      return;
-    }
-    const btn = document.getElementById('run-btn');
-    btn.textContent = 'Analyzing...';
-    btn.disabled = true;
-    fetch('https://aviationefficiencytool.onrender.com/predict', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ origin, destination, aircraft, passengers, cargo, wind, cruise_temp })
+function runAnalysis() {
+  const origin = document.getElementById('origin').value.trim().toUpperCase();
+  const destination = document.getElementById('destination').value.trim().toUpperCase();
+  const aircraft = document.getElementById('aircraft').value;
+  const passengers = document.getElementById('passengers').value;
+  const cargo = document.getElementById('cargo').value;
+  const wind = document.getElementById('wind').value;
+  const cruiseTemp = document.getElementById('cruise_temp').value;
+  const err = document.getElementById('modal-err');
+  const btn = document.getElementById('run-btn');
+
+  err.style.display = 'none';
+
+  if (!origin || !destination || !aircraft || !passengers || cargo === '' || wind === '' || cruiseTemp === '') {
+    err.textContent = 'Please fill in all fields before running.';
+    err.style.display = 'block';
+    return;
+  }
+
+  btn.textContent = 'Analyzing...';
+  btn.disabled = true;
+
+  fetch('https://aviationefficiencytool.onrender.com/predict', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      origin,
+      destination,
+      aircraft,
+      passengers,
+      cargo,
+      wind,
+      cruise_temp: cruiseTemp
     })
+  })
     .then(r => r.json())
     .then(data => {
       document.getElementById('modal-results').style.display = 'block';
@@ -396,7 +716,7 @@ nav {
       btn.textContent = 'Run Analysis';
       btn.disabled = false;
     });
-  }
+}
 </script>
 </body>
 </html>
