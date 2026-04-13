@@ -369,12 +369,13 @@ nav {
   </div>
 </nav>
 
+
 <div class="section" id="hero">
   <div class="hero-grid">
     <div class="hero-copy">
-      <p class="hero-eyebrow">Student / Researcher / Builder</p>
+      <p class="hero-eyebrow">Engineer / Researcher / Builder</p>
       <h1>Yifan<br><em>Wang</em></h1>
-      <p class="hero-desc">Aerospace engineering-focused student working at the intersection of machine learning and experimental aerodynamics. Founder of Elevon EX, developing AI systems for aviation efficiency alongside wind tunnel testing and aircraft performance analysis.</p>
+      <p class="hero-desc">Grade 11 high school student interested in Aerospace Enginnering, working at the intersection of experimental aerodynamics and machine learning. Founder of Elevon EX, as well as developing AI systems for aviation efficiency alongside wind tunnel testing and aircraft performance analysis.</p>
       <div class="hero-actions">
         <a class="hero-btn hero-btn-primary" href="#about">About me</a>
         <a class="hero-btn hero-btn-secondary" href="#blog">Read blog</a>
@@ -389,8 +390,9 @@ nav {
   </div>
 </div>
 
+
 <div class="section reveal" id="about">
-  <p class="section-label">About</p>
+  <p class="section-label">About Yifan Wang</p>
   <div class="about-grid">
     <div class="panel">
       <h3>About Me</h3>
@@ -400,19 +402,19 @@ nav {
     <div class="about-points">
       <div class="about-point">
         <strong>Focus</strong>
-        Machine learning for aviation efficiency, aerodynamics, and applied engineering research.
+        Machine learning applied to aviation systems, experimental aerodynamics, and data-driven aircraft performance analysis.
       </div>
       <div class="about-point">
         <strong>Approach</strong>
-        Combine wind tunnel experiments, computational analysis, and practical builds to test ideas end to end.
-      </div>
+        Integrate wind tunnel experimentation, computational modelling, and hands-on aircraft builds (e.g., RC and prototype systems) to validate aerodynamic and performance concepts across real and simulated environments.      </div>
       <div class="about-point">
         <strong>Current Direction</strong>
-        Expand published and in-progress aviation research while building tools that can be used outside the lab.
+        Developing and refining aviation-focused machine learning models and experimental aerospace projects, including published and in-progress research, while building practical tools that connect computational predictions with real-world flight behavior.
       </div>
     </div>
   </div>
 </div>
+
 
 <div class="section reveal" id="research">
   <p class="section-label">Research</p>
@@ -437,6 +439,7 @@ nav {
     </div>
   </div>
 </div>
+
 
 <div class="section reveal" id="projects">
   <p class="section-label">Projects</p>
@@ -486,6 +489,7 @@ nav {
   </div>
 </div>
 
+
 <div class="section reveal" id="athletics">
   <p class="section-label">Athletics</p>
   <div class="athletics-card">
@@ -516,6 +520,7 @@ nav {
   </div>
 </div>
 
+
 <div class="section reveal" id="blog">
   <p class="section-label">Blog</p>
   <div class="blog-grid">
@@ -540,12 +545,13 @@ nav {
   </div>
 </div>
 
+
 <div class="section reveal" id="contact">
   <p class="section-label">Contact</p>
   <div class="contact-list">
     <a href="mailto:yifanwang102@gmail.com" class="contact-row">
       <span>Email</span>
-      <span class="contact-handle">yifanwang102@gmail.com -></span>
+      <span class="contact-handle">yifanwang102(at)gmail(dot)com -></span>
     </a>
     <a href="https://www.linkedin.com/in/yifanwang102/" target="_blank" class="contact-row">
       <span>LinkedIn</span>
@@ -561,6 +567,7 @@ nav {
     </a>
   </div>
 </div>
+
 
 <div id="aviation-modal">
   <div class="modal-box">
@@ -646,6 +653,7 @@ nav {
   </div>
 </div>
 
+
 <script>
 document.querySelectorAll('.reveal').forEach(el => {
   new IntersectionObserver((entries) => {
@@ -655,9 +663,11 @@ document.querySelectorAll('.reveal').forEach(el => {
   }, { threshold: 0.1 }).observe(el);
 });
 
+
 document.getElementById('aviation-modal').addEventListener('click', function (e) {
   if (e.target === this) this.style.display = 'none';
 });
+
 
 function runAnalysis() {
   const origin = document.getElementById('origin').value.trim().toUpperCase();
@@ -670,7 +680,9 @@ function runAnalysis() {
   const err = document.getElementById('modal-err');
   const btn = document.getElementById('run-btn');
 
+
   err.style.display = 'none';
+
 
   if (!origin || !destination || !aircraft || !passengers || cargo === '' || wind === '' || cruiseTemp === '') {
     err.textContent = 'Please fill in all fields before running.';
@@ -678,8 +690,10 @@ function runAnalysis() {
     return;
   }
 
+
   btn.textContent = 'Analyzing...';
   btn.disabled = true;
+
 
   fetch('https://aviationefficiencytool.onrender.com/predict', {
     method: 'POST',
@@ -720,3 +734,6 @@ function runAnalysis() {
 </script>
 </body>
 </html>
+
+
+
