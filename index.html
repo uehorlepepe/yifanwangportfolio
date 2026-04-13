@@ -4,13 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yifan Wang</title>
-</head>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: Arial, sans-serif;
@@ -21,9 +16,7 @@
 
         nav {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 0; left: 0; right: 0;
             background: white;
             border-bottom: 1px solid #e2e2df;
             padding: 1rem 2rem;
@@ -33,10 +26,7 @@
             z-index: 100;
         }
 
-        nav span {
-            font-size: 15px;
-            font-weight: 500;
-        }
+        nav span { font-size: 15px; font-weight: 500; }
 
         nav a {
             margin-left: 2rem;
@@ -45,9 +35,7 @@
             text-decoration: none;
         }
 
-        nav a:hover {
-            color: #1a1a18;
-        }
+        nav a:hover { color: #1a1a18; }
 
         section {
             max-width: 720px;
@@ -55,9 +43,7 @@
             padding: 6rem 2rem;
         }
 
-        #hero {
-            padding-top: 10rem;
-        }
+        #hero { padding-top: 10rem; }
 
         #hero h1 {
             font-size: 42px;
@@ -81,7 +67,99 @@
             padding-bottom: 1rem;
             border-bottom: 1px solid #e2e2df;
         }
+
+        /* Modal */
+        #aviation-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.45);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        #aviation-modal .modal-box {
+            background: #fff;
+            border-radius: 12px;
+            border: 1px solid #e2e2df;
+            width: 100%;
+            max-width: 680px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        #aviation-modal .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid #e2e2df;
+            flex-shrink: 0;
+        }
+
+        #aviation-modal .modal-header span {
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        #aviation-modal .modal-header button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            color: #6b6b68;
+            line-height: 1;
+            padding: 0 4px;
+            width: auto;
+            height: auto;
+            margin: 0;
+            border-radius: 0;
+        }
+
+        #aviation-modal .modal-body {
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+
+        /* Tool form */
+        .tool-label {
+            display: block;
+            font-size: 13px;
+            color: #6b6b68;
+            margin-top: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .tool-input, .tool-select {
+            width: 100%;
+            height: 38px;
+            padding: 0 10px;
+            border: 1px solid #e2e2df;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+        }
+
+        .tool-btn {
+            width: 100%;
+            height: 42px;
+            margin-top: 1.5rem;
+            background: #1a1a18;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            font-family: Arial, sans-serif;
+        }
+
+        .tool-btn:disabled { opacity: 0.5; cursor: not-allowed; }
     </style>
+</head>
 <body>
 
     <nav>
@@ -138,7 +216,11 @@
             <p style="font-size: 12px; color: #6b6b68; margin-bottom: 6px;">Completed · App · 2026</p>
             <h3 style="font-size: 17px; font-weight: 500; margin-bottom: 8px;">Aviation Fuel Efficiency AI Tool</h3>
             <p style="font-size: 14px; color: #6b6b68; margin-bottom: 12px;">A full-stack machine learning application that predicts commercial flight fuel burn and generates operational optimization recommendations. Built with a Gradient Boosting Regressor, Flask backend, and custom frontend.</p>
-            <a href="https://aviationefficiencytool.onrender.com/" target="_blank" style="font-size: 13px; color: #185fa5; text-decoration: none;">Launch tool →</a>        </div>
+            <button onclick="document.getElementById('aviation-modal').style.display='flex'"
+                style="font-size: 13px; color: #185fa5; background: none; border: none; cursor: pointer; padding: 0; font-family: Arial, sans-serif;">
+                Launch tool →
+            </button>
+        </div>
 
         <div style="margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid #e2e2df;">
             <p style="font-size: 12px; color: #6b6b68; margin-bottom: 6px;">In progress · 2024–2026</p>
@@ -164,7 +246,6 @@
 
     <section id="athletics">
         <h2>Athletics</h2>
-
         <div>
             <p style="font-size: 12px; color: #6b6b68; margin-bottom: 6px;">Swimming · St. Robert CHS · 2024–2027</p>
             <h3 style="font-size: 17px; font-weight: 500; margin-bottom: 8px;">Varsity Swimming</h3>
@@ -194,6 +275,141 @@
             </a>
         </div>
     </section>
+
+    <!-- Aviation Tool Modal -->
+    <div id="aviation-modal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <span>Aviation Fuel Efficiency Tool</span>
+                <button onclick="document.getElementById('aviation-modal').style.display='none'">&times;</button>
+            </div>
+            <div class="modal-body">
+
+                <label class="tool-label">Origin Airport (IATA)</label>
+                <input class="tool-input" type="text" id="origin" placeholder="e.g. YYZ">
+
+                <label class="tool-label">Destination Airport (IATA)</label>
+                <input class="tool-input" type="text" id="destination" placeholder="e.g. LHR">
+
+                <label class="tool-label">Aircraft type</label>
+                <select class="tool-select" id="aircraft">
+                    <option value="">Select aircraft...</option>
+                    <option>Boeing 787-9</option>
+                    <option>Boeing 787-8</option>
+                    <option>Boeing 787-10</option>
+                    <option>Boeing 777-300ER</option>
+                    <option>Boeing 777-200ER</option>
+                    <option>Boeing 767-300ER</option>
+                    <option>Boeing 737-800</option>
+                    <option>Boeing 737-900ER</option>
+                    <option>Boeing 737-700</option>
+                    <option>Boeing 737 MAX 7</option>
+                    <option>Boeing 737 MAX 8</option>
+                    <option>Boeing 737 MAX 9</option>
+                    <option>Boeing 737 MAX 10</option>
+                    <option>Boeing 757-200</option>
+                    <option>Airbus A380-800</option>
+                    <option>Airbus A350-900</option>
+                    <option>Airbus A330-200</option>
+                    <option>Airbus A330-300</option>
+                    <option>Airbus A330-900</option>
+                    <option>Airbus A321neo</option>
+                    <option>Airbus A321ceo</option>
+                    <option>Airbus A320neo</option>
+                    <option>Airbus A320ceo</option>
+                    <option>Airbus A319neo</option>
+                    <option>Airbus A319ceo</option>
+                    <option>Airbus A220-300</option>
+                    <option>Embraer E190</option>
+                    <option>Embraer E175</option>
+                    <option>Embraer ERJ-145</option>
+                    <option>Bombardier CRJ-900</option>
+                </select>
+
+                <label class="tool-label">Passengers</label>
+                <input class="tool-input" type="number" id="passengers" placeholder="e.g. 250">
+
+                <label class="tool-label">Cargo load (%)</label>
+                <input class="tool-input" type="number" id="cargo" placeholder="e.g. 70">
+
+                <label class="tool-label">Wind speed (kts)</label>
+                <input class="tool-input" type="number" id="wind" placeholder="negative = tailwind">
+
+                <label class="tool-label">Cruise temperature (°C)</label>
+                <input class="tool-input" type="number" id="cruise_temp" placeholder="e.g. -55">
+
+                <button class="tool-btn" id="run-btn" onclick="runAnalysis()">Run Analysis</button>
+
+                <div id="results" style="display:none; margin-top: 1.5rem;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                        <div style="background: #f5f5f4; border-radius: 10px; padding: 1rem;">
+                            <p style="font-size: 12px; color: #6b6b68; margin-bottom: 4px;">Predicted fuel burn</p>
+                            <p style="font-size: 24px; font-weight: 500; color: #1a1a18; margin: 0;" id="r-fuel">—</p>
+                            <p style="font-size: 12px; color: #6b6b68; margin: 0;">litres</p>
+                        </div>
+                        <div style="background: #f5f5f4; border-radius: 10px; padding: 1rem;">
+                            <p style="font-size: 12px; color: #6b6b68; margin-bottom: 4px;">Efficiency score</p>
+                            <p style="font-size: 24px; font-weight: 500; color: #1a1a18; margin: 0;" id="r-eff">—</p>
+                            <p style="font-size: 12px; color: #6b6b68; margin: 0;">pkm / L</p>
+                        </div>
+                    </div>
+                    <div style="background: #f5f5f4; border-radius: 10px; padding: 1.5rem;">
+                        <p style="font-size: 11px; font-weight: 600; color: #6b6b68; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 1rem;">Recommendations</p>
+                        <ul id="r-recs" style="list-style: none; padding: 0; margin: 0;"></ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function runAnalysis() {
+            const btn = document.getElementById("run-btn");
+            btn.textContent = "Running...";
+            btn.disabled = true;
+
+            const origin = document.getElementById("origin").value;
+            const destination = document.getElementById("destination").value;
+            const aircraft = document.getElementById("aircraft").value;
+            const passengers = document.getElementById("passengers").value;
+            const cargo = document.getElementById("cargo").value;
+            const wind = document.getElementById("wind").value;
+            const cruise_temp = document.getElementById("cruise_temp").value;
+
+            fetch("https://aviationefficiencytool.onrender.com/predict", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ origin, destination, aircraft, passengers, cargo, wind, cruise_temp })
+            })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("results").style.display = "block";
+                document.getElementById("r-fuel").textContent = data.fuel.replace("Predicted Fuel Burn: ", "").replace(" L", "");
+                document.getElementById("r-eff").textContent = data.efficiency.replace("Efficiency: ", "").replace(" pkm/L", "");
+
+                const recList = document.getElementById("r-recs");
+                recList.innerHTML = "";
+                data.recommendations.forEach(rec => {
+                    const li = document.createElement("li");
+                    li.style.cssText = "padding: 10px 0; border-bottom: 1px solid #e2e2df; font-size: 14px; line-height: 1.5;";
+                    li.textContent = rec;
+                    recList.appendChild(li);
+                });
+
+                btn.textContent = "Run Analysis";
+                btn.disabled = false;
+            })
+            .catch(() => {
+                btn.textContent = "Error — try again";
+                btn.disabled = false;
+            });
+        }
+
+        document.getElementById("aviation-modal").addEventListener("click", function(e) {
+            if (e.target === this) this.style.display = "none";
+        });
+    </script>
 
 </body>
 </html>
