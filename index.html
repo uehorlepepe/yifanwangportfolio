@@ -12,32 +12,39 @@
   color: #000;
 }
 .photo-stack {
-  position: relative;
   width: 100%;
+  max-width:320px;
+  max-height: 400px;
+  margin: 0 auto 0 -28px;
+  position: relative;
   aspect-ratio: 4 / 5;
-  border-radius: 16px;
-  overflow: hidden;
 }
 
 .stack-img {
   position: absolute;
   inset: 0;
-  width: 100%;
+  width: min(130%, 600px);
   height: 100%;
   object-fit: cover;
+  object-position: left center;
   opacity: 0;
-  transform: scale(1.02);
   transition: opacity 0.6s ease;
-  border-radius: 16px;
-}
+  border: 6px solid #33E5FF;
+  border-radius: 22px;
+  box-shadow:
+  0 0 12px rgba(0, 229, 255, 0.65),
+  0 0 28px rgba(0, 229, 255, 0.45),
+  0 0 48px rgba(0, 229, 255, 0.25),
+  0 18px 50px rgba(0, 229, 255, 0.12);
 
+}
 .stack-img.active {
   opacity: 1;
 }
 :root {
-  --bg: #121212;
-  --surface: #1C1C1E;
-  --surface-2: #2D2D30;
+  --bg: #000000;
+  --surface: #000000;
+  --surface-2: #000000;
   --ink: #F2F2F2;
   --muted: #9A9A9A;
   --rule: rgba(255,255,255,0.08);
@@ -45,8 +52,9 @@
   --accent-alt: #00FFFF;
   --accent-soft: rgba(51,204,255,0.12);
   --link: #33CCFF;
-  --white: #FFFFFF; /* FIX MISSING VARIABLE */
-}
+  --white: #FFFFFF;
+  --sans: 'Instrument Sans', sans-serif;
+  --serif:'Instrument Serif', serif;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
@@ -100,7 +108,7 @@ nav {
   display: grid;
   grid-template-columns: minmax(0, 1.3fr) minmax(300px, 420px);
   gap: 3rem;
-  align-items: center;
+  align-items: start;
 }
 .hero-copy { max-width: 720px; }
 .hero-eyebrow {
@@ -128,7 +136,6 @@ nav {
   margin-bottom: 1.5rem;
 }
 
-/* ── HERO TEXT LINKS (About me / Photo Album) ── */
 /* These replaced the old hero-actions buttons */
 .hero-text-links {
   display: flex;
@@ -162,39 +169,50 @@ nav {
   font-family: var(--sans);
   font-weight: 500;
   text-decoration: none;
-  border: 1px solid var(--rule);
+  border: none;
   color: var(--ink);
-  background: rgba(255,255,255,0.86);
+  background: transparent;
   cursor: pointer;
-  transition: background 0.15s, border-color 0.15s;
+  transition: background 0.15s, border-color 0.15s, colour 0.15s;
 }
 .section-nav-btn:hover {
-  background: var(--ink);
-  color: var(--white);
-  border-color: var(--ink);
+  background: transparent;
+  color: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 10px rgba(51, 204, 255, 0.25);
 }
 
+
 .hero-photo-card {
-  background: rgba(255,255,255,0.86);
-  border: 1px solid var(--rule);
-  border-radius: 18px;
-  padding: 1rem;
-  box-shadow: 0 18px 50px rgba(20,20,18,0.08);
+  width: min(100%, 800px);
+  justify-self: end;
+  overflow: visible;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
 }
 .hero-photo,
 .photo-placeholder {
+  display: block;
   width: 100%;
+  height: auto;
   aspect-ratio: 4 / 5;
   border-radius: 16px;
 }
-.hero-photo { display: block; object-fit: cover; background: linear-gradient(180deg, #e8ece7, #d9dfd8); }
+.hero-photo {
+  object-fit: cover;
+  background: linear-gradient(180deg, #e8ece7, #d9dfd8);
+
+}
 .photo-placeholder {
   display: none;
+  min-height: 100%;
+  place-content: center;
   place-items: center;
   text-align: center;
   padding: 1.25rem;
   color: var(--muted);
-  border: 1px dashed #c8c8c1;
   background: linear-gradient(180deg, #f9f8f4, #eeede7);
 }
 .photo-placeholder code {
@@ -239,7 +257,7 @@ nav {
   border-radius: 999px;
   white-space: nowrap;
 }
-.badge-live { background: var(--accent-light); color: var(--accent); }
+.badge-live { background: var(--accent-soft); color: var(--accent); }
 .badge-progress { background: #fef9ec; color: #7a5c00; }
 .badge-concept { background: #f0f0ee; color: #555; }
 
@@ -413,13 +431,11 @@ nav {
   width: 100%;
   max-width: 760px;
   max-height: 90vh;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  background: var(--white);
-  border-radius: 16px;
-  border: 1px solid var(--rule);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+  background: transparent;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
 }
 .modal-header,
 .modal-body { padding: 1.5rem; }
@@ -487,11 +503,10 @@ nav {
   .skills-grid,
   .projects-grid,
   .blog-grid,
-  .athletics-stats,
   .form-row,
   .result-metrics { grid-template-columns: 1fr; }
+  .hero-photo-card {justify-self: start;}
   .skills-grid { grid-template-columns: repeat(2, 1fr); }
-  .athletics-header { flex-direction: column; }
   .form-group.full { grid-column: span 1; }
 }
 @media (max-width: 600px) {
@@ -522,32 +537,18 @@ nav {
       <p class="hero-eyebrow">Engineer / Researcher / Builder</p>
       <h1>Yifan<br><em>Wang</em></h1>
       <p class="hero-desc">Grade 11 high school student interested in Aerospace Engineering, working at the intersection of experimental aerodynamics and machine learning. Founder of Elevon EX, developing AI systems for aviation efficiency alongside wind tunnel testing and aircraft performance analysis.</p>
-
       <!-- Two text links replacing the old About Me panel -->
       <div class="hero-text-links">
         <a class="hero-text-link" href="#about">About me →</a>
-        <a class="hero-text-link" href="#photo-album" target="_blank">Photo Album →</a>
       </div>
-</div>
+    </div>
     <div class="hero-photo-card">
-  <div class="photo-stack">
-    <img src="images/photo1.jpg" class="stack-img active">
-    <img src="images/photo2.jpg" class="stack-img">
-    <img src="images/photo3.jpg" class="stack-img">
-    <img src="images/photo4.jpg" class="stack-img">
-  </div>
-  <div class="photo-placeholder">
-    Add your portrait at<br><code>images/yifan-portrait.jpg</code>
-  </div>
-</div>
-           onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">
-      <div class="photo-placeholder">
-        Add your portrait at<br><code>images/yifan-portrait.jpg</code>
-      </div>
+      <div class="photo-stack">
+        <img src="images/photo1.jpg" class="stack-img active">
+        <img src="images/photo2.jpg" class="stack-img">
     </div>
   </div>
 </div>
-
 
 
 <div class="section reveal" id="research">
@@ -828,13 +829,21 @@ nav {
 
 
 <script>
-document.querySelectorAll('.reveal').forEach(el => {
-  new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add('visible');
-    });
-  }, { threshold: 0.1 }).observe(el);
-});
+  document.querySelectorAll('.reveal').forEach(el => {
+    new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 }).observe(el);
+  });
+  const images = document.querySelectorAll('.stack-img');
+  let current = 0;
+
+  setInterval(() => {
+    images[current].classList.remove('active');
+    current = (current + 1) % images.length;
+    images[current].classList.add('active');
+  }, 3000);
 
 document.getElementById('aviation-modal').addEventListener('click', function(e) {
   if (e.target === this) this.style.display = 'none';
@@ -890,14 +899,7 @@ function runAnalysis() {
       btn.textContent = 'Run Analysis';
       btn.disabled = false;
     });
-  const images = document.querySelectorAll('.stack-img');
-  let current = 0;
-
-  setInterval(() => {
-    images[current].classList.remove('active');
-    current = (current + 1) % images.length;
-    images[current].classList.add('active');
-}, 3000);
+  
 }
 
 </script>
