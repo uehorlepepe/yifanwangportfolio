@@ -1,1082 +1,1404 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Yifan Wang</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  ::selection {
-  background: var(--accent);
-  color: #000;
-}
-.photo-stack {
-  width: 100%;
-  max-width:320px;
-  max-height: 400px;
-  margin: 0 auto 0 -28px;
-  position: relative;
-  aspect-ratio: 4 / 5;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yifan Wang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    ::selection {
+      background: var(--accent);
+      color: #000;
+    }
 
-.stack-img {
-  position: absolute;
-  inset: 0;
-  width: min(130%, 600px);
-  height: 100%;
-  object-fit: cover;
-  object-position: left center;
-  opacity: 0;
-  transition: opacity 0.6s ease;
-  border: 6px solid #33E5FF;
-  border-radius: 22px;
-  box-shadow:
-  0 0 12px rgba(0, 229, 255, 0.65),
-  0 0 28px rgba(0, 229, 255, 0.45),
-  0 0 48px rgba(0, 229, 255, 0.25),
-  0 18px 50px rgba(0, 229, 255, 0.12);
+    .photo-stack {
+      width: 100%;
+      max-width: 320px;
+      max-height: 400px;
+      margin: 0 auto 0 -28px;
+      position: relative;
+      aspect-ratio: 4 / 5;
+    }
 
-}
-.stack-img.active {
-  opacity: 1;
-}
-:root {
-  --bg: #000000;
-  --surface: #000000;
-  --surface-2: #000000;
-  --ink: #F2F2F2;
-  --muted: #9A9A9A;
-  --rule: rgba(255,255,255,0.08);
-  --accent: #33CCFF;
-  --accent-alt: #00FFFF;
-  --accent-soft: rgba(51,204,255,0.12);
-  --link: #33CCFF;
-  --white: #FFFFFF;
-  --sans: 'Instrument Sans', sans-serif;
-  --serif:'Instrument Serif', serif;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  font-family: var(--sans);
-  background:
-    radial-gradient(circle at top left, rgba(51, 204, 255, 0.08), transparent 35%),
-    radial-gradient(circle at bottom right, rgba(0, 255, 255, 0.05), transparent 40%),
-    var(--bg);
-  color: var(--ink);
-  line-height: 1.7;
-  font-size: 15px;
-}
-nav {
-  position: fixed;
-  inset: 0 0 auto 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.95rem 2.5rem;
-  border-bottom: 1px solid var(--rule);
-  background: rgba(18, 18, 18, 0.75);
-  backdrop-filter: blur(14px);
-  z-index: 100;
-}
+    .stack-img {
+      position: absolute;
+      inset: 0;
+      width: min(130%, 600px);
+      height: 100%;
+      object-fit: cover;
+      object-position: left center;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      border: 6px solid #33E5FF;
+      border-radius: 22px;
+      box-shadow:
+        0 0 12px rgba(0, 229, 255, 0.65),
+        0 0 28px rgba(0, 229, 255, 0.45),
+        0 0 48px rgba(0, 229, 255, 0.25),
+        0 18px 50px rgba(0, 229, 255, 0.12);
 
-.nav-name { font-family: var(--serif); font-size: 17px; }
-.nav-links { display: flex; gap: 1.4rem; flex-wrap: wrap; }
-.nav-links a { color: var(--muted); font-size: 13px; text-decoration: none; }
-.nav-links a:hover { color: var(--ink); }
-.nav-links a {color: var(--muted); }
-.nav-links a:hover {color: var(--accent); }
-.nav-pill-btns {display: flex; gap: 0.5rem; }
+    }
 
-.nav-pill-btns .section-nav-btn {
-  height: 30px;
-  font-size: 11px;
-  padding: 0 0.9rem;
+    .stack-img.active {
+      opacity: 1;
+    }
 
-}
-.section {
-  width: min(1120px, calc(100vw - 3.5rem));
-  margin: 0 auto;
-  padding: 6rem 0;
-}
-#hero { padding-top: 10.5rem; padding-bottom: 5rem; }
+    :root {
+      --bg: #000000;
+      --surface: #000000;
+      --surface-2: #000000;
+      --ink: #F2F2F2;
+      --muted: #9A9A9A;
+      --rule: rgba(255, 255, 255, 0.08);
+      --accent: #33CCFF;
+      --accent-alt: #00FFFF;
+      --accent-soft: rgba(51, 204, 255, 0.12);
+      --link: #33CCFF;
+      --white: #FFFFFF;
+      --sans: 'Instrument Sans', sans-serif;
+      --serif: 'Instrument Serif', serif;
+      --nav-btn-h: 34px;
+      --nav-btn-font: 12px;
+    }
 
-/* ── HERO GRID ── */
-.hero-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.3fr) minmax(300px, 420px);
-  gap: 3rem;
-  align-items: start;
-}
-.hero-copy { max-width: 720px; }
-.hero-eyebrow {
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--accent);
-  font-weight: 600;
-  margin-bottom: 1.25rem;
-}
-#hero h1 {
-  font-family: var(--serif);
-  font-size: clamp(48px, 7vw, 78px);
-  font-weight: 400;
-  line-height: 0.98;
-  letter-spacing: -0.02em;
-  margin-bottom: 1.5rem;
-}
-#hero h1 em { color: var(--muted); }
-.hero-desc {
-  max-width: 680px;
-  font-size: 18px;
-  color: var(--muted);
-  line-height: 1.8;
-  margin-bottom: 1.5rem;
-}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-/* These replaced the old hero-actions buttons */
-.hero-text-links {
-  display: flex;
-  gap: 1.6rem;
-  flex-wrap: wrap;
-  margin-bottom: 2rem;
-}
-.hero-text-link {
-  color: var(--link);
-  font-size: 14px;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}
-.hero-text-link:hover { text-decoration: underline; }
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--sans);
+      background:
+        radial-gradient(circle at top left, rgba(51, 204, 255, 0.08), transparent 35%),
+        radial-gradient(circle at bottom right, rgba(0, 255, 255, 0.05), transparent 40%),
+        var(--bg);
+      color: var(--ink);
+      line-height: 1.7;
+      font-size: 14px;
+      padding-top: 110px;
+    }
+
+    nav {
+      position: fixed;
+      inset: 0 0 auto 0;
+
+      display: flex;
+      align-items: center;
+
+      padding: 0.95rem 2.5rem;
+
+      border-bottom: 1px solid var(--rule);
+      background: rgba(18, 18, 18, 0.75);
+      backdrop-filter: blur(14px);
+
+      z-index: 100;
+    }
+
+    /* group everything tightly on the right */
+    .nav-pill-btns {
+      display: flex;
+      gap: 0.5rem;
+      margin-left: auto;
+      /* 🔥 THIS is the key fix */
+      align-items: center;
+    }
+
+    .nav-inner {
+      width: min(1120px, calc(100vw - 3rem));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0 auto;
+    }
+
+    .nav-name {
+      font-family: var(--serif);
+      font-size: 17px;
+    }
+
+    .section-nav-btns {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .section-nav-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 34px;
+      padding: 0 1rem;
+      border-radius: 999px;
+      font-size: 12px;
+      font-family: var(--sans);
+      font-weight: 500;
+      text-decoration: none;
+      border: 1px solid rgba(51, 229, 255, 0.18);
+      color: var(--ink);
+      background: rgba(10, 12, 18, 0.35);
+      backdrop-filter: blur(10px);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      white-space: nowrap;
+    }
+
+    /* BASE HOVER (IDENTICAL TO BLOG) */
+    .section-nav-btn:hover {
+      transform: translateY(-3px);
+
+      border-color: #33E5FF;
+
+      box-shadow:
+        0 0 0 1px rgba(51, 229, 255, 0.25),
+        0 0 12px rgba(51, 229, 255, 0.35),
+        0 0 28px rgba(51, 229, 255, 0.25),
+        0 0 50px rgba(51, 229, 255, 0.15);
+
+      color: var(--accent);
+      background: rgba(51, 229, 255, 0.05);
+    }
+
+    /* FEATURED (BLOG VERSION) */
+    .section-nav-btn.featured {
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .section-nav-btn.featured:hover {
+      transform: translateY(-3px);
+
+      border-color: #33E5FF;
+
+      box-shadow:
+        0 0 0 1px rgba(51, 229, 255, 0.25),
+        0 0 14px rgba(51, 229, 255, 0.35),
+        0 0 32px rgba(51, 229, 255, 0.25),
+        0 0 70px rgba(51, 229, 255, 0.12);
+
+      background: rgba(51, 229, 255, 0.06);
+    }
+
+    /* ── HERO GRID ── */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(300px, 420px);
+      gap: 3rem;
+      align-items: start;
+    }
+
+    #hero {
+      width: min(1120px, calc(100vw - 3rem));
+      margin: 0 auto;
+    }
+
+    .hero-copy {
+      max-width: 720px;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+    }
+
+    #hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(48px, 7vw, 78px);
+      font-weight: 400;
+      line-height: 0.98;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    #hero h1 em {
+      color: var(--muted);
+    }
+
+    .hero-desc {
+      max-width: 680px;
+      font-size: 18px;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    /* These replaced the old hero-actions buttons */
+    .hero-text-links {
+      display: flex;
+      gap: 1.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .hero-text-link {
+      color: var(--link);
+      font-size: 14px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .hero-text-link:hover {
+      text-decoration: underline;
+    }
 
 
-.section-nav-btns {
-  display: flex;
-  gap: 0.6rem;
-  flex-wrap: wrap;
-}
-.section-nav-btn {
-  display: inline-flex;
-  align-items: center;
-  height: 34px;
-  padding: 0 1rem;
-  border-radius: 999px;
-  font-size: 12px;
-  font-family: var(--sans);
-  font-weight: 500;
-  text-decoration: none;
-  border: none;
-  color: var(--ink);
-  background: transparent;
-  cursor: pointer;
-  transition: background 0.15s, border-color 0.15s, colour 0.15s;
-}
-.section-nav-btn.featured {
-  background: transparent;              /* removes fog */
-  border: 1px solid var(--accent);      /* clear highlight */
-  color: var(--accent);
 
-  box-shadow: 0 0 0 1px rgba(51, 204, 255, 0.25);
-  font-weight: 600;
-}
+    .hero-photo-card {
+      width: min(100%, 800px);
+      justify-self: end;
+      overflow: visible;
+      background: transparent;
+      padding: 0;
+      border-radius: 0;
+      box-shadow: none;
+    }
 
-.section-nav-btn.featured:hover {
-  background: transparent;
-  border-color: var(--accent);
-  color: var(--accent);
+    .hero-photo,
+    .photo-placeholder {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 4 / 5;
+      border-radius: 16px;
+    }
 
-  box-shadow:
-    0 0 0 1px rgba(51, 204, 255, 0.35),
-    0 0 12px rgba(51, 204, 255, 0.25);
+    .hero-photo {
+      object-fit: cover;
+      background: linear-gradient(180deg, #e8ece7, #d9dfd8);
 
-  transform: translateY(-1px);
-}
-.section-nav-btn:hover {
-  background: transparent;
-  color: var(--accent);
-  border-color: var(--accent);
-  box-shadow: 0 0 10px rgba(51, 204, 255, 0.25);
-}
+    }
 
+    .photo-placeholder {
+      display: none;
+      min-height: 100%;
+      place-content: center;
+      place-items: center;
+      text-align: center;
+      padding: 1.25rem;
+      color: var(--muted);
+      background: linear-gradient(180deg, #f9f8f4, #eeede7);
+    }
 
-.hero-photo-card {
-  width: min(100%, 800px);
-  justify-self: end;
-  overflow: visible;
-  background: transparent;
-  padding: 0;
-  border-radius: 0;
-  box-shadow: none;
-}
-.hero-photo,
-.photo-placeholder {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 5;
-  border-radius: 16px;
-}
-.hero-photo {
-  object-fit: cover;
-  background: linear-gradient(180deg, #e8ece7, #d9dfd8);
+    .photo-placeholder code {
+      background: rgba(255, 255, 255, 0.86);
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      padding: 2px 6px;
+    }
 
-}
-.photo-placeholder {
-  display: none;
-  min-height: 100%;
-  place-content: center;
-  place-items: center;
-  text-align: center;
-  padding: 1.25rem;
-  color: var(--muted);
-  background: linear-gradient(180deg, #f9f8f4, #eeede7);
-}
-.photo-placeholder code {
-  background: rgba(255,255,255,0.86);
-  border: 1px solid var(--rule);
-  border-radius: 6px;
-  padding: 2px 6px;
-}
+    .section {
+      width: min(1120px, calc(100vw - 3rem));
+      margin: 0 auto;
+      padding-top: 7rem;
+      padding-bottom: 3.5rem;
+    }
 
-.section-label {
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-  font-weight: 600;
-  margin-bottom: 2rem;
-  padding-bottom: 0.9rem;
-  border-bottom: 1px solid var(--rule);
-}
+    /* EXTRA SPACING CONTROL */
+    #hero {
+      padding-bottom: 2rem;
+    }
 
-.research-list { display: grid; gap: 1rem; }
-.research-item {
-  background: rgba(10, 12, 18, 0.55);
-  border: 1px solid rgba(51, 229, 255, 0.25);
-  border-radius: 18px;
-  padding: 1.5rem;
+    #research {
+      padding-top: 8rem;
+      padding-bottom: 2rem;
+    }
 
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+    #projects {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
 
-  color: var(--ink);
+    #skills {
+      padding-top: 2rem;
+    }
 
-  transition: all 0.25s ease;
-}
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 2rem;
+      padding-bottom: 0.9rem;
+      border-bottom: 1px solid var(--rule);
+    }
 
-/* hover = neon activation */
-.research-item:hover {
-  transform: translateY(-4px);
+    .research-list {
+      display: grid;
+      gap: 1rem;
+    }
 
-  border-color: #33E5FF;
+    .research-item {
+      background: rgba(10, 12, 18, 0.55);
+      border: 1px solid rgba(51, 229, 255, 0.25);
+      border-radius: 18px;
+      padding: 1.5rem;
 
-  box-shadow:
-    0 0 0 1px rgba(51, 229, 255, 0.25),
-    0 0 12px rgba(51, 229, 255, 0.35),
-    0 0 28px rgba(51, 229, 255, 0.25),
-    0 0 50px rgba(51, 229, 255, 0.15);
-}
-.item-meta { font-size: 11px; color: var(--muted); margin-bottom: 0.5rem; }
-.item-title {
-  font-family: var(--serif);
-  font-weight: 400;
-  font-size: 22px;
-  line-height: 1.3;
-  margin-bottom: 0.6rem;
-}
-.item-desc { font-size: 15px; color: var(--muted); margin-bottom: 0.875rem; max-width: 76ch; }
-.item-link { color: var(--link); font-size: 12px; text-decoration: none; }
-.project-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11px;
-  font-weight: 600;
-  padding: 3px 10px;
-  border-radius: 999px;
-  white-space: nowrap;
-}
-.project-badge::before {
-  content: "";
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: currentColor;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
 
-  box-shadow: 0 0 6px currentColor;
-}
-/* LIVE = cyan */
-.badge-live {
-  color: #33E5FF;
-  background: rgba(51, 229, 255, 0.08);
-}
-/* IN PROGRESS = amber */
-.badge-progress {
-  color: #FFD166;
-  background: rgba(255, 209, 102, 0.08);
-}
-/* CONCEPT = muted */
-.badge-concept {
-  color: #888;
-  background: rgba(255, 255, 255, 0.05);
-}
-@keyframes pulse-glow {
-  0% {
-    box-shadow: 0 0 4px currentColor;
-    opacity: 0.8;
-  }
-  50% {
-    box-shadow: 0 0 10px currentColor;
-    opacity: 1;
-  }
-  100% {
-    box-shadow: 0 0 4px currentColor;
-    opacity: 0.8;
-  }
-}
+      color: var(--ink);
 
-/* apply animation */
-.badge-live::before,
-.badge-progress::before {
-  animation: pulse-glow 2.2s infinite ease-in-out;
-}
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
-}
-.project-card {
-  background: rgba(10, 12, 18, 0.55);
-  border: 1px solid rgba(51, 229, 255, 0.18);
-  border-radius: 18px;
-  padding: 1.5rem;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 1rem;
-  min-height: 260px;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-}
-.project-card {
-  position: relative;
-}
+      transition: all 0.25s ease;
+    }
 
-.project-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 18px;
-  pointer-events: none;
+    /* hover = neon activation */
+    .research-item:hover {
+      transform: translateY(-4px);
 
-  box-shadow: inset 0 0 40px rgba(51, 229, 255, 0.05);
-  opacity: 0;
-  transition: opacity 0.25s ease;
-}
+      border-color: #33E5FF;
 
-.project-card:hover::before {
-  opacity: 1;
-}
+      box-shadow:
+        0 0 0 1px rgba(51, 229, 255, 0.25),
+        0 0 12px rgba(51, 229, 255, 0.35),
+        0 0 28px rgba(51, 229, 255, 0.25),
+        0 0 50px rgba(51, 229, 255, 0.15);
+    }
 
-.project-card:hover {
-  transform: translateY(-5px);
+    .item-meta {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
 
-  border-color: rgba(51, 229, 255, 0.5);
+    .item-title {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 22px;
+      line-height: 1.3;
+      margin-bottom: 0.6rem;
+    }
 
-  box-shadow:
-    0 0 0 1px rgba(51, 229, 255, 0.25),
-    0 0 14px rgba(51, 229, 255, 0.35),
-    0 0 32px rgba(51, 229, 255, 0.25),
-    0 0 70px rgba(51, 229, 255, 0.12);
-}
+    .item-desc {
+      font-size: 15px;
+      color: var(--muted);
+      margin-bottom: 0.875rem;
+      max-width: 76ch;
+    }
 
-.project-card-tag {
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 0.45rem;
-}
-.project-card-title {
-  font-family: var(--serif);
-  font-weight: 400;
-  font-size: 20px;
-  margin-bottom: 0.5rem;
-}
-.project-card-desc { font-size: 14px; color: var(--muted); flex: 1; }
-.project-card-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: auto;
-  padding-top: 1rem;
-  border-top: 1px solid var(--rule);
-}
-.project-link-btn,
-.project-launch-btn {
-  color: var(--link);
-  font-size: 12px;
-  text-decoration: none;
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  font-family: var(--sans);
-}
+    .item-link {
+      color: var(--link);
+      font-size: 12px;
+      text-decoration: none;
+    }
 
-/* ── SKILLS SECTION ── */
-/*
+    .project-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .project-badge::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+
+      box-shadow: 0 0 6px currentColor;
+    }
+
+    /* LIVE = cyan */
+    .badge-live {
+      color: #33E5FF;
+      background: rgba(51, 229, 255, 0.08);
+    }
+
+    /* IN PROGRESS = amber */
+    .badge-progress {
+      color: #FFD166;
+      background: rgba(255, 209, 102, 0.08);
+    }
+
+    /* CONCEPT = muted */
+    .badge-concept {
+      color: #888;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    @keyframes pulse-glow {
+      0% {
+        box-shadow: 0 0 4px currentColor;
+        opacity: 0.8;
+      }
+
+      50% {
+        box-shadow: 0 0 10px currentColor;
+        opacity: 1;
+      }
+
+      100% {
+        box-shadow: 0 0 4px currentColor;
+        opacity: 0.8;
+      }
+    }
+
+    /* apply animation */
+    .badge-live::before,
+    .badge-progress::before {
+      animation: pulse-glow 2.2s infinite ease-in-out;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .project-card {
+      background: rgba(10, 12, 18, 0.55);
+      border: 1px solid rgba(51, 229, 255, 0.18);
+      border-radius: 18px;
+      padding: 1.5rem;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1rem;
+      min-height: 260px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .project-card {
+      position: relative;
+    }
+
+    .project-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 18px;
+      pointer-events: none;
+
+      box-shadow: inset 0 0 40px rgba(51, 229, 255, 0.05);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .project-card:hover::before {
+      opacity: 1;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+
+      border-color: rgba(51, 229, 255, 0.5);
+
+      box-shadow:
+        0 0 0 1px rgba(51, 229, 255, 0.25),
+        0 0 14px rgba(51, 229, 255, 0.35),
+        0 0 32px rgba(51, 229, 255, 0.25),
+        0 0 70px rgba(51, 229, 255, 0.12);
+    }
+
+    .project-card-tag {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.45rem;
+    }
+
+    .project-card-title {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 20px;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-card-desc {
+      font-size: 14px;
+      color: var(--muted);
+      flex: 1;
+    }
+
+    .project-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+      padding-top: 1rem;
+      border-top: 1px solid var(--rule);
+    }
+
+    .project-link-btn,
+    .project-launch-btn {
+      color: var(--link);
+      font-size: 12px;
+      text-decoration: none;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      font-family: var(--sans);
+    }
+
+    /* ── SKILLS SECTION ── */
+    /*
   NEW section — 4 cards in a row, each with:
   logo + skill name + duration + bullet list
 */
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1rem;
-}
-.skill-card {
-  background: rgba(10, 12, 18, 0.55);
-  border: 1px solid rgba(51, 229, 255, 0.18);
-  border-radius: 18px;
-  padding: 1.5rem;
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem;
+    }
 
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+    .skill-card {
+      background: rgba(10, 12, 18, 0.55);
+      border: 1px solid rgba(51, 229, 255, 0.18);
+      border-radius: 18px;
+      padding: 1.5rem;
 
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
 
-  transition: all 0.25s ease;
-  position: relative;
-}
-.skill-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 18px;
-  pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
 
-  box-shadow: inset 0 0 40px rgba(51, 229, 255, 0.05);
-  opacity: 0;
-  transition: opacity 0.25s ease;
-}
+      transition: all 0.25s ease;
+      position: relative;
+    }
 
-.skill-card:hover::before {
-  opacity: 1;
-}
+    .skill-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 18px;
+      pointer-events: none;
 
-.skill-card:hover {
-  transform: translateY(-5px);
+      box-shadow: inset 0 0 40px rgba(51, 229, 255, 0.05);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
 
-  border-color: rgba(51, 229, 255, 0.5);
+    .skill-card:hover::before {
+      opacity: 1;
+    }
 
-  box-shadow:
-    0 0 0 1px rgba(51, 229, 255, 0.25),
-    0 0 14px rgba(51, 229, 255, 0.35),
-    0 0 32px rgba(51, 229, 255, 0.25),
-    0 0 70px rgba(51, 229, 255, 0.12);
-}
-.skill-logo {
-  font-size: 28px;
-  line-height: 1;
-}
-.skill-name {
-  font-family: var(--serif);
-  font-size: 19px;
-  font-weight: 400;
-}
-.skill-duration {
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-  font-weight: 600;
-}
-.skill-bullets {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  margin-top: 0.25rem;
-}
-.skill-bullets li {
-  font-size: 13px;
-  color: var(--muted);
-  padding-left: 1rem;
-  position: relative;
-}
-.skill-bullets li::before {
-  content: '·';
-  position: absolute;
-  left: 0;
-  color: var(--accent);
-  font-weight: 700;
-}
+    .skill-card:hover {
+      transform: translateY(-5px);
 
-.site-footer {
-  border-top: 1px solid var(--rule);
-  padding: 2rem 0;
-  margin-top: 2rem;
-}
-.footer-inner {
-  width: min(1120px, calc(100vw - 3.5rem));
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: relative;
-}
-.footer-copy {
-  font-size: 12px;
-  color: var(--muted);
-}
-.footer-icons {
-  display: flex;
-  gap: 0.75rem;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-}
-.footer-icon-link {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
+      border-color: rgba(51, 229, 255, 0.5);
 
-  border: 1px solid rgba(51, 229, 255, 0.25);
-  background: transparent;
+      box-shadow:
+        0 0 0 1px rgba(51, 229, 255, 0.25),
+        0 0 14px rgba(51, 229, 255, 0.35),
+        0 0 32px rgba(51, 229, 255, 0.25),
+        0 0 70px rgba(51, 229, 255, 0.12);
+    }
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    .skill-logo {
+      font-size: 28px;
+      line-height: 1;
+    }
 
-  text-decoration: none;
-  color: var(--ink);
+    .skill-name {
+      font-family: var(--serif);
+      font-size: 19px;
+      font-weight: 400;
+    }
 
-  transition: all 0.2s ease;
-}
-.footer-status {
-  font-size: 12px;
-  color: var(--muted);
-  text-align: right;
-}
-.footer-icon-link:hover {
-  color: var(--accent);
-  border-color: var(--accent);
+    .skill-duration {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+    }
 
-  box-shadow: 0 0 10px rgba(51, 204, 255, 0.25);
-}
-.footer-icon-link svg {
-  width: 18px;
-  height: 18px;
-  fill: currentColor;
-}
-.footer-left,
-.footer-right {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
+    .skill-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-top: 0.25rem;
+    }
 
-.footer-built {
-  font-size: 11px;
-  color: rgba(154, 154, 154, 0.8);
-  letter-spacing: 0.03em;
-}
+    .skill-bullets li {
+      font-size: 13px;
+      color: var(--muted);
+      padding-left: 1rem;
+      position: relative;
+    }
 
-.reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s; }
-.reveal.visible { opacity: 1; transform: none; }
+    .skill-bullets li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 700;
+    }
 
-#aviation-modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
-  z-index: 1000;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-}
-.modal-box {
-  width: 100%;
-  max-width: 760px;
-  max-height: 90vh;
-  background: transparent;
-  padding: 0;
-  border: none;
-  border-radius: 0;
-  box-shadow: none;
-}
-.modal-header,
-.modal-body { padding: 1.5rem; }
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid var(--rule);
-}
-.modal-header-title { font-family: var(--serif); font-size: 17px; }
-.modal-close { background: none; border: none; color: var(--muted); font-size: 20px; cursor: pointer; }
-.modal-body { overflow-y: auto; }
-.form-row,
-.result-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-.form-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 0.75rem; }
-.form-group.full { grid-column: span 2; }
-.form-group label { font-size: 11px; color: var(--muted); }
-.form-group input,
-.form-group select {
-  height: 38px;
-  width: 100%;
-  padding: 0 10px;
-  border: 1px solid var(--rule);
-  border-radius: 8px;
-  font-size: 14px;
-  font-family: var(--sans);
-  background: var(--bg);
-}
-.run-btn {
-  width: 100%;
-  height: 42px;
-  margin-top: 0.5rem;
-  border: none;
-  border-radius: 10px;
-  background: var(--ink);
-  color: var(--white);
-  font-size: 14px;
-  cursor: pointer;
-}
-.modal-err,
-.modal-results { display: none; }
-.modal-err {
-  margin-top: 0.75rem;
-  padding: 0.6rem 0.875rem;
-  border: 1px solid #fecaca;
-  border-radius: 8px;
-  background: #fff5f5;
-  color: #991b1b;
-  font-size: 13px;
-}
-.result-metric,
-.result-recs { padding: 1rem; border-radius: 10px; background: var(--bg); }
-.result-metric-label,
-.result-recs-label { font-size: 11px; color: var(--muted); }
-.result-metric-value { font-family: var(--serif); font-size: 26px; line-height: 1; }
-.result-metric-unit { font-size: 11px; color: var(--muted); margin-top: 2px; }
-.result-recs-label { margin-bottom: 0.875rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
-.rec-item { padding: 9px 0; border-bottom: 1px solid var(--rule); font-size: 13px; }
-.rec-item:last-child { border-bottom: none; }
+    .site-footer {
+      border-top: 1px solid var(--rule);
+      padding: 2rem 0;
+      margin-top: 2rem;
+    }
 
-@media (max-width: 900px) {
-  nav { padding: 0.9rem 1.25rem; }
-  .section { width: min(100vw - 2rem, 1120px); }
-  .hero-grid,
-  .skills-grid,
-  .projects-grid,
-  .blog-grid,
-  .form-row,
-  .result-metrics { grid-template-columns: 1fr; }
-  .hero-photo-card {justify-self: start;}
-  .skills-grid { grid-template-columns: repeat(2, 1fr); }
-  .form-group.full { grid-column: span 1; }
-}
-@media (max-width: 600px) {
-  .section { width: min(100vw - 1.4rem, 1120px); padding: 8rem 0; }
-  #hero { padding-top: 8rem; }
-  #hero { padding-bottom: 9rem;}
-  #hero h1 { font-size: clamp(42px, 14vw, 62px); }
-  .hero-desc { font-size: 16px; }
-  .nav-links { gap: 0.9rem; }
-  .skills-grid,
-  .projects-grid { grid-template-columns: 1fr; }
-  .reveal { transform: translateY(40px); }
-}
-</style>
+    .footer-inner {
+      width: min(1120px, calc(100vw - 3.5rem));
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .footer-icons {
+      display: flex;
+      gap: 0.75rem;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .footer-icon-link {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+
+      border: 1px solid rgba(51, 229, 255, 0.25);
+      background: transparent;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      text-decoration: none;
+      color: var(--ink);
+
+      transition: all 0.2s ease;
+    }
+
+    .footer-status {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: right;
+    }
+
+    .footer-icon-link:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+
+      box-shadow: 0 0 10px rgba(51, 204, 255, 0.25);
+    }
+
+    .footer-icon-link svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    .footer-left,
+    .footer-right {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .footer-built {
+      font-size: 11px;
+      color: rgba(154, 154, 154, 0.8);
+      letter-spacing: 0.03em;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s, transform 0.6s;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    #aviation-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .modal-box {
+      width: 100%;
+      max-width: 760px;
+      max-height: 90vh;
+      background: transparent;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .modal-header,
+    .modal-body {
+      padding: 1.5rem;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .modal-header-title {
+      font-family: var(--serif);
+      font-size: 17px;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .modal-body {
+      overflow-y: auto;
+    }
+
+    .form-row,
+    .result-metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-bottom: 0.75rem;
+    }
+
+    .form-group.full {
+      grid-column: span 2;
+    }
+
+    .form-group label {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .form-group input,
+    .form-group select {
+      height: 38px;
+      width: 100%;
+      padding: 0 10px;
+      border: 1px solid var(--rule);
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: var(--sans);
+      background: var(--bg);
+    }
+
+    .run-btn {
+      width: 100%;
+      height: 42px;
+      margin-top: 0.5rem;
+      border: none;
+      border-radius: 10px;
+      background: var(--ink);
+      color: var(--white);
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .modal-err,
+    .modal-results {
+      display: none;
+    }
+
+    .modal-err {
+      margin-top: 0.75rem;
+      padding: 0.6rem 0.875rem;
+      border: 1px solid #fecaca;
+      border-radius: 8px;
+      background: #fff5f5;
+      color: #991b1b;
+      font-size: 13px;
+    }
+
+    .result-metric,
+    .result-recs {
+      padding: 1rem;
+      border-radius: 10px;
+      background: var(--bg);
+    }
+
+    .result-metric-label,
+    .result-recs-label {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .result-metric-value {
+      font-family: var(--serif);
+      font-size: 26px;
+      line-height: 1;
+    }
+
+    .result-metric-unit {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .result-recs-label {
+      margin-bottom: 0.875rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .rec-item {
+      padding: 9px 0;
+      border-bottom: 1px solid var(--rule);
+      font-size: 13px;
+    }
+
+    .rec-item:last-child {
+      border-bottom: none;
+    }
+
+    @media (max-width: 900px) {
+      nav {
+        padding: 0.9rem 1.25rem;
+      }
+
+      .section {
+        width: min(100vw - 2rem, 1120px);
+      }
+
+      .hero-grid,
+      .skills-grid,
+      .projects-grid,
+      .blog-grid,
+      .form-row,
+      .result-metrics {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-photo-card {
+        justify-self: start;
+      }
+
+      .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .form-group.full {
+        grid-column: span 1;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .section {
+        width: min(100vw - 1.4rem, 1120px);
+        padding: 8rem 0;
+      }
+
+      #hero {
+        padding-top: 4rem;
+      }
+
+      #hero {
+        padding-bottom: 9rem;
+      }
+
+      #hero h1 {
+        font-size: clamp(42px, 14vw, 62px);
+      }
+
+      .hero-desc {
+        font-size: 16px;
+      }
+
+      .nav-links {
+        gap: 0.9rem;
+      }
+
+      .skills-grid,
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .reveal {
+        transform: translateY(40px);
+      }
+    }
+  </style>
 </head>
+
 <body>
-<nav>
-  <span class="nav-name">Yifan Wang</span>
+  <nav>
+    <div class="nav-inner">
+      <span class="nav-name">Yifan Wang</span>
 
-  <div class="nav-pill-btns">
-    <a class="section-nav-btn featured" href="https://yifanwang.vercel.app/blog.html">Blog</a>
-    <a class="section-nav-btn" href="#research">Research</a>
-    <a class="section-nav-btn" href="#projects">Projects</a>
-    <a class="section-nav-btn" href="#skills">Skills</a>
-  </div>
-</nav>
-<div class="section" id="hero">
-  <div class="hero-grid">
-    <div class="hero-copy">
-      <p class="hero-eyebrow">Engineer / Researcher / Builder</p>
-      <h1>Yifan<br><em>Wang</em></h1>
-      <p class="hero-desc">Grade 11 high school student interested in Aerospace Engineering, working at the intersection of experimental aerodynamics and machine learning. Founder of Elevon EX, developing AI systems for aviation efficiency alongside wind tunnel testing and aircraft performance analysis.</p>
-      <!-- Two text links replacing the old About Me panel -->
-      <div class="hero-text-links">
-        <a class="hero-text-link" href="#about">About me →</a>
+      <div class="section-nav-btns">
+        <a class="section-nav-btn featured" href="blog.html">Blog</a>
+        <a class="section-nav-btn" href="indexchange.html#research">Research</a>
+        <a class="section-nav-btn" href="indexchange.html#projects">Projects</a>
+        <a class="section-nav-btn" href="indexchange.html#skills">Skills</a>
       </div>
     </div>
-    <div class="hero-photo-card">
-      <div class="photo-stack">
-        <img src="images/photo1.jpg" class="stack-img active">
-        <img src="images/photo2.jpg" class="stack-img">
-    </div>
-  </div>
-</div>
-
-
-<div class="section reveal" id="research">
-  <p class="section-label">Research</p>
-  <div class="research-list">
-    <div class="research-item">
-      <p class="item-meta">Published / Scholarly Review Journal / January 2026</p>
-      <h3 class="item-title">Aerodynamic Analysis of Conventional and Non-Traditional Paper Aircraft: Wind Tunnel and Flight Analysis</h3>
-      <p class="item-desc">This study demonstrates that paper aircraft geometry significantly influences airflow behavior, stability, and efficiency, with small design changes leading to major differences in flight performance.</p>
-      <a href="https://doi.org/10.70121/001c.155068" target="_blank" class="item-link">Read paper →</a>
-    </div>
-    <div class="research-item">
-      <p class="item-meta">Under review / Curieux Academic Journal / Est. May 2026</p>
-      <h3 class="item-title">A Supervised Machine Learning Approach to Identifying Efficiency Gaps in Commercial Aviation</h3>
-      <p class="item-desc">A supervised machine learning framework using Gradient Boosting to model fuel burn and identify operational inefficiencies in commercial aviation through aerodynamic, environmental, and route-based analysis.</p>
-      <span class="project-badge badge-progress">Under review</span>
-    </div>
-    <div class="research-item">
-      <p class="item-meta">In Progress / Est. Sept 2026</p>
-      <h3 class="item-title">A Hybrid Experimental-Computational Framework for Tailfin Geometry Optimization in Low Reynolds Number Flight</h3>
-      <p class="item-desc">Investigating optimized tailfin geometries for low Reynolds number flight regimes through a combined experimental and computational approach.</p>
-      <span class="project-badge badge-progress">In progress</span>
+  </nav>
+  <div class="section" id="hero">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <p class="hero-eyebrow">Engineer / Researcher / Builder</p>
+        <h1>Yifan<br><em>Wang</em></h1>
+        <p class="hero-desc">Grade 11 high school student interested in Aerospace Engineering, working at the
+          intersection of experimental aerodynamics and machine learning. Founder of Elevon EX, developing AI systems
+          for aviation efficiency alongside wind tunnel testing and aircraft performance analysis.</p>
+        <!-- Two text links replacing the old About Me panel -->
+        <div class="hero-text-links">
+          <a class="hero-text-link" href="#about">About me →</a>
+        </div>
+      </div>
+      <div class="hero-photo-card">
+        <div class="photo-stack">
+          <img src="images/photo1.jpg" class="stack-img active">
+          <img src="images/photo2.jpg" class="stack-img">
+        </div>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="section reveal" id="projects">
-  <p class="section-label">Selected Projects</p>
-  <div class="projects-grid">
 
-    <div class="project-card">
-      <div>
-        <p class="project-card-tag">ML App / 2026</p>
-        <h3 class="project-card-title">Aviation Fuel Efficiency AI Tool</h3>
-        <p class="project-card-desc">Full-stack ML application predicting commercial flight fuel burn and generating optimization recommendations using a Gradient Boosting Regressor, Flask backend, and custom frontend.</p>
+  <div class="section reveal" id="research">
+    <p class="section-label">Research</p>
+    <div class="research-list">
+      <div class="research-item">
+        <p class="item-meta">Published / Scholarly Review Journal / January 2026</p>
+        <h3 class="item-title">Aerodynamic Analysis of Conventional and Non-Traditional Paper Aircraft: Wind Tunnel
+          and Flight Analysis</h3>
+        <p class="item-desc">This study demonstrates that paper aircraft geometry significantly influences airflow
+          behavior, stability, and efficiency, with small design changes leading to major differences in flight
+          performance.</p>
+        <a href="https://doi.org/10.70121/001c.155068" target="_blank" class="item-link">Read paper →</a>
       </div>
-      <div class="project-card-footer">
-        <span class="project-badge badge-live">Live</span>
-        <button class="project-launch-btn" onclick="document.getElementById('aviation-modal').style.display='flex'">Launch tool →</button>
+      <div class="research-item">
+        <p class="item-meta">Under review / Curieux Academic Journal / Est. May 2026</p>
+        <h3 class="item-title">A Supervised Machine Learning Approach to Identifying Efficiency Gaps in Commercial
+          Aviation</h3>
+        <p class="item-desc">A supervised machine learning framework using Gradient Boosting to model fuel burn and
+          identify operational inefficiencies in commercial aviation through aerodynamic, environmental, and
+          route-based analysis.</p>
+        <span class="project-badge badge-progress">Under review</span>
       </div>
-    </div>
-
-    <div class="project-card">
-      <div>
-        <p class="project-card-tag">Nonprofit / 2025</p>
-        <h3 class="project-card-title">Elevon EX</h3>
-        <p class="project-card-desc">Designing and distributing aerospace STEM kits to children in lower-income communities. Building toward a one-week summer program reaching 1,000+ students.</p>
-      </div>
-      <div class="project-card-footer">
-        <span class="project-badge badge-progress">In progress</span>
-        <a href="https://elevonex.pages.dev/" target="_blank" class="project-link-btn">Visit site →</a>
-      </div>
-    </div>
-
-    <div class="project-card">
-      <div>
-        <p class="project-card-tag">Hardware / 2024–2026</p>
-        <h3 class="project-card-title">Experimental RC Aircraft Prototype</h3>
-        <p class="project-card-desc">Custom RC aircraft built as an experimental aerodynamics platform to validate ideas in wing geometry and low Reynolds number flight performance.</p>
-      </div>
-      <div class="project-card-footer">
+      <div class="research-item">
+        <p class="item-meta">In Progress / Est. Sept 2026</p>
+        <h3 class="item-title">A Hybrid Experimental-Computational Framework for Tailfin Geometry Optimization in Low
+          Reynolds Number Flight</h3>
+        <p class="item-desc">Investigating optimized tailfin geometries for low Reynolds number flight regimes through
+          a combined experimental and computational approach.</p>
         <span class="project-badge badge-progress">In progress</span>
       </div>
     </div>
-
-    <div class="project-card">
-      <div>
-        <p class="project-card-tag">Concept / 2026</p>
-        <h3 class="project-card-title">Biomimetic Fail-Safe Drone</h3>
-        <p class="project-card-desc">Drone that transforms into a maple seed autorotation glider on power failure. Inspired by Von Karman vortex dynamics from wind tunnel testing, with AI-assisted return-to-user logic.</p>
-      </div>
-      <div class="project-card-footer">
-        <span class="project-badge badge-concept">Concept</span>
-      </div>
-    </div>
-
-    <div class="project-card">
-      <div>
-        <p class="project-card-tag">Hardware / 2026</p>
-        <h3 class="project-card-title">Smart Home Security System</h3>
-        <p class="project-card-desc">Phone-controlled door lock via servo motor triggered remotely through a custom mobile app, expanding toward an integrated security camera for real-time monitoring.</p>
-      </div>
-      <div class="project-card-footer">
-        <span class="project-badge badge-progress">In progress</span>
-      </div>
-    </div>
-
   </div>
-</div>
 
-<div class="section reveal" id="skills">
-  <p class="section-label">Technical Skillset</p>
-  <div class="skills-grid">
+  <div class="section reveal" id="projects">
+    <p class="section-label">Selected Projects</p>
+    <div class="projects-grid">
 
-    <div class="skill-card">
-      <div class="skill-logo">🐍</div>
-      <div>
-        <div class="skill-name">Python</div>
-        <div class="skill-duration">3 years</div>
+      <div class="project-card">
+        <div>
+          <p class="project-card-tag">ML App / 2026</p>
+          <h3 class="project-card-title">Aviation Fuel Efficiency AI Tool</h3>
+          <p class="project-card-desc">Full-stack ML application predicting commercial flight fuel burn and generating
+            optimization recommendations using a Gradient Boosting Regressor, Flask backend, and custom frontend.</p>
+        </div>
+        <div class="project-card-footer">
+          <span class="project-badge badge-live">Live</span>
+          <button class="project-launch-btn"
+            onclick="document.getElementById('aviation-modal').style.display='flex'">Launch tool →</button>
+        </div>
       </div>
-      <ul class="skill-bullets">
-        <li>Numerical modeling</li>
-        <li>Data visualization</li>
-        <li>Parameter sweeps</li>
-        <li>Equation implementation</li>
-      </ul>
-    </div>
 
-    <div class="skill-card">
-      <div class="skill-logo">🌊</div>
-      <div>
-        <div class="skill-name">CFD</div>
-        <div class="skill-duration">1 month</div>
+      <div class="project-card">
+        <div>
+          <p class="project-card-tag">Nonprofit / 2025</p>
+          <h3 class="project-card-title">Elevon EX</h3>
+          <p class="project-card-desc">Designing and distributing aerospace STEM kits to children in lower-income
+            communities. Building toward a one-week summer program reaching 1,000+ students.</p>
+        </div>
+        <div class="project-card-footer">
+          <span class="project-badge badge-progress">In progress</span>
+          <a href="https://elevonex.pages.dev/" target="_blank" class="project-link-btn">Visit site →</a>
+        </div>
       </div>
-      <ul class="skill-bullets">
-        <li>Flow simulation</li>
-        <li>Pressure analysis</li>
-        <li>Mesh evaluation</li>
-        <li>Result validation</li>
-      </ul>
-    </div>
 
-    <div class="skill-card">
-      <div class="skill-logo">🧩</div>
-      <div>
-        <div class="skill-name">CAD</div>
-        <div class="skill-duration">8 months</div>
+      <div class="project-card">
+        <div>
+          <p class="project-card-tag">Hardware / 2024–2026</p>
+          <h3 class="project-card-title">Experimental RC Aircraft Prototype</h3>
+          <p class="project-card-desc">Custom RC aircraft built as an experimental aerodynamics platform to validate
+            ideas in wing geometry and low Reynolds number flight performance.</p>
+        </div>
+        <div class="project-card-footer">
+          <span class="project-badge badge-progress">In progress</span>
+        </div>
       </div>
-      <ul class="skill-bullets">
-        <li>3D modeling</li>
-        <li>Geometry iteration</li>
-        <li>Prototype preparation</li>
-        <li>Constraint design</li>
-      </ul>
-    </div>
 
-    <div class="skill-card">
-      <div class="skill-logo">💻</div>
-      <div>
-        <div class="skill-name">JavaScript + CSS</div>
-        <div class="skill-duration">1 month</div>
+      <div class="project-card">
+        <div>
+          <p class="project-card-tag">Concept / 2026</p>
+          <h3 class="project-card-title">Biomimetic Fail-Safe Drone</h3>
+          <p class="project-card-desc">Drone that transforms into a maple seed autorotation glider on power failure.
+            Inspired by Von Karman vortex dynamics from wind tunnel testing, with AI-assisted return-to-user logic.
+          </p>
+        </div>
+        <div class="project-card-footer">
+          <span class="project-badge badge-concept">Concept</span>
+        </div>
       </div>
-      <ul class="skill-bullets">
-        <li>Interactive tools</li>
-        <li>Dynamic elements</li>
-        <li>Responsive design</li>
-        <li>UI styling</li>
-      </ul>
-    </div>
 
+      <div class="project-card">
+        <div>
+          <p class="project-card-tag">Hardware / 2026</p>
+          <h3 class="project-card-title">Smart Home Security System</h3>
+          <p class="project-card-desc">Phone-controlled door lock via servo motor triggered remotely through a custom
+            mobile app, expanding toward an integrated security camera for real-time monitoring.</p>
+        </div>
+        <div class="project-card-footer">
+          <span class="project-badge badge-progress">In progress</span>
+        </div>
+      </div>
+
+    </div>
   </div>
-</div>
 
-<footer class="site-footer">
-  <div class="footer-inner">
+  <div class="section reveal" id="skills">
+    <p class="section-label">Technical Skillset</p>
+    <div class="skills-grid">
 
-    <!-- LEFT -->
-    <div class="footer-left">
-      <p class="footer-copy">© Yifan Wang 2026.</p>
-      <p class="footer-built">Built with HTML, CSS, JavaScript (vanilla)</p>
-    </div>
-
-    <!-- CENTER (ICONS) -->
-    <div class="footer-icons">
-
-      <a class="footer-icon-link" href="mailto:yifanwang102@gmail.com" title="Email">
-        <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
-      </a>
-
-      <a class="footer-icon-link" href="https://www.linkedin.com/in/yifanwang102/" target="_blank" title="LinkedIn">
-        <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-      </a>
-
-      <a class="footer-icon-link" href="https://github.com/uehorlepepe" target="_blank" title="GitHub">
-        <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-      </a>
-
-      <a class="footer-icon-link" href="https://scholar.google.ca/citations?user=Us-blVoAAAAJ&hl=en" target="_blank" title="Google Scholar">
-        <svg viewBox="0 0 24 24"><path d="M5.242 13.769 0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>
-      </a>
-
-    </div>
-
-    <!-- RIGHT -->
-    <div class="footer-right">
-      <p class="footer-status">Open to research and project collaborations</p>
-    </div>
-
-  </div>
-</footer>
-
-
-<div id="aviation-modal">
-  <div class="modal-box">
-    <div class="modal-header">
-      <span class="modal-header-title">Aviation Fuel Efficiency Tool</span>
-      <button class="modal-close" onclick="document.getElementById('aviation-modal').style.display='none'">&times;</button>
-    </div>
-    <div class="modal-body">
-      <div class="form-row">
-        <div class="form-group">
-          <label>Origin Airport (IATA)</label>
-          <input type="text" id="origin" placeholder="e.g. YYZ" maxlength="4" style="text-transform:uppercase">
+      <div class="skill-card">
+        <div class="skill-logo">🐍</div>
+        <div>
+          <div class="skill-name">Python</div>
+          <div class="skill-duration">3 years</div>
         </div>
-        <div class="form-group">
-          <label>Destination Airport (IATA)</label>
-          <input type="text" id="destination" placeholder="e.g. LHR" maxlength="4" style="text-transform:uppercase">
-        </div>
-        <div class="form-group full">
-          <label>Aircraft type</label>
-          <select id="aircraft">
-            <option value="">Select aircraft...</option>
-            <optgroup label="Boeing widebody">
-              <option>Boeing 787-9</option><option>Boeing 787-8</option><option>Boeing 787-10</option>
-              <option>Boeing 777-300ER</option><option>Boeing 777-200ER</option><option>Boeing 767-300ER</option><option>Boeing 757-200</option>
-            </optgroup>
-            <optgroup label="Boeing narrowbody">
-              <option>Boeing 737-800</option><option>Boeing 737-900ER</option><option>Boeing 737-700</option>
-              <option>Boeing 737 MAX 7</option><option>Boeing 737 MAX 8</option><option>Boeing 737 MAX 9</option><option>Boeing 737 MAX 10</option>
-            </optgroup>
-            <optgroup label="Airbus widebody">
-              <option>Airbus A380-800</option><option>Airbus A350-900</option>
-              <option>Airbus A330-200</option><option>Airbus A330-300</option><option>Airbus A330-900</option>
-            </optgroup>
-            <optgroup label="Airbus narrowbody">
-              <option>Airbus A321neo</option><option>Airbus A321ceo</option>
-              <option>Airbus A320neo</option><option>Airbus A320ceo</option>
-              <option>Airbus A319neo</option><option>Airbus A319ceo</option><option>Airbus A220-300</option>
-            </optgroup>
-            <optgroup label="Regional">
-              <option>Embraer E190</option><option>Embraer E175</option>
-              <option>Embraer ERJ-145</option><option>Bombardier CRJ-900</option>
-            </optgroup>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Passengers</label>
-          <input type="number" id="passengers" placeholder="e.g. 250" min="1">
-        </div>
-        <div class="form-group">
-          <label>Cargo load (%)</label>
-          <input type="number" id="cargo" placeholder="e.g. 70" min="0" max="100">
-        </div>
-        <div class="form-group">
-          <label>Wind speed (kts)</label>
-          <input type="number" id="wind" placeholder="- = tailwind">
-        </div>
-        <div class="form-group">
-          <label>Cruise temperature (C)</label>
-          <input type="number" id="cruise_temp" placeholder="e.g. -55">
-        </div>
+        <ul class="skill-bullets">
+          <li>Numerical modeling</li>
+          <li>Data visualization</li>
+          <li>Parameter sweeps</li>
+          <li>Equation implementation</li>
+        </ul>
       </div>
-      <button class="run-btn" id="run-btn" onclick="runAnalysis()">Run Analysis</button>
-      <div class="modal-err" id="modal-err"></div>
-      <div class="modal-results" id="modal-results">
-        <div class="result-metrics">
-          <div class="result-metric">
-            <div class="result-metric-label">Predicted fuel burn</div>
-            <div class="result-metric-value" id="r-fuel">-</div>
-            <div class="result-metric-unit">litres</div>
+
+      <div class="skill-card">
+        <div class="skill-logo">🌊</div>
+        <div>
+          <div class="skill-name">CFD</div>
+          <div class="skill-duration">1 month</div>
+        </div>
+        <ul class="skill-bullets">
+          <li>Flow simulation</li>
+          <li>Pressure analysis</li>
+          <li>Mesh evaluation</li>
+          <li>Result validation</li>
+        </ul>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-logo">🧩</div>
+        <div>
+          <div class="skill-name">CAD</div>
+          <div class="skill-duration">8 months</div>
+        </div>
+        <ul class="skill-bullets">
+          <li>3D modeling</li>
+          <li>Geometry iteration</li>
+          <li>Prototype preparation</li>
+          <li>Constraint design</li>
+        </ul>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-logo">💻</div>
+        <div>
+          <div class="skill-name">JavaScript + CSS</div>
+          <div class="skill-duration">1 month</div>
+        </div>
+        <ul class="skill-bullets">
+          <li>Interactive tools</li>
+          <li>Dynamic elements</li>
+          <li>Responsive design</li>
+          <li>UI styling</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+
+      <!-- LEFT -->
+      <div class="footer-left">
+        <p class="footer-copy">© Yifan Wang 2026.</p>
+        <p class="footer-built">Built with HTML, CSS, JavaScript (vanilla)</p>
+      </div>
+
+      <!-- CENTER (ICONS) -->
+      <div class="footer-icons">
+
+        <a class="footer-icon-link" href="mailto:yifanwang102@gmail.com" title="Email">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z" />
+          </svg>
+        </a>
+
+        <a class="footer-icon-link" href="https://www.linkedin.com/in/yifanwang102/" target="_blank" title="LinkedIn">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+          </svg>
+        </a>
+
+        <a class="footer-icon-link" href="https://github.com/uehorlepepe" target="_blank" title="GitHub">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+          </svg>
+        </a>
+
+        <a class="footer-icon-link" href="https://scholar.google.ca/citations?user=Us-blVoAAAAJ&hl=en" target="_blank"
+          title="Google Scholar">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M5.242 13.769 0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z" />
+          </svg>
+        </a>
+
+      </div>
+
+      <!-- RIGHT -->
+      <div class="footer-right">
+        <p class="footer-status">Open to research and project collaborations</p>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <div id="aviation-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <span class="modal-header-title">Aviation Fuel Efficiency Tool</span>
+        <button class="modal-close"
+          onclick="document.getElementById('aviation-modal').style.display='none'">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Origin Airport (IATA)</label>
+            <input type="text" id="origin" placeholder="e.g. YYZ" maxlength="4" style="text-transform:uppercase">
           </div>
-          <div class="result-metric">
-            <div class="result-metric-label">Efficiency score</div>
-            <div class="result-metric-value" id="r-eff">-</div>
-            <div class="result-metric-unit">pkm / L</div>
+          <div class="form-group">
+            <label>Destination Airport (IATA)</label>
+            <input type="text" id="destination" placeholder="e.g. LHR" maxlength="4" style="text-transform:uppercase">
+          </div>
+          <div class="form-group full">
+            <label>Aircraft type</label>
+            <select id="aircraft">
+              <option value="">Select aircraft...</option>
+              <optgroup label="Boeing widebody">
+                <option>Boeing 787-9</option>
+                <option>Boeing 787-8</option>
+                <option>Boeing 787-10</option>
+                <option>Boeing 777-300ER</option>
+                <option>Boeing 777-200ER</option>
+                <option>Boeing 767-300ER</option>
+                <option>Boeing 757-200</option>
+              </optgroup>
+              <optgroup label="Boeing narrowbody">
+                <option>Boeing 737-800</option>
+                <option>Boeing 737-900ER</option>
+                <option>Boeing 737-700</option>
+                <option>Boeing 737 MAX 7</option>
+                <option>Boeing 737 MAX 8</option>
+                <option>Boeing 737 MAX 9</option>
+                <option>Boeing 737 MAX 10</option>
+              </optgroup>
+              <optgroup label="Airbus widebody">
+                <option>Airbus A380-800</option>
+                <option>Airbus A350-900</option>
+                <option>Airbus A330-200</option>
+                <option>Airbus A330-300</option>
+                <option>Airbus A330-900</option>
+              </optgroup>
+              <optgroup label="Airbus narrowbody">
+                <option>Airbus A321neo</option>
+                <option>Airbus A321ceo</option>
+                <option>Airbus A320neo</option>
+                <option>Airbus A320ceo</option>
+                <option>Airbus A319neo</option>
+                <option>Airbus A319ceo</option>
+                <option>Airbus A220-300</option>
+              </optgroup>
+              <optgroup label="Regional">
+                <option>Embraer E190</option>
+                <option>Embraer E175</option>
+                <option>Embraer ERJ-145</option>
+                <option>Bombardier CRJ-900</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Passengers</label>
+            <input type="number" id="passengers" placeholder="e.g. 250" min="1">
+          </div>
+          <div class="form-group">
+            <label>Cargo load (%)</label>
+            <input type="number" id="cargo" placeholder="e.g. 70" min="0" max="100">
+          </div>
+          <div class="form-group">
+            <label>Wind speed (kts)</label>
+            <input type="number" id="wind" placeholder="- = tailwind">
+          </div>
+          <div class="form-group">
+            <label>Cruise temperature (C)</label>
+            <input type="number" id="cruise_temp" placeholder="e.g. -55">
           </div>
         </div>
-        <div class="result-recs">
-          <div class="result-recs-label">Recommendations</div>
-          <div id="r-recs"></div>
+        <button class="run-btn" id="run-btn" onclick="runAnalysis()">Run Analysis</button>
+        <div class="modal-err" id="modal-err"></div>
+        <div class="modal-results" id="modal-results">
+          <div class="result-metrics">
+            <div class="result-metric">
+              <div class="result-metric-label">Predicted fuel burn</div>
+              <div class="result-metric-value" id="r-fuel">-</div>
+              <div class="result-metric-unit">litres</div>
+            </div>
+            <div class="result-metric">
+              <div class="result-metric-label">Efficiency score</div>
+              <div class="result-metric-value" id="r-eff">-</div>
+              <div class="result-metric-unit">pkm / L</div>
+            </div>
+          </div>
+          <div class="result-recs">
+            <div class="result-recs-label">Recommendations</div>
+            <div id="r-recs"></div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
 
-<script>
-  document.querySelectorAll('.reveal').forEach(el => {
-    new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
-      });
-    }, { threshold: 0.1 }).observe(el);
-  });
-  const images = document.querySelectorAll('.stack-img');
-  let current = 0;
-
-  setInterval(() => {
-    images[current].classList.remove('active');
-    current = (current + 1) % images.length;
-    images[current].classList.add('active');
-  }, 3000);
-
-document.getElementById('aviation-modal').addEventListener('click', function(e) {
-  if (e.target === this) this.style.display = 'none';
-});
-
-// Aviation tool
-function runAnalysis() {
-  const origin = document.getElementById('origin').value.trim().toUpperCase();
-  const destination = document.getElementById('destination').value.trim().toUpperCase();
-  const aircraft = document.getElementById('aircraft').value;
-  const passengers = document.getElementById('passengers').value;
-  const cargo = document.getElementById('cargo').value;
-  const wind = document.getElementById('wind').value;
-  const cruiseTemp = document.getElementById('cruise_temp').value;
-  const err = document.getElementById('modal-err');
-  const btn = document.getElementById('run-btn');
-
-  err.style.display = 'none';
-
-  if (!origin || !destination || !aircraft || !passengers || cargo === '' || wind === '' || cruiseTemp === '') {
-    err.textContent = 'Please fill in all fields before running.';
-    err.style.display = 'block';
-    return;
-  }
-
-  btn.textContent = 'Analyzing...';
-  btn.disabled = true;
-
-  fetch('https://aviationefficiencytool.onrender.com/predict', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ origin, destination, aircraft, passengers, cargo, wind, cruise_temp: cruiseTemp })
-  })
-    .then(r => r.json())
-    .then(data => {
-      document.getElementById('modal-results').style.display = 'block';
-      document.getElementById('r-fuel').textContent = data.fuel.replace('Predicted Fuel Burn: ', '').replace(' L', '');
-      document.getElementById('r-eff').textContent = data.efficiency.replace('Efficiency: ', '').replace(' pkm/L', '');
-      const recsEl = document.getElementById('r-recs');
-      recsEl.innerHTML = '';
-      (data.recommendations.length ? data.recommendations : ['Flight is operating optimally.']).forEach(rec => {
-        const div = document.createElement('div');
-        div.className = 'rec-item';
-        div.textContent = rec;
-        recsEl.appendChild(div);
-      });
-    })
-    .catch(() => {
-      err.textContent = 'Could not reach the backend. Make sure the server is running.';
-      err.style.display = 'block';
-    })
-    .finally(() => {
-      btn.textContent = 'Run Analysis';
-      btn.disabled = false;
+  <script>
+    document.querySelectorAll('.reveal').forEach(el => {
+      new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+      }, { threshold: 0.1 }).observe(el);
     });
-  
-}
+    const images = document.querySelectorAll('.stack-img');
+    let current = 0;
 
-</script>
+    setInterval(() => {
+      images[current].classList.remove('active');
+      current = (current + 1) % images.length;
+      images[current].classList.add('active');
+    }, 3000);
+
+    document.getElementById('aviation-modal').addEventListener('click', function (e) {
+      if (e.target === this) this.style.display = 'none';
+    });
+
+    // Aviation tool
+    function runAnalysis() {
+      const origin = document.getElementById('origin').value.trim().toUpperCase();
+      const destination = document.getElementById('destination').value.trim().toUpperCase();
+      const aircraft = document.getElementById('aircraft').value;
+      const passengers = document.getElementById('passengers').value;
+      const cargo = document.getElementById('cargo').value;
+      const wind = document.getElementById('wind').value;
+      const cruiseTemp = document.getElementById('cruise_temp').value;
+      const err = document.getElementById('modal-err');
+      const btn = document.getElementById('run-btn');
+
+      err.style.display = 'none';
+
+      if (!origin || !destination || !aircraft || !passengers || cargo === '' || wind === '' || cruiseTemp === '') {
+        err.textContent = 'Please fill in all fields before running.';
+        err.style.display = 'block';
+        return;
+      }
+
+      btn.textContent = 'Analyzing...';
+      btn.disabled = true;
+
+      fetch('https://aviationefficiencytool.onrender.com/predict', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ origin, destination, aircraft, passengers, cargo, wind, cruise_temp: cruiseTemp })
+      })
+        .then(r => r.json())
+        .then(data => {
+          document.getElementById('modal-results').style.display = 'block';
+          document.getElementById('r-fuel').textContent = data.fuel.replace('Predicted Fuel Burn: ', '').replace(' L', '');
+          document.getElementById('r-eff').textContent = data.efficiency.replace('Efficiency: ', '').replace(' pkm/L', '');
+          const recsEl = document.getElementById('r-recs');
+          recsEl.innerHTML = '';
+          (data.recommendations.length ? data.recommendations : ['Flight is operating optimally.']).forEach(rec => {
+            const div = document.createElement('div');
+            div.className = 'rec-item';
+            div.textContent = rec;
+            recsEl.appendChild(div);
+          });
+        })
+        .catch(() => {
+          err.textContent = 'Could not reach the backend. Make sure the server is running.';
+          err.style.display = 'block';
+        })
+        .finally(() => {
+          btn.textContent = 'Run Analysis';
+          btn.disabled = false;
+        });
+
+    }
+
+  </script>
 </body>
-</html>  
+
+</html>
