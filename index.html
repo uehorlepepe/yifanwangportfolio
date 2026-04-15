@@ -175,6 +175,26 @@ nav {
   cursor: pointer;
   transition: background 0.15s, border-color 0.15s, colour 0.15s;
 }
+.section-nav-btn.featured {
+  background: transparent;              /* removes fog */
+  border: 1px solid var(--accent);      /* clear highlight */
+  color: var(--accent);
+
+  box-shadow: 0 0 0 1px rgba(51, 204, 255, 0.25);
+  font-weight: 600;
+}
+
+.section-nav-btn.featured:hover {
+  background: transparent;
+  border-color: var(--accent);
+  color: var(--accent);
+
+  box-shadow:
+    0 0 0 1px rgba(51, 204, 255, 0.35),
+    0 0 12px rgba(51, 204, 255, 0.25);
+
+  transform: translateY(-1px);
+}
 .section-nav-btn:hover {
   background: transparent;
   color: var(--accent);
@@ -235,10 +255,30 @@ nav {
 
 .research-list { display: grid; gap: 1rem; }
 .research-item {
-  background: rgba(255,255,255,0.86);
-  border: 1px solid var(--rule);
+  background: rgba(10, 12, 18, 0.55);
+  border: 1px solid rgba(51, 229, 255, 0.25);
   border-radius: 18px;
   padding: 1.5rem;
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  color: var(--ink);
+
+  transition: all 0.25s ease;
+}
+
+/* hover = neon activation */
+.research-item:hover {
+  transform: translateY(-4px);
+
+  border-color: #33E5FF;
+
+  box-shadow:
+    0 0 0 1px rgba(51, 229, 255, 0.25),
+    0 0 12px rgba(51, 229, 255, 0.35),
+    0 0 28px rgba(51, 229, 255, 0.25),
+    0 0 50px rgba(51, 229, 255, 0.15);
 }
 .item-meta { font-size: 11px; color: var(--muted); margin-bottom: 0.5rem; }
 .item-title {
@@ -251,33 +291,110 @@ nav {
 .item-desc { font-size: 15px; color: var(--muted); margin-bottom: 0.875rem; max-width: 76ch; }
 .item-link { color: var(--link); font-size: 12px; text-decoration: none; }
 .project-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-size: 11px;
   font-weight: 600;
   padding: 3px 10px;
   border-radius: 999px;
   white-space: nowrap;
 }
-.badge-live { background: var(--accent-soft); color: var(--accent); }
-.badge-progress { background: #fef9ec; color: #7a5c00; }
-.badge-concept { background: #f0f0ee; color: #555; }
+.project-badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
 
+  box-shadow: 0 0 6px currentColor;
+}
+/* LIVE = cyan */
+.badge-live {
+  color: #33E5FF;
+  background: rgba(51, 229, 255, 0.08);
+}
+/* IN PROGRESS = amber */
+.badge-progress {
+  color: #FFD166;
+  background: rgba(255, 209, 102, 0.08);
+}
+/* CONCEPT = muted */
+.badge-concept {
+  color: #888;
+  background: rgba(255, 255, 255, 0.05);
+}
+@keyframes pulse-glow {
+  0% {
+    box-shadow: 0 0 4px currentColor;
+    opacity: 0.8;
+  }
+  50% {
+    box-shadow: 0 0 10px currentColor;
+    opacity: 1;
+  }
+  100% {
+    box-shadow: 0 0 4px currentColor;
+    opacity: 0.8;
+  }
+}
+
+/* apply animation */
+.badge-live::before,
+.badge-progress::before {
+  animation: pulse-glow 2.2s infinite ease-in-out;
+}
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
 }
 .project-card {
-  background: rgba(255,255,255,0.86);
-  border: 1px solid var(--rule);
+  background: rgba(10, 12, 18, 0.55);
+  border: 1px solid rgba(51, 229, 255, 0.18);
   border-radius: 18px;
   padding: 1.5rem;
-  /* CHANGED: column direction so content stacks vertically */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 1rem;
   min-height: 260px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
+.project-card {
+  position: relative;
+}
+
+.project-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  pointer-events: none;
+
+  box-shadow: inset 0 0 40px rgba(51, 229, 255, 0.05);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.project-card:hover::before {
+  opacity: 1;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+
+  border-color: rgba(51, 229, 255, 0.5);
+
+  box-shadow:
+    0 0 0 1px rgba(51, 229, 255, 0.25),
+    0 0 14px rgba(51, 229, 255, 0.35),
+    0 0 32px rgba(51, 229, 255, 0.25),
+    0 0 70px rgba(51, 229, 255, 0.12);
+}
+
 .project-card-tag {
   font-size: 10px;
   letter-spacing: 0.1em;
@@ -323,13 +440,47 @@ nav {
   gap: 1rem;
 }
 .skill-card {
-  background: rgba(255,255,255,0.86);
-  border: 1px solid var(--rule);
+  background: rgba(10, 12, 18, 0.55);
+  border: 1px solid rgba(51, 229, 255, 0.18);
   border-radius: 18px;
   padding: 1.5rem;
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+
+  transition: all 0.25s ease;
+  position: relative;
+}
+.skill-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  pointer-events: none;
+
+  box-shadow: inset 0 0 40px rgba(51, 229, 255, 0.05);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.skill-card:hover::before {
+  opacity: 1;
+}
+
+.skill-card:hover {
+  transform: translateY(-5px);
+
+  border-color: rgba(51, 229, 255, 0.5);
+
+  box-shadow:
+    0 0 0 1px rgba(51, 229, 255, 0.25),
+    0 0 14px rgba(51, 229, 255, 0.35),
+    0 0 32px rgba(51, 229, 255, 0.25),
+    0 0 70px rgba(51, 229, 255, 0.12);
 }
 .skill-logo {
   font-size: 28px;
@@ -379,8 +530,7 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
+  position: relative;
 }
 .footer-copy {
   font-size: 12px;
@@ -389,29 +539,54 @@ nav {
 .footer-icons {
   display: flex;
   gap: 0.75rem;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 .footer-icon-link {
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  border: 1px solid var(--rule);
-  background: rgba(255,255,255,0.8);
+
+  border: 1px solid rgba(51, 229, 255, 0.25);
+  background: transparent;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   text-decoration: none;
   color: var(--ink);
-  transition: background 0.15s, border-color 0.15s, color 0.15s;
+
+  transition: all 0.2s ease;
+}
+.footer-status {
+  font-size: 12px;
+  color: var(--muted);
+  text-align: right;
 }
 .footer-icon-link:hover {
-  background: var(--ink);
-  color: var(--white);
-  border-color: var(--ink);
+  color: var(--accent);
+  border-color: var(--accent);
+
+  box-shadow: 0 0 10px rgba(51, 204, 255, 0.25);
 }
 .footer-icon-link svg {
   width: 18px;
   height: 18px;
   fill: currentColor;
+}
+.footer-left,
+.footer-right {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.footer-built {
+  font-size: 11px;
+  color: rgba(154, 154, 154, 0.8);
+  letter-spacing: 0.03em;
 }
 
 .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s; }
@@ -510,13 +685,15 @@ nav {
   .form-group.full { grid-column: span 1; }
 }
 @media (max-width: 600px) {
-  .section { width: min(100vw - 1.4rem, 1120px); padding: 4.5rem 0; }
+  .section { width: min(100vw - 1.4rem, 1120px); padding: 8rem 0; }
   #hero { padding-top: 8rem; }
+  #hero { padding-bottom: 9rem;}
   #hero h1 { font-size: clamp(42px, 14vw, 62px); }
   .hero-desc { font-size: 16px; }
   .nav-links { gap: 0.9rem; }
   .skills-grid,
   .projects-grid { grid-template-columns: 1fr; }
+  .reveal { transform: translateY(40px); }
 }
 </style>
 </head>
@@ -525,10 +702,10 @@ nav {
   <span class="nav-name">Yifan Wang</span>
 
   <div class="nav-pill-btns">
+    <a class="section-nav-btn featured" href="#blog">Blog</a>
     <a class="section-nav-btn" href="#research">Research</a>
     <a class="section-nav-btn" href="#projects">Projects</a>
     <a class="section-nav-btn" href="#skills">Skills</a>
-    <a class="section-nav-btn" href="#blog">Blog</a>
   </div>
 </nav>
 <div class="section" id="hero">
@@ -704,41 +881,39 @@ nav {
 
 <footer class="site-footer">
   <div class="footer-inner">
-    <!-- Copyright — bottom left as per your sketch -->
-    <p class="footer-copy">© Yifan Wang 2026</p>
 
-    <!-- Circular icon links — bottom right -->
+    <!-- LEFT -->
+    <div class="footer-left">
+      <p class="footer-copy">© Yifan Wang 2026.</p>
+      <p class="footer-built">Built with HTML, CSS, JavaScript (vanilla)</p>
+    </div>
+
+    <!-- CENTER (ICONS) -->
     <div class="footer-icons">
 
-      <!-- Email -->
       <a class="footer-icon-link" href="mailto:yifanwang102@gmail.com" title="Email">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
-        </svg>
+        <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
       </a>
 
-      <!-- LinkedIn -->
       <a class="footer-icon-link" href="https://www.linkedin.com/in/yifanwang102/" target="_blank" title="LinkedIn">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-        </svg>
+        <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
       </a>
 
-      <!-- GitHub -->
       <a class="footer-icon-link" href="https://github.com/uehorlepepe" target="_blank" title="GitHub">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
-        </svg>
+        <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
       </a>
 
-      <!-- Google Scholar -->
       <a class="footer-icon-link" href="https://scholar.google.ca/citations?user=Us-blVoAAAAJ&hl=en" target="_blank" title="Google Scholar">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M5.242 13.769 0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/>
-        </svg>
+        <svg viewBox="0 0 24 24"><path d="M5.242 13.769 0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>
       </a>
 
     </div>
+
+    <!-- RIGHT -->
+    <div class="footer-right">
+      <p class="footer-status">Open to research and project collaborations</p>
+    </div>
+
   </div>
 </footer>
 
@@ -904,4 +1079,4 @@ function runAnalysis() {
 
 </script>
 </body>
-</html> 
+</html>  
