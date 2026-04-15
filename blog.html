@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Blog | Yifan Wang</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #000;
+  --ink: #F2F2F2;
+  --muted: #9A9A9A;
+  --accent: #33CCFF;
+  --rule: rgba(255,255,255,0.08);
+  --sans: 'Instrument Sans', sans-serif;
+  --serif: 'Instrument Serif', serif;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+.site-footer {
+  border-top: 1px solid var(--rule);
+  padding: 2rem 0;
+  margin-top: 4rem;
+}
+
+.footer-inner {
+  width: min(1120px, calc(100vw - 3.5rem));
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.footer-copy {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.footer-built {
+  font-size: 11px;
+  color: rgba(154, 154, 154, 0.8);
+}
+
+.footer-icons {
+  display: flex;
+  gap: 0.75rem;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.footer-icon-link {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(51, 229, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+  transition: 0.2s ease;
+}
+
+.footer-icon-link:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 10px rgba(51, 204, 255, 0.25);
+}
+
+.footer-icon-link svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+.footer-status {
+  font-size: 12px;
+  color: var(--muted);
+  text-align: right;
+}
+
+.footer-left,
+.footer-right {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  line-height: 1.6;
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top:0;
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  padding:1rem 2rem;
+  backdrop-filter: blur(14px);
+  border-bottom:1px solid var(--rule);
+  background: rgba(0,0,0,0.6);
+}
+
+.nav-name {
+  font-family: var(--serif);
+  font-size: 16px;
+}
+
+.nav-links a {
+  color: var(--muted);
+  margin-left: 1rem;
+  text-decoration:none;
+  font-size: 13px;
+}
+
+.nav-links a:hover {
+  color: var(--accent);
+}
+
+/* HEADER */
+.header {
+  padding: 8rem 2rem 3rem;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.header h1 {
+  font-family: var(--serif);
+  font-size: 64px;
+  font-weight: 400;
+}
+
+.header p {
+  color: var(--muted);
+  max-width: 600px;
+  margin-top: 1rem;
+  font-size: 16px;
+}
+
+/* GRID */
+.blog-grid {
+  max-width: 1100px;
+  margin: auto;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 1rem;
+}
+
+/* CARD */
+.blog-card {
+  background: rgba(10,12,18,0.55);
+  border: 1px solid rgba(51,204,255,0.18);
+  border-radius: 18px;
+  padding: 1.5rem;
+  backdrop-filter: blur(12px);
+  transition: 0.25s ease;
+}
+
+.blog-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent);
+  box-shadow:
+    0 0 14px rgba(51,204,255,0.35),
+    0 0 30px rgba(51,204,255,0.2);
+}
+
+.blog-tag {
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.blog-title {
+  font-family: var(--serif);
+  font-size: 22px;
+  margin-bottom: 0.5rem;
+}
+
+.blog-excerpt {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 1rem;
+}
+
+.blog-meta {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.read-more {
+  display:inline-block;
+  margin-top: 1rem;
+  font-size: 12px;
+  color: var(--accent);
+  text-decoration:none;
+}
+
+/* MOBILE */
+@media (max-width: 800px) {
+  .blog-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .header h1 {
+    font-size: 44px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <div class="nav-name">Yifan Wang</div>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="blog.html" style="color: var(--accent);">Blog</a>
+    <a href="index.html#projects">Projects</a>
+    <a href="index.html#research">Research</a>
+  </div>
+</nav>
+
+<div class="header">
+  <h1>Blog</h1>
+  <p>Research notes, engineering logs, and system design insights from aerospace, machine learning, and experimental prototyping work.</p>
+</div>
+
+<div class="blog-grid">
+
+  <div class="blog-card">
+    <div class="blog-tag">Research</div>
+    <div class="blog-title">Paper Aircraft Aerodynamics: What Actually Changes Lift?</div>
+    <div class="blog-excerpt">
+      A breakdown of how small geometry changes drastically impact stability and glide ratio in low Reynolds number flight.
+    </div>
+    <div class="blog-meta">Jan 2026 • 6 min read</div>
+    <a class="read-more" href="#">Read →</a>
+  </div>
+
+  <div class="blog-card">
+    <div class="blog-tag">Machine Learning</div>
+    <div class="blog-title">Predicting Fuel Burn Using Gradient Boosting Models</div>
+    <div class="blog-excerpt">
+      How I built a regression model to estimate aviation fuel efficiency using route, aircraft, and environmental variables.
+    </div>
+    <div class="blog-meta">Feb 2026 • 8 min read</div>
+    <a class="read-more" href="#">Read →</a>
+  </div>
+
+  <div class="blog-card">
+    <div class="blog-tag">RC Aircraft</div>
+    <div class="blog-title">Building a Low Reynolds Number Test Platform</div>
+    <div class="blog-excerpt">
+      Iterating on wing design, tail stability, and control surfaces for experimental validation of aerodynamic theory.
+    </div>
+    <div class="blog-meta">Mar 2026 • 5 min read</div>
+    <a class="read-more" href="#">Read →</a>
+  </div>
+
+</div>
+
+</body>
+<footer class="site-footer">
+  <div class="footer-inner">
+
+    <!-- LEFT -->
+    <div class="footer-left">
+      <p class="footer-copy">© Yifan Wang 2026.</p>
+      <p class="footer-built">Built with HTML, CSS, JavaScript (vanilla)</p>
+    </div>
+
+    <!-- CENTER (ICONS) -->
+    <div class="footer-icons">
+
+      <a class="footer-icon-link" href="mailto:yifanwang102@gmail.com" title="Email">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+      </a>
+
+      <a class="footer-icon-link" href="https://www.linkedin.com/in/yifanwang102/" target="_blank" title="LinkedIn">
+        <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      </a>
+
+      <a class="footer-icon-link" href="https://github.com/uehorlepepe" target="_blank" title="GitHub">
+        <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      </a>
+
+      <a class="footer-icon-link" href="https://scholar.google.ca/citations?user=Us-blVoAAAAJ&hl=en" target="_blank" title="Google Scholar">
+        <svg viewBox="0 0 24 24"><path d="M5.242 13.769 0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>
+      </a>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="footer-right">
+      <p class="footer-status">Open to research and project collaborations</p>
+    </div>
+
+  </div>
+</footer>
+</html>
