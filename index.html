@@ -7,7 +7,7 @@
   <title>Yifan Wang</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link
-    href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap"
     rel="stylesheet">
   <style>
     ::selection {
@@ -231,24 +231,28 @@
     }
 
     #hero h1 {
-      font-family: var(--serif);
+      font-family: 'Space Grotesk', sans-serif;
       font-size: clamp(48px, 7vw, 78px);
-      font-weight: 400;
+      font-weight: 600;
       line-height: 0.98;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
       margin-bottom: 1.5rem;
     }
 
     #hero h1 em {
-      color: var(--muted);
+      color: rgba(51, 229, 255, 0.9);
+      font-weight: 500;
     }
 
     .hero-desc {
       max-width: 680px;
-      font-size: 18px;
-      color: var(--muted);
-      line-height: 1.8;
+      font-size: 17px;
+      /* slightly tighter */
+      color: rgba(242, 242, 242, 0.75);
+      /* less washed out than var(--muted) */
+      line-height: 1.85;
       margin-bottom: 1.5rem;
+      font-weight: 400;
     }
 
     /* These replaced the old hero-actions buttons */
@@ -417,10 +421,11 @@
     }
 
     .item-title {
-      font-family: var(--serif);
-      font-weight: 400;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 500;
       font-size: 22px;
       line-height: 1.3;
+      letter-spacing: -0.01em;
       margin-bottom: 0.6rem;
     }
 
@@ -602,9 +607,10 @@
     }
 
     .project-card-title {
-      font-family: var(--serif);
-      font-weight: 400;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 500;
       font-size: 20px;
+      letter-spacing: -0.01em;
       margin-bottom: 0.5rem;
     }
 
@@ -697,9 +703,10 @@
     }
 
     .skill-name {
-      font-family: var(--serif);
+      font-family: 'Space Grotesk', sans-serif;
       font-size: 19px;
-      font-weight: 400;
+      font-weight: 500;
+      letter-spacing: -0.01em;
     }
 
     .skill-duration {
