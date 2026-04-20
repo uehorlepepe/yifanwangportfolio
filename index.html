@@ -326,9 +326,9 @@
     .section {
       width: min(1120px, calc(100vw - 3rem));
       margin: 0 auto;
-      padding-top: 7rem;
-      padding-bottom: 3.5rem;
-      scroll-margin-top: -20px;
+      padding-top: 2rem;
+      padding-bottom: 2.5rem;
+      scroll-margin-top: 110px;
     }
 
     /* EXTRA SPACING CONTROL */
@@ -337,17 +337,17 @@
     }
 
     #research {
-      padding-top: 8rem;
-      padding-bottom: 2rem;
+      padding-top: 1rem;
+      padding-bottom: 1.5rem;
     }
 
     #projects {
-      padding-top: 2rem;
-      padding-bottom: 2rem;
+      padding-top: 1rem;
+      padding-bottom: 1.5rem;
     }
 
     #skills {
-      padding-top: 2rem;
+      padding-top: 1rem;
     }
 
     .section-label {
@@ -357,7 +357,7 @@
       color: var(--accent);
       font-weight: 600;
 
-      margin-bottom: 2.2rem;
+      margin-bottom: 1.25rem;
       padding-bottom: 0.9rem;
 
       position: relative;
@@ -385,7 +385,7 @@
       background: rgba(10, 12, 18, 0.55);
       border: 1px solid rgba(51, 229, 255, 0.25);
       border-radius: 18px;
-      padding: 1.5rem;
+      padding: 1.25rem;
 
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
@@ -513,17 +513,18 @@
       border: 1px solid rgba(34, 197, 94, 0.3);
     }
 
-    /* IN PROGRESS = cyan */
+    /* IN PROGRESS = amber yellow */
     .badge-progress {
-      color: #33E5FF;
-      background: rgba(51, 229, 255, 0.08);
-      border: 1px solid rgba(51, 229, 255, 0.25);
-    }
-
-    /* CONCEPT = amber */
-    .badge-concept {
       color: #FFD166;
       background: rgba(255, 209, 102, 0.08);
+      border: 1px solid rgba(255, 209, 102, 0.25);
+    }
+
+    /* CONCEPT = soft indigo */
+    .badge-concept {
+      color: #A78BFA;
+      background: rgba(167, 139, 250, 0.08);
+      border: 1px solid rgba(167, 139, 250, 0.25);
     }
 
     @keyframes pulse-glow {
@@ -1238,9 +1239,10 @@
 
       <div class="section-nav-btns">
         <a class="section-nav-btn featured" href="blog.html">Blog</a>
-        <a class="section-nav-btn" href="indexchange.html#research">Research</a>
-        <a class="section-nav-btn" href="indexchange.html#projects">Projects</a>
-        <a class="section-nav-btn" href="indexchange.html#skills">Skills</a>
+        <a class="section-nav-btn" href="#hero">Home</a>
+        <a class="section-nav-btn" href="#research">Research</a>
+        <a class="section-nav-btn" href="#projects">Projects</a>
+        <a class="section-nav-btn" href="#skills">Skills</a>
       </div>
     </div>
   </nav>
@@ -1353,10 +1355,11 @@
           </div>
           <h3 class="project-card-title">Elevon EX</h3>
           <p class="project-card-desc">Designing and distributing aerospace STEM kits to children in lower-income
-            communities. Building toward a one-week summer program reaching 1,000+ students.</p>
+            communities. Building toward a one-week summer program reaching 1,000+ students. (Website under
+            construction)</p>
         </div>
         <div class="project-card-footer">
-          <a href="https://elevonex.pages.dev/" target="_blank" class="project-link-btn">Visit site →</a>
+          <a href="https://elevonex.pages.dev/" target="_blank" class="project-link-btn">Visit Site →</a>
         </div>
       </div>
 
@@ -1411,7 +1414,7 @@
         <div class="skill-logo">🐍</div>
         <div>
           <div class="skill-name">Python</div>
-          <div class="skill-duration">3 years</div>
+          <div class="skill-duration">1 year</div>
         </div>
         <ul class="skill-bullets">
           <li>Numerical modeling</li>
