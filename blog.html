@@ -1541,7 +1541,8 @@
                 date: "2026-04-20T20:40:00",
                 desc: "How a near-perfect R² value of 0.9998 led me to a critical discovery about synthetic data, overfitting, and the necessity of real-world noise.",
                 link: "blog-ml-efficiency.html",
-                image: "images/r2.png"
+                image: "images/r2.png",
+                contain: true
             }
         ];
 
@@ -1568,7 +1569,7 @@
         // Render Featured Post
         const featured = posts[0];
         const featuredImgHtml = featured.image
-            ? `<img src="${featured.image}" alt="${featured.title}" style="width:100%; height:100%; object-fit:contain; background: white;">`
+            ? `<img src="${featured.image}" alt="${featured.title}" style="width:100%; height:100%; object-fit:${featured.contain ? 'contain; background:white' : 'cover'};">`
             : `IMAGE PLACEHOLDER`;
 
         featuredContainer.innerHTML = `
@@ -1586,7 +1587,7 @@
         const gridItems = posts.slice(1, 4);
         gridContainer.innerHTML = gridItems.map(post => {
             const imgHtml = post.image
-                ? `<img src="${post.image}" alt="${post.title}" style="width:100%; height:100%; object-fit:contain; background: white;">`
+                ? `<img src="${post.image}" alt="${post.title}" style="width:100%; height:100%; object-fit:${post.contain ? 'contain; background:white' : 'cover'};">`
                 : `IMAGE PLACEHOLDER`;
 
             return `
