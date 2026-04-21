@@ -195,9 +195,13 @@
             flex-direction: row-reverse;
         }
 
-        .about-image-box {
+        .about-image-column {
             flex: 1;
             min-width: 300px;
+        }
+
+        .about-image-box {
+            flex: 1;
             aspect-ratio: 4 / 3;
             border-radius: 24px;
             border: 1px solid rgba(51, 204, 255, 0.2);
@@ -206,6 +210,22 @@
             display: flex;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
             background: #111;
+        }
+
+        .about-image-date {
+            margin-top: 0.7rem;
+            padding-left: 0.1rem;
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 12px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .about-image-date.align-right {
+            text-align: right;
+            padding-left: 0;
+            padding-right: 0.1rem;
         }
 
         /* Horizontal Scrollable container for multiple images */
@@ -236,18 +256,13 @@
             position: relative;
         }
 
-        .about-image-slide::before {
-            content: "IMAGE PLACEHOLDER";
-            font-family: "Space Grotesk", sans-serif;
-            font-size: 11px;
-            letter-spacing: 0.2em;
-            color: var(--accent);
-            opacity: 0.3;
-            z-index: 1;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        .about-image-slide img {
+            width: 100%;
+            height: 100%;
+            border-radius: inherit;
+            display: block;
+            object-fit: cover;
+            object-position: center;
         }
 
         /* Unique Gradients for all 6 Hobbies (Reordered) */
@@ -296,7 +311,8 @@
             font-size: 32px;
             font-weight: 600;
             margin-bottom: 1rem;
-            color: var(--ink);
+            color: var(--accent);
+            text-shadow: 0 0 14px rgba(51, 204, 255, 0.28);
         }
 
         .about-hobby-desc {
@@ -432,11 +448,14 @@
         <div class="about-container">
             <!-- 1. Swimming -->
             <div class="about-item reveal">
-                <div class="about-image-box">
-                    <div class="about-image-scroll">
-                        <div class="about-image-slide"><img src="images/swimming.jpg" alt="Swimming"
-                                style="width:100%;height:100%;object-fit:contain;border-radius:inherit;"></div>
+                <div class="about-image-column">
+                    <div class="about-image-box">
+                        <div class="about-image-scroll">
+                            <div class="about-image-slide"><img src="images/swimming.png" alt="Swimming"
+                                    style="object-fit:cover;object-position:center 28%;"></div>
+                        </div>
                     </div>
+                    <p class="about-image-date">03/04/2026</p>
                 </div>
                 <div class="about-text">
                     <h3 class="about-hobby-title">Swimming</h3>
@@ -450,11 +469,14 @@
 
             <!-- 2. Air Cadets -->
             <div class="about-item reveal">
-                <div class="about-image-box">
-                    <div class="about-image-scroll">
-                        <div class="about-image-slide"><img src="images/marksmanship.jpg" alt="Air Cadets"
-                                style="width:100%;height:100%;object-fit:contain;border-radius:inherit;"></div>
+                <div class="about-image-column">
+                    <div class="about-image-box">
+                        <div class="about-image-scroll">
+                            <div class="about-image-slide"><img src="images/marksmanship.jpg" alt="Air Cadets"
+                                    style="object-fit:cover;object-position:center center;"></div>
+                        </div>
                     </div>
+                    <p class="about-image-date align-right">07/25/2024</p>
                 </div>
                 <div class="about-text">
                     <h3 class="about-hobby-title">Air Cadets</h3>
@@ -468,11 +490,14 @@
 
             <!-- 3. Arts Council -->
             <div class="about-item reveal">
-                <div class="about-image-box">
-                    <div class="about-image-scroll">
-                        <div class="about-image-slide"><img src="images/artsco.jpg" alt="Arts Council"
-                                style="width:100%;height:100%;object-fit:contain;border-radius:inherit;"></div>
+                <div class="about-image-column">
+                    <div class="about-image-box">
+                        <div class="about-image-scroll">
+                            <div class="about-image-slide"><img src="images/artsco.jpg" alt="Arts Council"
+                                    style="object-fit:cover;object-position:center center;"></div>
+                        </div>
                     </div>
+                    <p class="about-image-date">03/26/2026</p>
                 </div>
                 <div class="about-text">
                     <h3 class="about-hobby-title">Arts Council</h3>
@@ -486,11 +511,14 @@
 
             <!-- 4. SHAD -->
             <div class="about-item reveal">
-                <div class="about-image-box">
-                    <div class="about-image-scroll">
-                        <div class="about-image-slide"><img src="images/shad.JPG" alt="SHAD"
-                                style="width:100%;height:100%;object-fit:contain;border-radius:inherit;"></div>
+                <div class="about-image-column">
+                    <div class="about-image-box">
+                        <div class="about-image-scroll">
+                            <div class="about-image-slide"><img src="images/shad.JPG" alt="SHAD"
+                                    style="object-fit:cover;object-position:center 42%;"></div>
+                        </div>
                     </div>
+                    <p class="about-image-date align-right">07/24/2025</p>
                 </div>
                 <div class="about-text">
                     <h3 class="about-hobby-title">SHAD</h3>
@@ -504,11 +532,14 @@
 
             <!-- 5. Music -->
             <div class="about-item reveal">
-                <div class="about-image-box">
-                    <div class="about-image-scroll">
-                        <div class="about-image-slide"><img src="images/music.jpg" alt="Music"
-                                style="width:100%;height:100%;object-fit:cover;border-radius:inherit;"></div>
+                <div class="about-image-column">
+                    <div class="about-image-box">
+                        <div class="about-image-scroll">
+                            <div class="about-image-slide"><img src="images/music.jpg" alt="Music"
+                                    style="object-fit:cover;object-position:center 18%;"></div>
+                        </div>
                     </div>
+                    <p class="about-image-date">04/11/2025</p>
                 </div>
                 <div class="about-text">
                     <h3 class="about-hobby-title">Music</h3>
@@ -522,11 +553,14 @@
 
             <!-- 6. Fishing -->
             <div class="about-item reveal">
-                <div class="about-image-box">
-                    <div class="about-image-scroll">
-                        <div class="about-image-slide"><img src="images/fish.jpg" alt="Fishing"
-                                style="width:100%;height:100%;object-fit:cover;border-radius:inherit;"></div>
+                <div class="about-image-column">
+                    <div class="about-image-box">
+                        <div class="about-image-scroll">
+                            <div class="about-image-slide"><img src="images/fish.jpg" alt="Fishing"
+                                    style="object-fit:cover;object-position:center 16%;"></div>
+                        </div>
                     </div>
+                    <p class="about-image-date align-right">08/10/2023</p>
                 </div>
                 <div class="about-text">
                     <h3 class="about-hobby-title">Fishing</h3>
