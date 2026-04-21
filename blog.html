@@ -1462,6 +1462,8 @@
             <h2 class="section-label blog-header">Engineering Logbook</h2>
             <div style="
                 display: flex;
+                flex-direction: column;
+                gap: 0.7rem;
                 align-items: center;
                 justify-content: center;
                 padding: 4rem 2rem;
@@ -1471,11 +1473,19 @@
             ">
                 <p style="
                     font-family: 'Space Grotesk', sans-serif;
+                    font-size: 12px;
+                    font-weight: 600;
+                    text-transform: uppercase;
+                    letter-spacing: 0.14em;
+                    color: #33CCFF;
+                ">Coming soon</p>
+                <p style="
+                    font-family: 'Space Grotesk', sans-serif;
                     font-size: 20px;
                     font-weight: 600;
                     color: rgba(242, 242, 242, 0.35);
                     letter-spacing: 0.05em;
-                ">Coming soon.</p>
+                ">Logbook entries are on the way!</p>
             </div>
         </div>
     </div>
@@ -1639,7 +1649,8 @@
         ];
 
         const logbookContainer = document.getElementById("logbookContainer");
-        logbookContainer.innerHTML = logbookEntries.map(entry => `
+        if (logbookContainer) {
+            logbookContainer.innerHTML = logbookEntries.map(entry => `
       <div class="research-item">
         <div class="item-meta-row">
           <span class="research-badge">${entry.category}</span>
@@ -1649,6 +1660,7 @@
         <p class="item-desc">${entry.desc}</p>
       </div>
     `).join('');
+        }
 
         // --- REVEAL ON SCROLL ---
         const observerOptions = {
