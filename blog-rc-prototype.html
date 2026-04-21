@@ -112,6 +112,33 @@
             padding-bottom: 8rem;
         }
 
+        .article-back-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            background: rgba(51, 204, 255, 0.06);
+            border: 1px solid rgba(51, 229, 255, 0.4);
+            border-radius: 999px;
+            padding: 0.65rem 1rem;
+            transition: all 0.25s ease;
+        }
+
+        .article-back-link:hover {
+            color: #000;
+            background: var(--accent);
+            border-color: var(--accent);
+            box-shadow: 0 0 16px rgba(51, 204, 255, 0.5), 0 0 32px rgba(51, 204, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
         .article-hero {
             padding: 3rem 0;
         }
@@ -301,6 +328,7 @@
     </nav>
 
     <article class="article-container">
+        <a class="article-back-link" href="blog.html">Back to Blog</a>
         <div class="article-cover">
             <div class="article-cover-box">
                 <img src="images/rcplane.jpg" alt="RC Plane Build"
