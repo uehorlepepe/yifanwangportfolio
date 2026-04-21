@@ -1104,6 +1104,18 @@
       font-size: 13px;
     }
 
+    .modal-note {
+      margin-top: 0.85rem;
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .modal-note strong {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
     .result-recs {
       padding: 1rem;
       border-radius: 10px;
@@ -1608,6 +1620,10 @@
         <div class="button-wrapper">
           <button class="run-btn" id="run-btn" onclick="runAnalysis()">Run Analysis</button>
         </div>
+        <p class="modal-note">
+          <strong>Note:</strong> the backend can take about 50 seconds to start up, so please wait before the
+          results appear. If it says timed out, try again.
+        </p>
         <div class="modal-err" id="modal-err"></div>
         <div class="modal-results" id="modal-results">
           <div class="result-metrics">
@@ -1734,7 +1750,7 @@
           });
         })
         .catch(() => {
-          err.textContent = 'Could not reach the backend. Make sure the server is running.';
+          err.textContent = 'The backend may still be starting up. It can take about 50 seconds. If it says timed out, try again.';
           err.style.display = 'block';
         })
         .finally(() => {
