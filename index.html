@@ -5,7 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Yifan Wang</title>
-  <link rel="icon" type="image/png" href="images/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link
     href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap"
@@ -90,6 +89,7 @@
 
     html {
       scroll-behavior: smooth;
+      scrollbar-gutter: stable;
     }
 
     body {
@@ -327,9 +327,9 @@
     .section {
       width: min(1120px, calc(100vw - 3rem));
       margin: 0 auto;
-      padding-top: 7rem;
-      padding-bottom: 3.5rem;
-      scroll-margin-top: -20px;
+      padding-top: 2rem;
+      padding-bottom: 2.5rem;
+      scroll-margin-top: 110px;
     }
 
     /* EXTRA SPACING CONTROL */
@@ -338,17 +338,17 @@
     }
 
     #research {
-      padding-top: 8rem;
-      padding-bottom: 2rem;
+      padding-top: 1rem;
+      padding-bottom: 1.5rem;
     }
 
     #projects {
-      padding-top: 2rem;
-      padding-bottom: 2rem;
+      padding-top: 1rem;
+      padding-bottom: 1.5rem;
     }
 
     #skills {
-      padding-top: 2rem;
+      padding-top: 1rem;
     }
 
     .section-label {
@@ -358,7 +358,7 @@
       color: var(--accent);
       font-weight: 600;
 
-      margin-bottom: 2.2rem;
+      margin-bottom: 1.25rem;
       padding-bottom: 0.9rem;
 
       position: relative;
@@ -386,7 +386,7 @@
       background: rgba(10, 12, 18, 0.55);
       border: 1px solid rgba(51, 229, 255, 0.25);
       border-radius: 18px;
-      padding: 1.5rem;
+      padding: 1.25rem;
 
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
@@ -516,15 +516,16 @@
 
     /* IN PROGRESS = amber yellow */
     .badge-progress {
-      color: #FFB000;
-      background: rgba(255, 176, 0, 0.08);
-      border: 1px solid rgba(255, 176, 0, 0.25);
-    }
-
-    /* CONCEPT = amber */
-    .badge-concept {
       color: #FFD166;
       background: rgba(255, 209, 102, 0.08);
+      border: 1px solid rgba(255, 209, 102, 0.25);
+    }
+
+    /* CONCEPT = soft indigo */
+    .badge-concept {
+      color: #A78BFA;
+      background: rgba(167, 139, 250, 0.08);
+      border: 1px solid rgba(167, 139, 250, 0.25);
     }
 
     @keyframes pulse-glow {
@@ -643,6 +644,14 @@
       height: 76px;
       box-sizing: border-box;
       flex-shrink: 0;
+    }
+
+    .project-card-note {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: center;
     }
 
     .project-link-btn,
@@ -793,6 +802,7 @@
     .footer-copy {
       font-size: 12px;
       color: var(--muted);
+      line-height: 1.5;
     }
 
     .footer-icons {
@@ -825,6 +835,7 @@
       font-size: 12px;
       color: var(--muted);
       text-align: right;
+      line-height: 1.5;
     }
 
     .footer-icon-link:hover {
@@ -851,6 +862,7 @@
       font-size: 11px;
       color: rgba(154, 154, 154, 0.8);
       letter-spacing: 0.03em;
+      line-height: 1.5;
     }
 
     .reveal {
@@ -1100,6 +1112,18 @@
       font-size: 13px;
     }
 
+    .modal-note {
+      margin-top: 0.85rem;
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .modal-note strong {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
     .result-recs {
       padding: 1rem;
       border-radius: 10px;
@@ -1238,10 +1262,12 @@
       <span class="nav-name">Yifan Wang</span>
 
       <div class="section-nav-btns">
-        <a class="section-nav-btn featured" href="blog.html">Blog</a>
-        <a class="section-nav-btn" href="indexchange.html#research">Research</a>
-        <a class="section-nav-btn" href="indexchange.html#projects">Projects</a>
-        <a class="section-nav-btn" href="indexchange.html#skills">Skills</a>
+        <a class="section-nav-btn featured" href="#hero">Home</a>
+        <a class="section-nav-btn" href="blog.html">Blog</a>
+        <a class="section-nav-btn" href="aboutme.html">About</a>
+        <a class="section-nav-btn" href="#research">Research</a>
+        <a class="section-nav-btn" href="#projects">Projects</a>
+        <a class="section-nav-btn" href="#skills">Skills</a>
       </div>
     </div>
   </nav>
@@ -1255,7 +1281,7 @@
           for aviation efficiency alongside wind tunnel testing and aircraft performance analysis.</p>
         <!-- Two text links replacing the old About Me panel -->
         <div class="hero-text-links">
-          <a class="hero-text-link" href="#about">About me →</a>
+          <a class="hero-text-link" href="aboutme.html">About me →</a>
         </div>
       </div>
       <div class="hero-photo-card">
@@ -1354,10 +1380,11 @@
           </div>
           <h3 class="project-card-title">Elevon EX</h3>
           <p class="project-card-desc">Designing and distributing aerospace STEM kits to children in lower-income
-            communities. Building toward a one-week summer program reaching 1,000+ students.</p>
+            communities. Building toward a one-week summer program reaching 1,000+ students. (Website under
+            construction)</p>
         </div>
         <div class="project-card-footer">
-          <a href="https://elevonex.pages.dev/" target="_blank" class="project-link-btn">Visit site →</a>
+          <a href="https://elevonex.pages.dev/" target="_blank" class="project-link-btn">Visit Site →</a>
         </div>
       </div>
 
@@ -1371,7 +1398,9 @@
           <p class="project-card-desc">Custom RC aircraft built as an experimental aerodynamics platform to validate
             ideas in wing geometry and low Reynolds number flight performance.</p>
         </div>
-        <div class="project-card-footer"></div>
+        <div class="project-card-footer">
+          <a href="blog-rc-prototype.html" class="project-link-btn">Read Post</a>
+        </div>
       </div>
 
       <div class="project-card">
@@ -1401,6 +1430,20 @@
         <div class="project-card-footer"></div>
       </div>
 
+      <div class="project-card">
+        <div>
+          <div class="project-meta-row">
+            <span class="project-badge badge-concept">Concept</span>
+            <p class="project-card-tag">Aviation / 2026</p>
+          </div>
+          <h3 class="project-card-title">Experimental Flight Dynamics Platform</h3>
+          <p class="project-card-desc">A modular RC aircraft platform featuring real-time angle-of-attack estimation via
+            onboard ML, adjustable wing geometry responding to wind conditions, and integrated sensors for flight
+            testing, enabling data-driven analysis and optimization of lift, stability, and control.</p>
+        </div>
+        <div class="project-card-footer"></div>
+      </div>
+
     </div>
   </div>
 
@@ -1412,7 +1455,7 @@
         <div class="skill-logo">🐍</div>
         <div>
           <div class="skill-name">Python</div>
-          <div class="skill-duration">3 years</div>
+          <div class="skill-duration">1 year</div>
         </div>
         <ul class="skill-bullets">
           <li>Numerical modeling</li>
@@ -1602,6 +1645,10 @@
         <div class="button-wrapper">
           <button class="run-btn" id="run-btn" onclick="runAnalysis()">Run Analysis</button>
         </div>
+        <p class="modal-note">
+          <strong>Note:</strong> the backend can take about 50 seconds to start up, so please wait before the
+          results appear. If it says timed out, try again.
+        </p>
         <div class="modal-err" id="modal-err"></div>
         <div class="modal-results" id="modal-results">
           <div class="result-metrics">
@@ -1633,28 +1680,6 @@
           if (entry.isIntersecting) entry.target.classList.add('visible');
         });
       }, { threshold: 0.1 }).observe(el);
-    });
-
-    // --- NAVIGATION LOGIC ---
-    const navBtns = document.querySelectorAll('.section-nav-btn');
-    const sections = document.querySelectorAll('.section');
-
-    // Smooth Scroll
-    navBtns.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const href = btn.getAttribute('href');
-        if (href.startsWith('#') || href.includes('#')) {
-          const targetId = href.split('#')[1];
-          const targetSection = document.getElementById(targetId);
-          if (targetSection) {
-            e.preventDefault();
-            window.scrollTo({
-              top: targetSection.offsetTop - 80,
-              behavior: 'smooth'
-            });
-          }
-        }
-      });
     });
     const images = document.querySelectorAll('.stack-img');
     let current = 0;
@@ -1750,7 +1775,7 @@
           });
         })
         .catch(() => {
-          err.textContent = 'Could not reach the backend. Make sure the server is running.';
+          err.textContent = 'The backend may still be starting up. It can take about 50 seconds. If it says timed out, try again.';
           err.style.display = 'block';
         })
         .finally(() => {
