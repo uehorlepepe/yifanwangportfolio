@@ -323,16 +323,28 @@
             fill: currentColor;
         }
 
-        @media (max-width: 900px) {
-            .footer-inner {
+        @media (max-width: 600px) {
+            .nav-inner {
                 flex-direction: column;
-                gap: 1.5rem;
-                text-align: center;
+                gap: 0.8rem;
+                align-items: flex-start;
             }
 
-            .footer-icons {
-                position: static;
-                transform: none;
+            .section-nav-btns {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                width: 100%;
+                padding-bottom: 0.25rem;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+
+            .section-nav-btn {
+                flex-shrink: 0;
+            }
+
+            .section-nav-btns::-webkit-scrollbar {
+                display: none;
             }
         }
     </style>
