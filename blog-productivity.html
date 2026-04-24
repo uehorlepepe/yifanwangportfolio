@@ -74,7 +74,7 @@
             color: var(--ink);
         }
 
-        .nav-pill-btns {
+        .section-nav-btns {
             display: flex;
             gap: 0.5rem;
             align-items: center;
@@ -263,18 +263,6 @@
             position: relative;
         }
 
-        @media (max-width: 900px) {
-            .footer-inner {
-                flex-direction: column;
-                gap: 1.5rem;
-                text-align: center;
-            }
-
-            .footer-icons {
-                position: static;
-                transform: none;
-            }
-        }
 
         .footer-built {
             font-size: 11px;
@@ -321,6 +309,19 @@
             width: 18px;
             height: 18px;
             fill: currentColor;
+        }
+
+        @media (max-width: 900px) {
+            .footer-inner {
+                flex-direction: column;
+                gap: 1.5rem;
+                text-align: center;
+            }
+
+            .footer-icons {
+                position: static;
+                transform: none;
+            }
         }
 
         @media (max-width: 600px) {
