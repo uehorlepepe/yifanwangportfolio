@@ -1314,6 +1314,17 @@
             .form-group.full {
                 grid-column: span 1;
             }
+
+            .footer-inner {
+                flex-direction: column;
+                gap: 1.5rem;
+                text-align: center;
+            }
+
+            .footer-icons {
+                position: static;
+                transform: none;
+            }
         }
 
         /* ── FOOTER (UNIFIED) ── */
@@ -1416,12 +1427,36 @@
                 font-size: clamp(42px, 14vw, 62px);
             }
 
+            .blog-header {
+                font-size: 42px;
+                margin-bottom: 1.5rem;
+            }
+
             .hero-desc {
                 font-size: 16px;
             }
 
-            .nav-links {
-                gap: 0.9rem;
+            .nav-inner {
+                flex-direction: column;
+                gap: 0.8rem;
+                align-items: flex-start;
+            }
+
+            .section-nav-btns {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                width: 100%;
+                padding-bottom: 0.25rem;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+
+            .section-nav-btn {
+                flex-shrink: 0;
+            }
+
+            .section-nav-btns::-webkit-scrollbar {
+                display: none;
             }
 
             .skills-grid,
@@ -1431,6 +1466,19 @@
 
             .reveal {
                 transform: translateY(40px);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .footer-inner {
+                flex-direction: column;
+                gap: 1.5rem;
+                text-align: center;
+            }
+
+            .footer-icons {
+                position: static;
+                transform: none;
             }
         }
     </style>
