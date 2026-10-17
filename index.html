@@ -448,6 +448,43 @@
       text-decoration: none;
     }
 
+    .item-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 0.25rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(51, 229, 255, 0.15);
+    }
+
+    .item-action-btn {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      background: rgba(51, 204, 255, 0.06);
+      border: 1px solid rgba(51, 229, 255, 0.4);
+      border-radius: 6px;
+      padding: 8px 18px;
+      cursor: pointer;
+      font-family: var(--sans);
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .item-action-btn:hover {
+      color: #000;
+      background: var(--accent);
+      border-color: var(--accent);
+      box-shadow:
+        0 0 12px rgba(51, 204, 255, 0.5),
+        0 0 26px rgba(51, 204, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
     .research-badge {
       position: static;
       font-size: 10px;
@@ -881,7 +918,8 @@
       transform: none;
     }
 
-    #aviation-modal {
+    #aviation-modal,
+    #manuscript-modal {
       display: none;
       position: fixed;
       inset: 0;
@@ -891,6 +929,21 @@
       justify-content: center;
       padding: 1rem;
       overflow: hidden;
+    }
+
+    .manuscript-frame {
+      width: 100%;
+      height: 70vh;
+      border: 1px solid rgba(51, 229, 255, 0.2);
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.4);
+    }
+
+    .manuscript-note {
+      font-size: 12px;
+      color: var(--muted);
+      margin: 0.85rem 0 0;
+      line-height: 1.5;
     }
 
     .modal-box {
@@ -1363,8 +1416,8 @@
 
       <div class="research-item">
         <div class="item-meta-row">
-          <span class="research-badge badge-review">Under review</span>
-          <p class="item-meta">Curieux Academic Journal / Est. May 2026</p>
+          <span class="research-badge badge-published">Published</span>
+          <p class="item-meta">Curieux Academic Journal / May 2026</p>
         </div>
 
         <h3 class="item-title">
@@ -1376,6 +1429,11 @@
           operational inefficiencies in commercial aviation through aerodynamic, environmental, and route-based
           analysis.
         </p>
+
+        <a href="https://www.curieuxreview.com/_files/ugd/60ed3c_1e077cd259714cfa82a5d3a0694d27eb.pdf" target="_blank"
+          rel="noopener" class="item-link">
+          Read paper →
+        </a>
       </div>
 
       <div class="research-item">
@@ -1392,6 +1450,12 @@
           Investigating optimized tailfin geometries for low Reynolds number flight regimes through a combined
           experimental and computational approach.
         </p>
+
+        <div class="item-actions">
+          <button class="item-action-btn" onclick="openManuscript()">Preview Manuscript →</button>
+          <a href="https://github.com/uehorlepepe/uav-tailfin-cfd" target="_blank" rel="noopener"
+            class="item-action-btn">GitHub Repository →</a>
+        </div>
       </div>
 
     </div>
@@ -1713,6 +1777,25 @@
   </div>
 
 
+  <div id="manuscript-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <span class="modal-header-title">Tailfin Geometry Optimization — Manuscript</span>
+        <button class="modal-close"
+          onclick="document.getElementById('manuscript-modal').style.display='none'">&times;</button>
+      </div>
+      <div class="modal-body">
+        <iframe id="manuscript-frame" class="manuscript-frame" title="UAV tailfin CFD manuscript preview" src="about:blank"></iframe>
+        <p class="manuscript-note">
+          <strong>Manuscript in progress.</strong> Replace the preview source with your hosted PDF to enable full
+          inline viewing.
+          <a class="item-link" id="manuscript-download" href="#" target="_blank" rel="noopener">Open in new tab →</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+
   <script>
     document.querySelectorAll('.reveal').forEach(el => {
       new IntersectionObserver((entries) => {
@@ -1733,6 +1816,20 @@
       document.getElementById('aviation-modal').style.display = 'flex';
     }
     document.getElementById('aviation-modal').addEventListener('click', function (e) {
+      if (e.target === this) this.style.display = 'none';
+    });
+
+    // UAV tailfin manuscript preview
+    const MANUSCRIPT_PDF_URL = "manuscripts/uav-tailfin-manuscript.pdf";
+    function openManuscript() {
+      const frame = document.getElementById('manuscript-frame');
+      if (frame.src === 'about:blank' || !frame.getAttribute('src') || frame.getAttribute('src') === 'about:blank') {
+        frame.src = MANUSCRIPT_PDF_URL;
+      }
+      document.getElementById('manuscript-download').href = MANUSCRIPT_PDF_URL;
+      document.getElementById('manuscript-modal').style.display = 'flex';
+    }
+    document.getElementById('manuscript-modal').addEventListener('click', function (e) {
       if (e.target === this) this.style.display = 'none';
     });
 
