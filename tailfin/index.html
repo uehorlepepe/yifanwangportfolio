@@ -20,7 +20,6 @@
       --ink: #F2F2F2;
       --muted: #9A9A9A;
       --accent: #33CCFF;
-      --accent-soft: rgba(51, 204, 255, 0.12);
       --line: rgba(51, 229, 255, 0.18);
       --rule: rgba(255, 255, 255, 0.08);
       --sans: 'Instrument Sans', sans-serif;
@@ -119,7 +118,7 @@
     }
 
     .page {
-      width: min(1040px, calc(100vw - 3rem));
+      width: min(880px, calc(100vw - 3rem));
       margin: 0 auto;
       padding-bottom: 6rem;
     }
@@ -151,8 +150,7 @@
     }
 
     .hero {
-      padding: 3rem 0 2rem;
-      border-bottom: 1px solid var(--rule);
+      padding: 2.5rem 0 1.75rem;
     }
 
     .hero-badges {
@@ -160,7 +158,7 @@
       flex-wrap: wrap;
       align-items: center;
       gap: 0.6rem;
-      margin-bottom: 1.25rem;
+      margin-bottom: 1rem;
     }
 
     .badge {
@@ -194,12 +192,6 @@
       animation: pulse 2.2s infinite ease-in-out;
     }
 
-    .badge-done {
-      color: #22c55e;
-      background: rgba(34, 197, 94, 0.1);
-      border: 1px solid rgba(34, 197, 94, 0.3);
-    }
-
     .badge-plain {
       color: var(--muted);
       background: rgba(255, 255, 255, 0.03);
@@ -226,24 +218,100 @@
     .hero h1 {
       font-family: var(--space);
       font-weight: 600;
-      font-size: clamp(28px, 4.2vw, 46px);
-      line-height: 1.15;
+      font-size: clamp(24px, 3.6vw, 36px);
+      line-height: 1.2;
       letter-spacing: -0.02em;
-      max-width: 22ch;
-      margin-bottom: 1.25rem;
     }
 
-    .hero .lede {
+    .section {
+      padding: 2.25rem 0;
+      border-top: 1px solid var(--rule);
+    }
+
+    .eyebrow {
+      font-family: var(--space);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .section h2 {
+      font-family: var(--space);
+      font-weight: 600;
+      font-size: clamp(20px, 2.6vw, 26px);
+      letter-spacing: -0.01em;
+      margin: 0.4rem 0 1.25rem;
+    }
+
+    .prose p {
+      color: rgba(242, 242, 242, 0.88);
+      max-width: 74ch;
+    }
+
+    .ms-viewer {
+      display: none;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(10, 12, 18, 0.5);
+    }
+
+    .ms-viewer iframe {
+      width: 100%;
+      height: 78vh;
+      border: 0;
+      display: block;
+    }
+
+    .ms-placeholder {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      border: 1px dashed rgba(51, 229, 255, 0.35);
+      border-radius: 16px;
+      padding: 2rem;
+      background: rgba(51, 204, 255, 0.03);
+    }
+
+    .ms-placeholder-icon {
+      flex-shrink: 0;
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(51, 229, 255, 0.3);
+      color: var(--accent);
+      background: rgba(51, 204, 255, 0.06);
+    }
+
+    .ms-placeholder-icon svg {
+      width: 26px;
+      height: 26px;
+      fill: currentColor;
+    }
+
+    .ms-placeholder h3 {
+      font-family: var(--space);
       font-size: 18px;
-      color: rgba(242, 242, 242, 0.85);
-      max-width: 72ch;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
     }
 
-    .hero-actions {
+    .ms-placeholder p {
+      font-size: 14px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .actions {
       display: flex;
       flex-wrap: wrap;
       gap: 0.75rem;
-      margin-top: 2rem;
+      margin-top: 1.5rem;
     }
 
     .btn {
@@ -271,283 +339,6 @@
       border-color: var(--accent);
       box-shadow: 0 0 16px rgba(51, 204, 255, 0.5), 0 0 32px rgba(51, 204, 255, 0.2);
       transform: translateY(-2px);
-    }
-
-    .btn-primary {
-      color: #000;
-      background: var(--accent);
-      border-color: var(--accent);
-    }
-
-    .btn-primary:hover {
-      box-shadow: 0 0 22px rgba(51, 204, 255, 0.7), 0 0 44px rgba(51, 204, 255, 0.3);
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 1rem;
-      margin: 2.5rem 0;
-    }
-
-    .stat {
-      background: rgba(10, 12, 18, 0.55);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 1.4rem 1.25rem;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      transition: all 0.25s ease;
-    }
-
-    .stat:hover {
-      border-color: var(--accent);
-      transform: translateY(-3px);
-      box-shadow: 0 0 0 1px rgba(51, 229, 255, 0.2), 0 0 24px rgba(51, 229, 255, 0.18);
-    }
-
-    .stat-value {
-      font-family: var(--space);
-      font-size: clamp(26px, 3.4vw, 36px);
-      font-weight: 700;
-      color: var(--accent);
-      line-height: 1;
-      letter-spacing: -0.02em;
-    }
-
-    .stat-label {
-      margin-top: 0.6rem;
-      font-size: 12px;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    .section {
-      padding: 2.75rem 0;
-      border-bottom: 1px solid var(--rule);
-    }
-
-    .eyebrow {
-      font-family: var(--space);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--accent);
-    }
-
-    .section h2 {
-      font-family: var(--space);
-      font-weight: 600;
-      font-size: clamp(22px, 3vw, 30px);
-      letter-spacing: -0.01em;
-      margin: 0.5rem 0 1.25rem;
-    }
-
-    .prose p {
-      color: rgba(242, 242, 242, 0.88);
-      margin-bottom: 1.25rem;
-      max-width: 78ch;
-    }
-
-    .prose p:last-child {
-      margin-bottom: 0;
-    }
-
-    .pipeline {
-      display: grid;
-      gap: 0.85rem;
-    }
-
-    .stage {
-      display: grid;
-      grid-template-columns: 44px 1fr auto;
-      align-items: center;
-      gap: 1.1rem;
-      background: rgba(10, 12, 18, 0.5);
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 1.1rem 1.25rem;
-      transition: all 0.25s ease;
-    }
-
-    .stage:hover {
-      border-color: var(--accent);
-      box-shadow: 0 0 22px rgba(51, 229, 255, 0.15);
-    }
-
-    .stage-num {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--space);
-      font-weight: 700;
-      font-size: 16px;
-      color: var(--accent);
-      border: 1px solid rgba(51, 229, 255, 0.4);
-      background: rgba(51, 204, 255, 0.06);
-    }
-
-    .stage-title {
-      font-family: var(--space);
-      font-weight: 500;
-      font-size: 17px;
-    }
-
-    .stage-desc {
-      font-size: 14px;
-      color: var(--muted);
-      margin-top: 0.15rem;
-    }
-
-    .findings {
-      list-style: none;
-      display: grid;
-      gap: 0.9rem;
-    }
-
-    .findings li {
-      position: relative;
-      padding-left: 1.75rem;
-      color: rgba(242, 242, 242, 0.88);
-    }
-
-    .findings li::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0.62em;
-      width: 8px;
-      height: 8px;
-      border-radius: 2px;
-      transform: rotate(45deg);
-      background: var(--accent);
-      box-shadow: 0 0 8px rgba(51, 204, 255, 0.7);
-    }
-
-    .figures {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1rem;
-      margin-top: 1.5rem;
-    }
-
-    figure {
-      background: rgba(10, 12, 18, 0.55);
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      overflow: hidden;
-      transition: all 0.25s ease;
-    }
-
-    figure:hover {
-      border-color: var(--accent);
-      transform: translateY(-3px);
-      box-shadow: 0 0 24px rgba(51, 229, 255, 0.18);
-    }
-
-    figure img {
-      display: block;
-      width: 100%;
-      aspect-ratio: 4 / 3;
-      object-fit: contain;
-      background: rgba(0, 0, 0, 0.35);
-      padding: 0.75rem;
-    }
-
-    figcaption {
-      font-size: 12px;
-      color: var(--muted);
-      padding: 0.85rem 1rem;
-      border-top: 1px solid var(--rule);
-      line-height: 1.5;
-    }
-
-    .roadmap {
-      list-style: none;
-      counter-reset: step;
-      display: grid;
-      gap: 0.85rem;
-    }
-
-    .roadmap li {
-      counter-increment: step;
-      display: flex;
-      gap: 1rem;
-      align-items: baseline;
-      color: rgba(242, 242, 242, 0.88);
-    }
-
-    .roadmap li::before {
-      content: counter(step, decimal-leading-zero);
-      font-family: var(--space);
-      font-weight: 700;
-      font-size: 13px;
-      color: var(--accent);
-    }
-
-    .ms-viewer {
-      display: none;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      overflow: hidden;
-      background: rgba(10, 12, 18, 0.5);
-      margin-top: 1.5rem;
-    }
-
-    .ms-viewer iframe {
-      width: 100%;
-      height: 78vh;
-      border: 0;
-      display: block;
-    }
-
-    .ms-placeholder {
-      display: none;
-      align-items: center;
-      gap: 1.25rem;
-      border: 1px dashed rgba(51, 229, 255, 0.35);
-      border-radius: 16px;
-      padding: 1.75rem;
-      margin-top: 1.5rem;
-      background: rgba(51, 204, 255, 0.03);
-    }
-
-    .ms-placeholder-icon {
-      flex-shrink: 0;
-      width: 52px;
-      height: 52px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid rgba(51, 229, 255, 0.3);
-      color: var(--accent);
-      background: rgba(51, 204, 255, 0.06);
-    }
-
-    .ms-placeholder-icon svg {
-      width: 24px;
-      height: 24px;
-      fill: currentColor;
-    }
-
-    .ms-placeholder h3 {
-      font-family: var(--space);
-      font-size: 17px;
-      font-weight: 600;
-      margin-bottom: 0.3rem;
-    }
-
-    .ms-placeholder p {
-      font-size: 14px;
-      color: var(--muted);
-      margin: 0;
     }
 
     .site-footer {
@@ -614,14 +405,6 @@
     }
 
     @media (max-width: 900px) {
-      .stats {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .figures {
-        grid-template-columns: 1fr;
-      }
-
       .footer-inner {
         flex-direction: column;
         text-align: center;
@@ -661,13 +444,10 @@
         display: none;
       }
 
-      .stage {
-        grid-template-columns: 36px 1fr;
-      }
-
-      .stage .badge {
-        grid-column: 2;
-        justify-self: start;
+      .ms-placeholder {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
       }
     }
   </style>
@@ -695,169 +475,14 @@
       <div class="hero-badges">
         <span class="badge badge-progress">In progress</span>
         <span class="badge badge-plain">Est. Sept 2026</span>
-        <span class="badge badge-plain">Low-Re aerodynamics</span>
       </div>
       <h1>A Hybrid Experimental-Computational Framework for Tailfin Geometry Optimization in Low Reynolds Number
         Flight</h1>
-      <p class="lede">
-        A closed-loop study of tailfin (vertical stabilizer) planform optimization for low Reynolds number flight
-        (Re ≈ 50k–100k). The pipeline connects parametric CAD, transition-modelled OpenFOAM CFD, a Gaussian-process
-        surrogate with a Pareto search, and wind tunnel validation. The first three stages are complete; the
-        headline result is an optimized fin that buys <strong>40% more directional stability for 14% more drag</strong>
-        versus an RQ-11 Raven style baseline.
-      </p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="https://github.com/uehorlepepe/low_re_tailfin_project" target="_blank"
-          rel="noopener">GitHub Repository →</a>
-        <a class="btn" href="#manuscript">Read manuscript →</a>
-      </div>
     </header>
 
-    <section class="section" style="border-bottom: none; padding-bottom: 0;">
-      <div class="stats">
-        <div class="stat">
-          <div class="stat-value">30/30</div>
-          <div class="stat-label">DoE cases converged</div>
-        </div>
-        <div class="stat">
-          <div class="stat-value">0.991</div>
-          <div class="stat-label">Surrogate R² (GPR)</div>
-        </div>
-        <div class="stat">
-          <div class="stat-value">+40%</div>
-          <div class="stat-label">Yaw stiffness vs. baseline</div>
-        </div>
-        <div class="stat">
-          <div class="stat-value">+14%</div>
-          <div class="stat-label">Drag penalty</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <span class="eyebrow">Overview</span>
-      <h2>What the project is doing</h2>
-      <div class="prose">
-        <p>
-          At the Reynolds numbers where small UAVs and hand-launched aircraft operate, conventional tailfin rules of
-          thumb stop being reliable. Laminar separation bubbles, low aspect ratios, and lightly loaded surfaces change
-          the trade between directional stability and drag. This project asks a concrete question: for a fixed
-          low-Re flight envelope, what planform geometry gives the best stability for the least drag penalty?
-        </p>
-        <p>
-          To answer it, the work closes the loop between computation and experiment. A parametric CAD generator builds
-          candidate fins, a frozen OpenFOAM template with transition modelling (kOmegaSSTLM) evaluates them, and a
-          machine-learning surrogate makes the design space cheap to search. The result is a small set of
-          Pareto-optimal geometries that are then handed to the wind tunnel for validation rather than guessed at.
-        </p>
-        <p>
-          Design of experiments uses a Latin hypercube over fin sweep (15–35°), aspect ratio (1.5–3.0), and taper
-          ratio (0.4–0.8). All 30 cases converged, and the surrogate was confirmed to 2.9% error against held-out CFD,
-          giving enough confidence to move from screening to a physical test campaign.
-        </p>
-      </div>
-    </section>
-
-    <section class="section">
-      <span class="eyebrow">Methodology</span>
-      <h2>The closed-loop pipeline</h2>
-      <div class="pipeline">
-        <div class="stage">
-          <div class="stage-num">1</div>
-          <div>
-            <div class="stage-title">Parametric CAD</div>
-            <div class="stage-desc">CadQuery generator for SD8020 / NACA 4-digit fins with sweep, aspect ratio, and
-              taper as inputs; exports print-ready STL.</div>
-          </div>
-          <span class="badge badge-done">Done</span>
-        </div>
-        <div class="stage">
-          <div class="stage-num">2</div>
-          <div>
-            <div class="stage-title">CFD campaign</div>
-            <div class="stage-desc">Frozen OpenFOAM cruise template, 30-point LHS matrix, kOmegaSSTLM transition
-              modelling, tuned snappyHexMesh, regional wall-resolved y+ over the LSB zone.</div>
-          </div>
-          <span class="badge badge-done">Done</span>
-        </div>
-        <div class="stage">
-          <div class="stage-num">3</div>
-          <div>
-            <div class="stage-title">ML surrogate &amp; optimization</div>
-            <div class="stage-desc">GPR / GBR / polynomial comparison, NSGA-II Pareto search, Sobol sensitivity, and
-              publication-grade Cp / LSB / LEV extractors.</div>
-          </div>
-          <span class="badge badge-done">Done</span>
-        </div>
-        <div class="stage">
-          <div class="stage-num">4</div>
-          <div>
-            <div class="stage-title">Wind tunnel validation</div>
-            <div class="stage-desc">Force balance over sideslip 0–15° plus oil-flow for the LSB footprint, on printed
-              baseline and optimized fins.</div>
-          </div>
-          <span class="badge badge-progress">In progress</span>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <span class="eyebrow">Results</span>
-      <h2>Selected figures</h2>
-      <div class="figures">
-        <figure>
-          <img
-            src="https://raw.githubusercontent.com/uehorlepepe/low_re_tailfin_project/main/ml_optimizer/pareto_front.png"
-            alt="Pareto front of drag versus yaw stiffness">
-          <figcaption>NSGA-II Pareto front: drag against directional (yaw) stiffness.</figcaption>
-        </figure>
-        <figure>
-          <img
-            src="https://raw.githubusercontent.com/uehorlepepe/low_re_tailfin_project/main/ml_optimizer/sobol_indices.png"
-            alt="Sobol sensitivity indices">
-          <figcaption>Sobol indices: drag is an area story, bubble behaviour is a taper story.</figcaption>
-        </figure>
-        <figure>
-          <img
-            src="https://raw.githubusercontent.com/uehorlepepe/low_re_tailfin_project/main/ml_optimizer/parity_Cd.png"
-            alt="Parity plot of predicted versus computed drag">
-          <figcaption>Surrogate parity for drag coefficient (R² = 0.991).</figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <section class="section">
-      <span class="eyebrow">Findings</span>
-      <h2>What the results show so far</h2>
-      <ul class="findings">
-        <li>Small, lightly swept, low-taper fins win on drag, because wetted area dominates at this scale.</li>
-        <li>The predicted optimum (sweep 16.0°, AR 1.54, taper 0.42) delivers roughly +43% side force per degree and
-          +40% stiffer yaw than the Raven NACA 0009 baseline, at a cost of about +14% drag.</li>
-        <li>Three full campaigns (axial, sideslip to ±20°, and 60° delta fins) all stayed attached with no mean-flow
-          reversal, which scopes exactly what the tunnel needs to test.</li>
-        <li>The laminar separation bubble proxy resisted every surrogate tried; the Sobol split explains why by
-          separating the area-driven drag response from the taper-driven bubble response.</li>
-      </ul>
-    </section>
-
-    <section class="section">
-      <span class="eyebrow">Roadmap</span>
-      <h2>Next steps</h2>
-      <ol class="roadmap">
-        <li>Print the baseline and optimized fins and run the tunnel campaign — force balance over sideslip 0–15° with
-          oil-flow for the LSB footprint.</li>
-        <li>Run a sideslip-times-geometry campaign to extract per-planform stability derivatives.</li>
-        <li>Write up the full framework and results as the manuscript.</li>
-      </ol>
-    </section>
-
-    <section class="section" id="manuscript" style="border-bottom: none;">
+    <section class="section" id="manuscript">
       <span class="eyebrow">Manuscript</span>
       <h2>The paper</h2>
-      <p style="color: rgba(242, 242, 242, 0.88); max-width: 78ch;">
-        The full write-up of the framework, CFD campaign, surrogate optimization, and wind tunnel validation will be
-        hosted here. Once available it renders inline below.
-      </p>
 
       <div class="ms-viewer" id="ms-viewer">
         <iframe id="ms-frame" title="Manuscript preview"></iframe>
@@ -875,6 +500,25 @@
           <p>The manuscript is being written and will appear here once the wind tunnel validation campaign is complete.
           </p>
         </div>
+      </div>
+
+      <div class="actions">
+        <a class="btn" href="https://github.com/uehorlepepe/low_re_tailfin_project" target="_blank"
+          rel="noopener">GitHub Repository →</a>
+      </div>
+    </section>
+
+    <section class="section" id="overview">
+      <span class="eyebrow">Overview</span>
+      <h2>What this is about</h2>
+      <div class="prose">
+        <p>
+          This project optimizes tailfin (vertical stabilizer) planform geometry for low Reynolds number flight
+          (Re ≈ 50k–100k) through a closed loop that connects parametric CAD, transition-modelled OpenFOAM CFD, a
+          machine-learning surrogate with a Pareto search, and wind tunnel validation. The first three stages are
+          complete, and the headline result is an optimized fin that buys roughly 40% more directional stability for
+          about 14% more drag versus an RQ-11 Raven style baseline.
+        </p>
       </div>
     </section>
   </main>
@@ -927,17 +571,12 @@
     fetch(MANUSCRIPT_URL, { method: "HEAD" })
       .then(function (res) {
         if (res.ok) {
-          const frame = document.getElementById("ms-frame");
-          frame.src = MANUSCRIPT_URL;
+          document.getElementById("ms-frame").src = MANUSCRIPT_URL;
           document.getElementById("ms-viewer").style.display = "block";
           document.getElementById("ms-placeholder").style.display = "none";
-        } else {
-          document.getElementById("ms-placeholder").style.display = "flex";
         }
       })
-      .catch(function () {
-        document.getElementById("ms-placeholder").style.display = "flex";
-      });
+      .catch(function () { });
   </script>
 </body>
 
