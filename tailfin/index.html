@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="icon" href="../images/favicon.ico">
+  <link rel="icon" type="image/png" href="../images/favicon.png">
+  <link rel="apple-touch-icon" href="../images/favicon.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tailfin Optimization - Yifan Wang</title>
+  <meta name="description"
+    content="Low Reynolds number tailfin planform optimization: a hybrid experimental-computational framework combining parametric CAD, OpenFOAM CFD, ML surrogates, and wind tunnel validation.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #000000;
+      --ink: #F2F2F2;
+      --muted: #9A9A9A;
+      --accent: #33CCFF;
+      --accent-soft: rgba(51, 204, 255, 0.12);
+      --line: rgba(51, 229, 255, 0.18);
+      --rule: rgba(255, 255, 255, 0.08);
+      --sans: 'Instrument Sans', sans-serif;
+      --space: 'Space Grotesk', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scrollbar-gutter: stable;
+    }
+
+    ::selection {
+      background: var(--accent);
+      color: #000;
+    }
+
+    body {
+      font-family: var(--sans);
+      background:
+        radial-gradient(circle at top left, rgba(51, 204, 255, 0.07), transparent 32%),
+        radial-gradient(circle at bottom right, rgba(0, 255, 255, 0.04), transparent 38%),
+        var(--bg);
+      color: var(--ink);
+      line-height: 1.75;
+      font-size: 16px;
+      padding-top: 100px;
+    }
+
+    nav {
+      position: fixed;
+      inset: 0 0 auto 0;
+      display: flex;
+      align-items: center;
+      padding: 0.95rem 2.5rem;
+      border-bottom: 1px solid var(--rule);
+      background: rgba(18, 18, 18, 0.75);
+      backdrop-filter: blur(14px);
+      z-index: 100;
+    }
+
+    .nav-inner {
+      width: min(1120px, calc(100vw - 3rem));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0 auto;
+    }
+
+    .nav-name {
+      font-family: var(--space);
+      font-weight: 600;
+      font-size: 16px;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+      color: var(--ink);
+    }
+
+    .section-nav-btns {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .section-nav-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 34px;
+      padding: 0 1.25rem;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 500;
+      text-decoration: none;
+      border: 1px solid var(--line);
+      color: var(--ink);
+      background: rgba(10, 12, 18, 0.35);
+      transition: all 0.25s ease;
+    }
+
+    .section-nav-btn:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 0 0 20px rgba(51, 204, 255, 0.15);
+    }
+
+    .section-nav-btn.featured {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .page {
+      width: min(1040px, calc(100vw - 3rem));
+      margin: 0 auto;
+      padding-bottom: 6rem;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2rem;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      background: rgba(51, 204, 255, 0.06);
+      border: 1px solid rgba(51, 229, 255, 0.4);
+      border-radius: 999px;
+      padding: 0.6rem 1rem;
+      transition: all 0.25s ease;
+    }
+
+    .back-link:hover {
+      color: #000;
+      background: var(--accent);
+      border-color: var(--accent);
+      box-shadow: 0 0 16px rgba(51, 204, 255, 0.5), 0 0 32px rgba(51, 204, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .hero {
+      padding: 3rem 0 2rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 5px 11px;
+      border-radius: 999px;
+    }
+
+    .badge::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 6px currentColor;
+    }
+
+    .badge-progress {
+      color: #FFD166;
+      background: rgba(255, 209, 102, 0.08);
+      border: 1px solid rgba(255, 209, 102, 0.25);
+    }
+
+    .badge-progress::before {
+      animation: pulse 2.2s infinite ease-in-out;
+    }
+
+    .badge-done {
+      color: #22c55e;
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+
+    .badge-plain {
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--rule);
+    }
+
+    .badge-plain::before {
+      display: none;
+    }
+
+    @keyframes pulse {
+      0%,
+      100% {
+        box-shadow: 0 0 4px currentColor;
+        opacity: 0.8;
+      }
+
+      50% {
+        box-shadow: 0 0 10px currentColor;
+        opacity: 1;
+      }
+    }
+
+    .hero h1 {
+      font-family: var(--space);
+      font-weight: 600;
+      font-size: clamp(28px, 4.2vw, 46px);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      max-width: 22ch;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero .lede {
+      font-size: 18px;
+      color: rgba(242, 242, 242, 0.85);
+      max-width: 72ch;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 2rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      background: rgba(51, 204, 255, 0.06);
+      border: 1px solid rgba(51, 229, 255, 0.4);
+      border-radius: 8px;
+      padding: 12px 24px;
+      cursor: pointer;
+      font-family: var(--sans);
+      transition: all 0.25s ease;
+    }
+
+    .btn:hover {
+      color: #000;
+      background: var(--accent);
+      border-color: var(--accent);
+      box-shadow: 0 0 16px rgba(51, 204, 255, 0.5), 0 0 32px rgba(51, 204, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      color: #000;
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 0 22px rgba(51, 204, 255, 0.7), 0 0 44px rgba(51, 204, 255, 0.3);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem;
+      margin: 2.5rem 0;
+    }
+
+    .stat {
+      background: rgba(10, 12, 18, 0.55);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 1.4rem 1.25rem;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: all 0.25s ease;
+    }
+
+    .stat:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 0 0 1px rgba(51, 229, 255, 0.2), 0 0 24px rgba(51, 229, 255, 0.18);
+    }
+
+    .stat-value {
+      font-family: var(--space);
+      font-size: clamp(26px, 3.4vw, 36px);
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    .stat-label {
+      margin-top: 0.6rem;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .section {
+      padding: 2.75rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .eyebrow {
+      font-family: var(--space);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .section h2 {
+      font-family: var(--space);
+      font-weight: 600;
+      font-size: clamp(22px, 3vw, 30px);
+      letter-spacing: -0.01em;
+      margin: 0.5rem 0 1.25rem;
+    }
+
+    .prose p {
+      color: rgba(242, 242, 242, 0.88);
+      margin-bottom: 1.25rem;
+      max-width: 78ch;
+    }
+
+    .prose p:last-child {
+      margin-bottom: 0;
+    }
+
+    .pipeline {
+      display: grid;
+      gap: 0.85rem;
+    }
+
+    .stage {
+      display: grid;
+      grid-template-columns: 44px 1fr auto;
+      align-items: center;
+      gap: 1.1rem;
+      background: rgba(10, 12, 18, 0.5);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 1.1rem 1.25rem;
+      transition: all 0.25s ease;
+    }
+
+    .stage:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 22px rgba(51, 229, 255, 0.15);
+    }
+
+    .stage-num {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--space);
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--accent);
+      border: 1px solid rgba(51, 229, 255, 0.4);
+      background: rgba(51, 204, 255, 0.06);
+    }
+
+    .stage-title {
+      font-family: var(--space);
+      font-weight: 500;
+      font-size: 17px;
+    }
+
+    .stage-desc {
+      font-size: 14px;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+
+    .findings {
+      list-style: none;
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .findings li {
+      position: relative;
+      padding-left: 1.75rem;
+      color: rgba(242, 242, 242, 0.88);
+    }
+
+    .findings li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.62em;
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      transform: rotate(45deg);
+      background: var(--accent);
+      box-shadow: 0 0 8px rgba(51, 204, 255, 0.7);
+    }
+
+    .figures {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    figure {
+      background: rgba(10, 12, 18, 0.55);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: all 0.25s ease;
+    }
+
+    figure:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 0 24px rgba(51, 229, 255, 0.18);
+    }
+
+    figure img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: contain;
+      background: rgba(0, 0, 0, 0.35);
+      padding: 0.75rem;
+    }
+
+    figcaption {
+      font-size: 12px;
+      color: var(--muted);
+      padding: 0.85rem 1rem;
+      border-top: 1px solid var(--rule);
+      line-height: 1.5;
+    }
+
+    .roadmap {
+      list-style: none;
+      counter-reset: step;
+      display: grid;
+      gap: 0.85rem;
+    }
+
+    .roadmap li {
+      counter-increment: step;
+      display: flex;
+      gap: 1rem;
+      align-items: baseline;
+      color: rgba(242, 242, 242, 0.88);
+    }
+
+    .roadmap li::before {
+      content: counter(step, decimal-leading-zero);
+      font-family: var(--space);
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--accent);
+    }
+
+    .ms-viewer {
+      display: none;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(10, 12, 18, 0.5);
+      margin-top: 1.5rem;
+    }
+
+    .ms-viewer iframe {
+      width: 100%;
+      height: 78vh;
+      border: 0;
+      display: block;
+    }
+
+    .ms-placeholder {
+      display: none;
+      align-items: center;
+      gap: 1.25rem;
+      border: 1px dashed rgba(51, 229, 255, 0.35);
+      border-radius: 16px;
+      padding: 1.75rem;
+      margin-top: 1.5rem;
+      background: rgba(51, 204, 255, 0.03);
+    }
+
+    .ms-placeholder-icon {
+      flex-shrink: 0;
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(51, 229, 255, 0.3);
+      color: var(--accent);
+      background: rgba(51, 204, 255, 0.06);
+    }
+
+    .ms-placeholder-icon svg {
+      width: 24px;
+      height: 24px;
+      fill: currentColor;
+    }
+
+    .ms-placeholder h3 {
+      font-family: var(--space);
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    .ms-placeholder p {
+      font-size: 14px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .site-footer {
+      border-top: 1px solid var(--rule);
+      padding: 2rem 0;
+      background: rgba(0, 0, 0, 0.4);
+    }
+
+    .footer-inner {
+      width: min(1120px, calc(100vw - 3.5rem));
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      gap: 1rem;
+    }
+
+    .footer-copy,
+    .footer-status,
+    .footer-built {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .footer-built {
+      font-size: 11px;
+      color: rgba(154, 154, 154, 0.75);
+      letter-spacing: 0.02em;
+    }
+
+    .footer-icons {
+      display: flex;
+      gap: 0.75rem;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .footer-icon-link {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid rgba(51, 229, 255, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: var(--ink);
+      transition: all 0.2s ease;
+    }
+
+    .footer-icon-link:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+      box-shadow: 0 0 10px rgba(51, 204, 255, 0.25);
+    }
+
+    .footer-icon-link svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    @media (max-width: 900px) {
+      .stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .figures {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .footer-icons {
+        position: static;
+        transform: none;
+      }
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        padding: 0.95rem 1.25rem;
+      }
+
+      .nav-inner {
+        flex-direction: column;
+        gap: 0.8rem;
+        align-items: flex-start;
+      }
+
+      .section-nav-btns {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        width: 100%;
+        padding-bottom: 0.25rem;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+
+      .section-nav-btn {
+        flex-shrink: 0;
+      }
+
+      .section-nav-btns::-webkit-scrollbar {
+        display: none;
+      }
+
+      .stage {
+        grid-template-columns: 36px 1fr;
+      }
+
+      .stage .badge {
+        grid-column: 2;
+        justify-self: start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-name">Yifan Wang</a>
+      <div class="section-nav-btns">
+        <a class="section-nav-btn" href="../index.html">Home</a>
+        <a class="section-nav-btn featured" href="../index.html#research">Research</a>
+        <a class="section-nav-btn" href="../blog.html">Blog</a>
+        <a class="section-nav-btn" href="../aboutme.html">About</a>
+        <a class="section-nav-btn" href="../index.html#projects">Projects</a>
+        <a class="section-nav-btn" href="../index.html#skills">Skills</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="page">
+    <a class="back-link" href="../index.html#research">← Back to Research</a>
+
+    <header class="hero">
+      <div class="hero-badges">
+        <span class="badge badge-progress">In progress</span>
+        <span class="badge badge-plain">Est. Sept 2026</span>
+        <span class="badge badge-plain">Low-Re aerodynamics</span>
+      </div>
+      <h1>A Hybrid Experimental-Computational Framework for Tailfin Geometry Optimization in Low Reynolds Number
+        Flight</h1>
+      <p class="lede">
+        A closed-loop study of tailfin (vertical stabilizer) planform optimization for low Reynolds number flight
+        (Re ≈ 50k–100k). The pipeline connects parametric CAD, transition-modelled OpenFOAM CFD, a Gaussian-process
+        surrogate with a Pareto search, and wind tunnel validation. The first three stages are complete; the
+        headline result is an optimized fin that buys <strong>40% more directional stability for 14% more drag</strong>
+        versus an RQ-11 Raven style baseline.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="https://github.com/uehorlepepe/low_re_tailfin_project" target="_blank"
+          rel="noopener">GitHub Repository →</a>
+        <a class="btn" href="#manuscript">Read manuscript →</a>
+      </div>
+    </header>
+
+    <section class="section" style="border-bottom: none; padding-bottom: 0;">
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-value">30/30</div>
+          <div class="stat-label">DoE cases converged</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">0.991</div>
+          <div class="stat-label">Surrogate R² (GPR)</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">+40%</div>
+          <div class="stat-label">Yaw stiffness vs. baseline</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">+14%</div>
+          <div class="stat-label">Drag penalty</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <span class="eyebrow">Overview</span>
+      <h2>What the project is doing</h2>
+      <div class="prose">
+        <p>
+          At the Reynolds numbers where small UAVs and hand-launched aircraft operate, conventional tailfin rules of
+          thumb stop being reliable. Laminar separation bubbles, low aspect ratios, and lightly loaded surfaces change
+          the trade between directional stability and drag. This project asks a concrete question: for a fixed
+          low-Re flight envelope, what planform geometry gives the best stability for the least drag penalty?
+        </p>
+        <p>
+          To answer it, the work closes the loop between computation and experiment. A parametric CAD generator builds
+          candidate fins, a frozen OpenFOAM template with transition modelling (kOmegaSSTLM) evaluates them, and a
+          machine-learning surrogate makes the design space cheap to search. The result is a small set of
+          Pareto-optimal geometries that are then handed to the wind tunnel for validation rather than guessed at.
+        </p>
+        <p>
+          Design of experiments uses a Latin hypercube over fin sweep (15–35°), aspect ratio (1.5–3.0), and taper
+          ratio (0.4–0.8). All 30 cases converged, and the surrogate was confirmed to 2.9% error against held-out CFD,
+          giving enough confidence to move from screening to a physical test campaign.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <span class="eyebrow">Methodology</span>
+      <h2>The closed-loop pipeline</h2>
+      <div class="pipeline">
+        <div class="stage">
+          <div class="stage-num">1</div>
+          <div>
+            <div class="stage-title">Parametric CAD</div>
+            <div class="stage-desc">CadQuery generator for SD8020 / NACA 4-digit fins with sweep, aspect ratio, and
+              taper as inputs; exports print-ready STL.</div>
+          </div>
+          <span class="badge badge-done">Done</span>
+        </div>
+        <div class="stage">
+          <div class="stage-num">2</div>
+          <div>
+            <div class="stage-title">CFD campaign</div>
+            <div class="stage-desc">Frozen OpenFOAM cruise template, 30-point LHS matrix, kOmegaSSTLM transition
+              modelling, tuned snappyHexMesh, regional wall-resolved y+ over the LSB zone.</div>
+          </div>
+          <span class="badge badge-done">Done</span>
+        </div>
+        <div class="stage">
+          <div class="stage-num">3</div>
+          <div>
+            <div class="stage-title">ML surrogate &amp; optimization</div>
+            <div class="stage-desc">GPR / GBR / polynomial comparison, NSGA-II Pareto search, Sobol sensitivity, and
+              publication-grade Cp / LSB / LEV extractors.</div>
+          </div>
+          <span class="badge badge-done">Done</span>
+        </div>
+        <div class="stage">
+          <div class="stage-num">4</div>
+          <div>
+            <div class="stage-title">Wind tunnel validation</div>
+            <div class="stage-desc">Force balance over sideslip 0–15° plus oil-flow for the LSB footprint, on printed
+              baseline and optimized fins.</div>
+          </div>
+          <span class="badge badge-progress">In progress</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <span class="eyebrow">Results</span>
+      <h2>Selected figures</h2>
+      <div class="figures">
+        <figure>
+          <img
+            src="https://raw.githubusercontent.com/uehorlepepe/low_re_tailfin_project/main/ml_optimizer/pareto_front.png"
+            alt="Pareto front of drag versus yaw stiffness">
+          <figcaption>NSGA-II Pareto front: drag against directional (yaw) stiffness.</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="https://raw.githubusercontent.com/uehorlepepe/low_re_tailfin_project/main/ml_optimizer/sobol_indices.png"
+            alt="Sobol sensitivity indices">
+          <figcaption>Sobol indices: drag is an area story, bubble behaviour is a taper story.</figcaption>
+        </figure>
+        <figure>
+          <img
+            src="https://raw.githubusercontent.com/uehorlepepe/low_re_tailfin_project/main/ml_optimizer/parity_Cd.png"
+            alt="Parity plot of predicted versus computed drag">
+          <figcaption>Surrogate parity for drag coefficient (R² = 0.991).</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section">
+      <span class="eyebrow">Findings</span>
+      <h2>What the results show so far</h2>
+      <ul class="findings">
+        <li>Small, lightly swept, low-taper fins win on drag, because wetted area dominates at this scale.</li>
+        <li>The predicted optimum (sweep 16.0°, AR 1.54, taper 0.42) delivers roughly +43% side force per degree and
+          +40% stiffer yaw than the Raven NACA 0009 baseline, at a cost of about +14% drag.</li>
+        <li>Three full campaigns (axial, sideslip to ±20°, and 60° delta fins) all stayed attached with no mean-flow
+          reversal, which scopes exactly what the tunnel needs to test.</li>
+        <li>The laminar separation bubble proxy resisted every surrogate tried; the Sobol split explains why by
+          separating the area-driven drag response from the taper-driven bubble response.</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <span class="eyebrow">Roadmap</span>
+      <h2>Next steps</h2>
+      <ol class="roadmap">
+        <li>Print the baseline and optimized fins and run the tunnel campaign — force balance over sideslip 0–15° with
+          oil-flow for the LSB footprint.</li>
+        <li>Run a sideslip-times-geometry campaign to extract per-planform stability derivatives.</li>
+        <li>Write up the full framework and results as the manuscript.</li>
+      </ol>
+    </section>
+
+    <section class="section" id="manuscript" style="border-bottom: none;">
+      <span class="eyebrow">Manuscript</span>
+      <h2>The paper</h2>
+      <p style="color: rgba(242, 242, 242, 0.88); max-width: 78ch;">
+        The full write-up of the framework, CFD campaign, surrogate optimization, and wind tunnel validation will be
+        hosted here. Once available it renders inline below.
+      </p>
+
+      <div class="ms-viewer" id="ms-viewer">
+        <iframe id="ms-frame" title="Manuscript preview"></iframe>
+      </div>
+
+      <div class="ms-placeholder" id="ms-placeholder">
+        <div class="ms-placeholder-icon">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 7V3.5L18.5 9H13zM8 13h8v1.5H8V13zm0 3h8v1.5H8V16zm0-6h3v1.5H8V10z" />
+          </svg>
+        </div>
+        <div>
+          <h3>Manuscript in progress</h3>
+          <p>The manuscript is being written and will appear here once the wind tunnel validation campaign is complete.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <p class="footer-copy">© Yifan Wang 2026.</p>
+        <p class="footer-built">Built with HTML, CSS, JavaScript (vanilla)</p>
+      </div>
+
+      <div class="footer-icons">
+        <a class="footer-icon-link" href="mailto:yifanwang102@gmail.com" title="Email">
+          <svg viewBox="0 0 24 24">
+            <path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z" />
+          </svg>
+        </a>
+
+        <a class="footer-icon-link" href="https://www.linkedin.com/in/yifanwang102/" target="_blank" title="LinkedIn">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+          </svg>
+        </a>
+
+        <a class="footer-icon-link" href="https://github.com/uehorlepepe" target="_blank" title="GitHub">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+          </svg>
+        </a>
+
+        <a class="footer-icon-link" href="https://scholar.google.ca/citations?user=Us-blVoAAAAJ&hl=en" target="_blank"
+          title="Google Scholar">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M5.242 13.769 0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z" />
+          </svg>
+        </a>
+      </div>
+
+      <div class="footer-right">
+        <p class="footer-status">Open to research and project collaborations</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const MANUSCRIPT_URL = "manuscript.pdf";
+    fetch(MANUSCRIPT_URL, { method: "HEAD" })
+      .then(function (res) {
+        if (res.ok) {
+          const frame = document.getElementById("ms-frame");
+          frame.src = MANUSCRIPT_URL;
+          document.getElementById("ms-viewer").style.display = "block";
+          document.getElementById("ms-placeholder").style.display = "none";
+        } else {
+          document.getElementById("ms-placeholder").style.display = "flex";
+        }
+      })
+      .catch(function () {
+        document.getElementById("ms-placeholder").style.display = "flex";
+      });
+  </script>
+</body>
+
+</html>

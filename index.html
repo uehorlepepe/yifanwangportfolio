@@ -419,6 +419,10 @@
         0 0 50px rgba(51, 229, 255, 0.15);
     }
 
+    .research-item-link {
+      cursor: pointer;
+    }
+
     .item-meta {
       font-size: 11px;
       color: var(--muted);
@@ -918,8 +922,7 @@
       transform: none;
     }
 
-    #aviation-modal,
-    #manuscript-modal {
+    #aviation-modal {
       display: none;
       position: fixed;
       inset: 0;
@@ -929,21 +932,6 @@
       justify-content: center;
       padding: 1rem;
       overflow: hidden;
-    }
-
-    .manuscript-frame {
-      width: 100%;
-      height: 70vh;
-      border: 1px solid rgba(51, 229, 255, 0.2);
-      border-radius: 10px;
-      background: rgba(0, 0, 0, 0.4);
-    }
-
-    .manuscript-note {
-      font-size: 12px;
-      color: var(--muted);
-      margin: 0.85rem 0 0;
-      line-height: 1.5;
     }
 
     .modal-box {
@@ -1436,7 +1424,7 @@
         </a>
       </div>
 
-      <div class="research-item">
+      <div class="research-item research-item-link" onclick="window.location='tailfin/'">
         <div class="item-meta-row">
           <span class="research-badge badge-progress">In progress</span>
           <p class="item-meta">Est. Sept 2026</p>
@@ -1452,9 +1440,9 @@
         </p>
 
         <div class="item-actions">
-          <button class="item-action-btn" onclick="openManuscript()">Preview Manuscript →</button>
-          <a href="https://github.com/uehorlepepe/uav-tailfin-cfd" target="_blank" rel="noopener"
-            class="item-action-btn">GitHub Repository →</a>
+          <a href="tailfin/" class="item-action-btn" onclick="event.stopPropagation()">Project Overview →</a>
+          <a href="https://github.com/uehorlepepe/low_re_tailfin_project" target="_blank" rel="noopener"
+            class="item-action-btn" onclick="event.stopPropagation()">GitHub Repository →</a>
         </div>
       </div>
 
@@ -1777,25 +1765,6 @@
   </div>
 
 
-  <div id="manuscript-modal">
-    <div class="modal-box">
-      <div class="modal-header">
-        <span class="modal-header-title">Tailfin Geometry Optimization — Manuscript</span>
-        <button class="modal-close"
-          onclick="document.getElementById('manuscript-modal').style.display='none'">&times;</button>
-      </div>
-      <div class="modal-body">
-        <iframe id="manuscript-frame" class="manuscript-frame" title="UAV tailfin CFD manuscript preview" src="about:blank"></iframe>
-        <p class="manuscript-note">
-          <strong>Manuscript in progress.</strong> Replace the preview source with your hosted PDF to enable full
-          inline viewing.
-          <a class="item-link" id="manuscript-download" href="#" target="_blank" rel="noopener">Open in new tab →</a>
-        </p>
-      </div>
-    </div>
-  </div>
-
-
   <script>
     document.querySelectorAll('.reveal').forEach(el => {
       new IntersectionObserver((entries) => {
@@ -1816,20 +1785,6 @@
       document.getElementById('aviation-modal').style.display = 'flex';
     }
     document.getElementById('aviation-modal').addEventListener('click', function (e) {
-      if (e.target === this) this.style.display = 'none';
-    });
-
-    // UAV tailfin manuscript preview
-    const MANUSCRIPT_PDF_URL = "manuscripts/uav-tailfin-manuscript.pdf";
-    function openManuscript() {
-      const frame = document.getElementById('manuscript-frame');
-      if (frame.src === 'about:blank' || !frame.getAttribute('src') || frame.getAttribute('src') === 'about:blank') {
-        frame.src = MANUSCRIPT_PDF_URL;
-      }
-      document.getElementById('manuscript-download').href = MANUSCRIPT_PDF_URL;
-      document.getElementById('manuscript-modal').style.display = 'flex';
-    }
-    document.getElementById('manuscript-modal').addEventListener('click', function (e) {
       if (e.target === this) this.style.display = 'none';
     });
 
