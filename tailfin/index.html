@@ -250,61 +250,133 @@
       max-width: 74ch;
     }
 
-    .ms-viewer {
-      display: none;
+    .ms-container {
       border: 1px solid var(--line);
       border-radius: 16px;
       overflow: hidden;
-      background: rgba(10, 12, 18, 0.5);
+      background: rgba(10, 12, 18, 0.7);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), 0 0 24px rgba(51, 204, 255, 0.08);
+      backdrop-filter: blur(12px);
+    }
+
+    .ms-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.9rem 1.25rem;
+      border-bottom: 1px solid var(--line);
+      background: rgba(18, 22, 32, 0.9);
+    }
+
+    .ms-doc-info {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      min-width: 0;
+    }
+
+    .ms-doc-icon {
+      width: 38px;
+      height: 38px;
+      flex-shrink: 0;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(51, 204, 255, 0.1);
+      border: 1px solid rgba(51, 229, 255, 0.35);
+      color: var(--accent);
+    }
+
+    .ms-doc-icon svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    .ms-doc-meta-col {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ms-doc-title {
+      font-family: var(--space);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .ms-doc-sub {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+
+    .ms-toolbar-actions {
+      display: flex;
+      gap: 0.5rem;
+      flex-shrink: 0;
+    }
+
+    .ms-viewer {
+      display: block;
+      width: 100%;
+      height: 82vh;
+      min-height: 680px;
+      background: #0d0f14;
+      position: relative;
     }
 
     .ms-viewer iframe {
       width: 100%;
-      height: 78vh;
+      height: 100%;
       border: 0;
       display: block;
     }
 
-    .ms-placeholder {
-      display: flex;
-      align-items: center;
-      gap: 1.25rem;
-      border: 1px dashed rgba(51, 229, 255, 0.35);
-      border-radius: 16px;
-      padding: 2rem;
-      background: rgba(51, 204, 255, 0.03);
-    }
-
-    .ms-placeholder-icon {
-      flex-shrink: 0;
-      width: 56px;
-      height: 56px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid rgba(51, 229, 255, 0.3);
-      color: var(--accent);
-      background: rgba(51, 204, 255, 0.06);
-    }
-
-    .ms-placeholder-icon svg {
-      width: 26px;
-      height: 26px;
-      fill: currentColor;
-    }
-
-    .ms-placeholder h3 {
-      font-family: var(--space);
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: 0.3rem;
-    }
-
-    .ms-placeholder p {
-      font-size: 14px;
+    .ms-fallback-note {
+      padding: 0.75rem 1.25rem;
+      border-top: 1px solid var(--rule);
+      background: rgba(10, 12, 18, 0.6);
+      font-size: 12px;
       color: var(--muted);
-      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .ms-fallback-note a {
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .btn-primary {
+      background: var(--accent) !important;
+      color: #000 !important;
+      border-color: var(--accent) !important;
+      font-weight: 700;
+      box-shadow: 0 0 16px rgba(51, 204, 255, 0.35);
+    }
+
+    .btn-primary:hover {
+      background: #66e0ff !important;
+      border-color: #66e0ff !important;
+      color: #000 !important;
+      box-shadow: 0 0 24px rgba(51, 204, 255, 0.6) !important;
+    }
+
+    .btn-sm {
+      padding: 8px 16px;
+      font-size: 12px;
+      border-radius: 6px;
     }
 
     .actions {
@@ -444,10 +516,22 @@
         display: none;
       }
 
-      .ms-placeholder {
+      .ms-toolbar {
         flex-direction: column;
         align-items: flex-start;
-        text-align: left;
+      }
+
+      .ms-toolbar-actions {
+        width: 100%;
+      }
+
+      .ms-toolbar-actions .btn {
+        flex: 1;
+      }
+
+      .ms-viewer {
+        height: 65vh;
+        min-height: 480px;
       }
     }
   </style>
@@ -484,25 +568,67 @@
       <span class="eyebrow">Manuscript</span>
       <h2>The paper</h2>
 
-      <div class="ms-viewer" id="ms-viewer">
-        <iframe id="ms-frame" title="Manuscript preview"></iframe>
-      </div>
-
-      <div class="ms-placeholder" id="ms-placeholder">
-        <div class="ms-placeholder-icon">
-          <svg viewBox="0 0 24 24">
-            <path
-              d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 7V3.5L18.5 9H13zM8 13h8v1.5H8V13zm0 3h8v1.5H8V16zm0-6h3v1.5H8V10z" />
-          </svg>
+      <div class="ms-container">
+        <div class="ms-toolbar">
+          <div class="ms-doc-info">
+            <div class="ms-doc-icon">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 7V3.5L18.5 9H13zM8 13h8v1.5H8V13zm0 3h8v1.5H8V16zm0-6h3v1.5H8V10z" />
+              </svg>
+            </div>
+            <div class="ms-doc-meta-col">
+              <span class="ms-doc-title">NTU Research - Google Docs.pdf</span>
+              <span class="ms-doc-sub">Full Research Manuscript • Scroll &amp; Download</span>
+            </div>
+          </div>
+          <div class="ms-toolbar-actions">
+            <a class="btn btn-sm btn-primary" href="NTU%20Research%20-%20Google%20Docs.pdf" download="NTU Research - Google Docs.pdf">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              Download PDF
+            </a>
+            <a class="btn btn-sm" href="NTU%20Research%20-%20Google%20Docs.pdf" target="_blank" rel="noopener">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+              Open in Tab
+            </a>
+          </div>
         </div>
-        <div>
-          <h3>Manuscript in progress</h3>
-          <p>The manuscript is being written and will appear here once the wind tunnel validation campaign is complete.
-          </p>
+
+        <div class="ms-viewer" id="ms-viewer">
+          <iframe id="ms-frame" src="NTU%20Research%20-%20Google%20Docs.pdf#toolbar=1&navpanes=0&view=FitH" title="NTU Research - Google Docs.pdf manuscript preview"></iframe>
+        </div>
+
+        <div class="ms-fallback-note">
+          <span>Scroll inside the viewer above to explore the manuscript.</span>
+          <span>Having trouble viewing inline? <a href="NTU%20Research%20-%20Google%20Docs.pdf" download="NTU Research - Google Docs.pdf">Download PDF</a> or <a href="NTU%20Research%20-%20Google%20Docs.pdf" target="_blank" rel="noopener">open in full window</a>.</span>
         </div>
       </div>
 
       <div class="actions">
+        <a class="btn btn-primary" href="NTU%20Research%20-%20Google%20Docs.pdf" download="NTU Research - Google Docs.pdf">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Download PDF (NTU Research)
+        </a>
+        <a class="btn" href="NTU%20Research%20-%20Google%20Docs.pdf" target="_blank" rel="noopener">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+          Open in New Tab ↗
+        </a>
         <a class="btn" href="https://github.com/uehorlepepe/low_re_tailfin_project" target="_blank"
           rel="noopener">GitHub Repository →</a>
       </div>
@@ -566,18 +692,6 @@
     </div>
   </footer>
 
-  <script>
-    const MANUSCRIPT_URL = "manuscript.pdf";
-    fetch(MANUSCRIPT_URL, { method: "HEAD" })
-      .then(function (res) {
-        if (res.ok) {
-          document.getElementById("ms-frame").src = MANUSCRIPT_URL;
-          document.getElementById("ms-viewer").style.display = "block";
-          document.getElementById("ms-placeholder").style.display = "none";
-        }
-      })
-      .catch(function () { });
-  </script>
 </body>
 
 </html>
